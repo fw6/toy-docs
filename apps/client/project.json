@@ -1,0 +1,14 @@
+{
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "name": "client",
+    "sourceRoot": "apps/client/src",
+    "projectType": "application",
+    "generators": {},
+    "targets": {},
+    "tags": [
+        "type:app"
+    ],
+    "implicitDependencies": [
+        "extension-table"
+    ]
+}

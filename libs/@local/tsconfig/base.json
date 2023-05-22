@@ -1,0 +1,56 @@
+{
+    "$schema": "https://json.schemastore.org/tsconfig",
+    "display": "Default",
+    "compileOnSave": false,
+    "compilerOptions": {
+        "ignoreDeprecations": "5.0",
+        "sourceMap": true,
+        "declaration": true,
+        "moduleResolution": "node",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "useDefineForClassFields": false,
+        "importHelpers": true,
+        "target": "es2015",
+        "module": "esnext",
+        "lib": [
+            "es2020",
+            "dom",
+            "DOM.Iterable"
+        ],
+        "types": [
+            "vite/client"
+        ],
+        "forceConsistentCasingInFileNames": true,
+        "strict": true,
+        "noImplicitOverride": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "noImplicitAny": true,
+        "noFallthroughCasesInSwitch": true,
+        "importsNotUsedAsValues": "error",
+        "resolveJsonModule": true,
+        "allowSyntheticDefaultImports": true,
+        "skipLibCheck": true,
+        "skipDefaultLibCheck": true,
+        "preserveValueImports": true
+    },
+    "include": [
+        "../../extension-*/src/**/*.ts",
+        "../../@litmirror/*/src/**/*.ts",
+        "../../@tiptap/*/src/**/*.ts",
+        "../../../stories/histoire.setup.ts",
+        "../../@types/*.d.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "tmp",
+        "dist",
+        "dist*",
+        ".svelte-kit",
+        "**/__tests__",
+        "dep-types"
+    ]
+}

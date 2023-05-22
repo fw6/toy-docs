@@ -1,0 +1,53 @@
+{
+    "tasksRunnerOptions": {
+        "default": {
+            "runner": "nx-cloud",
+            "options": {
+                "cacheableOperations": [
+                    "build",
+                    "lint",
+                    "test",
+                    "e2e",
+                    "build-storybook"
+                ],
+                "accessToken": "ODEwNjYwZWQtOWUwOS00NzM1LWFjOWEtM2VlNjRjYzhkZWJhfHJlYWQtd3JpdGU="
+            }
+        }
+    },
+    "extends": "nx/presets/npm.json",
+    "$schema": "./node_modules/nx/schemas/nx-schema.json",
+    "affected": {
+        "defaultBase": "master"
+    },
+    "workspaceLayout": {
+        "appsDir": "apps",
+        "libsDir": "libs"
+    },
+    "targetDefaults": {
+        "build": {
+            "dependsOn": ["^build"]
+        },
+        "build-storybook": {
+            "inputs": [
+                "default",
+                "^production",
+                "{workspaceRoot}/.storybook/**/*",
+                "!{projectRoot}/.storybook/**/*"
+            ]
+        }
+    },
+    "namedInputs": {
+        "default": ["{projectRoot}/**/*", "sharedGlobals"],
+        "production": [
+            "default",
+            "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
+            "!{projectRoot}/tsconfig.spec.json",
+            "!{projectRoot}/jest.config.[jt]s",
+            "!{projectRoot}/.eslintrc.json",
+            "!{projectRoot}/.storybook/**/*",
+            "!{projectRoot}/**/*.stories.@(js|jsx|ts|tsx|mdx)"
+        ],
+        "sharedGlobals": []
+    },
+    "defaultProject": "client"
+}

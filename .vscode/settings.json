@@ -1,0 +1,106 @@
+{
+    "stylelint.enable": true,
+    "stylelint.validate": [
+        "html",
+        "vue",
+        "svelte",
+        "astro"
+    ],
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll": true
+    },
+    "eslint.validate": [
+        "javascript",
+        "javascriptreact",
+        "typescript",
+        "typescriptreact",
+        "vue",
+        "svelte"
+    ],
+    "npm.packageManager": "pnpm",
+    "search.exclude": {
+        "**/.git": true,
+        "**/.github": true,
+        "**/.nuxt": true,
+        "**/.output": true,
+        "**/.pnpm": true,
+        "**/.vscode": true,
+        "**/.yarn": true,
+        "**/bower_components": true,
+        "**/dist/**": true,
+        "**/logs": true,
+        "**/node_modules": true,
+        "**/out/**": true,
+        "**/package-lock.json": true,
+        "**/pnpm-lock.yaml": true,
+        "**/tmp": true,
+        "**/dist": true,
+        "**/yarn.lock": true
+    },
+    "cSpell.words": [
+        "astro",
+        "devkit",
+        "dndzone",
+        "esbuild",
+        "histoire",
+        "iconify",
+        "idcard",
+        "invisibles",
+        "litmirror",
+        "lmds",
+        "mdast",
+        "misky",
+        "nrwl",
+        "numfmt",
+        "nxext",
+        "qiyuesuo",
+        "stylelintrc",
+        "sveltejs",
+        "tabler",
+        "tiptap",
+        "tsbuildinfo",
+        "tsdoc",
+        "unist",
+        "unplugin",
+        "vueuse",
+        "WUJIE"
+    ],
+    "[svelte]": {
+        "editor.defaultFormatter": "svelte.svelte-vscode"
+    },
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "rome.rome"
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "rome.rome"
+    },
+    // https://github.com/sveltejs/language-tools/blob/master/packages/svelte-vscode/package.json
+    "svelte.enable-ts-plugin": true,
+    // FIXME: 垃圾prettier！printWidth不生效、换行位置很难看，暂时先关掉，移除prettier后再开启（singleAttributePerLine 配置暂不支持）
+    // "svelte.plugin.svelte.format.enable": false,
+    "svelte.plugin.svelte.format.config.printWidth": 999,
+    "svelte.plugin.svelte.defaultScriptLanguage": "ts"
+    // "svelte.plugin.css.globals": "./design/tokens/platforms/web/tokens.css"
+    // https://github.com/sveltejs/language-tools/issues/1665
+    // https://github.com/sveltejs/language-tools/blob/master/docs/preprocessors/other-css-preprocessors.md#sass
+    // https://github.com/sveltejs/language-tools/blob/master/docs/preprocessors/scss-less.md#scss-cant-find-stylesheet-when-using-prependdata
+    // "svelte.plugin.css.diagnostics.enable": false,
+    // "prettier.enable": false,
+    // "prettier.printWidth": 999,
+    // "prettier.tabWidth": 4,
+    // "designTokens.importAtRuleName": "tokens",
+    // "designTokens.valueFunctionName": "token",
+    // "postcss.validate": false,
+    // "editor.suggest.showVariables": true,
+    // "css.customData": [
+    //     "./data/tokens.css-data.json"
+    // ],
+    // "css.validate": false,
+    // "cssvar.files": [
+    //     "./design/tokens/platforms/web/tokens.css"
+    // ]
+}
