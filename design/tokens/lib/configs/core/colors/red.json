@@ -1,0 +1,68 @@
+{
+    "core": {
+        "color": {
+            "red": {
+                "50": {
+                    "value": "#fdeee9",
+                    "attributes": {
+                        "category": "color"
+                    }
+                },
+                "100": {
+                    "value": "#f9c9ba",
+                    "attributes": {
+                        "category": "color"
+                    }
+                },
+                "200": {
+                    "value": "#f7af98",
+                    "attributes": {
+                        "category": "color"
+                    }
+                },
+                "300": {
+                    "value": "#f38b69",
+                    "attributes": {
+                        "category": "color"
+                    }
+                },
+                "400": {
+                    "value": "#f1754c",
+                    "attributes": {
+                        "category": "color"
+                    }
+                },
+                "500": {
+                    "value": "#ed521f",
+                    "attributes": {
+                        "category": "color"
+                    }
+                },
+                "600": {
+                    "value": "#d84b1c",
+                    "attributes": {
+                        "category": "color"
+                    }
+                },
+                "700": {
+                    "value": "#a83a16",
+                    "attributes": {
+                        "category": "color"
+                    }
+                },
+                "800": {
+                    "value": "#822d11",
+                    "attributes": {
+                        "category": "color"
+                    }
+                },
+                "900": {
+                    "value": "#64220d",
+                    "attributes": {
+                        "category": "color"
+                    }
+                }
+            }
+        }
+    }
+}

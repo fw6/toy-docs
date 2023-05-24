@@ -1,0 +1,74 @@
+{
+    "core": {
+        "color": {
+            "yellow": {
+                "0": {
+                    "value": "#ffffc7",
+                    "attributes": {
+                        "category": "color"
+                    }
+                },
+                "50": {
+                    "value": "#ffeba8",
+                    "attributes": {
+                        "category": "color"
+                    }
+                },
+                "100": {
+                    "value": "#ffd58b",
+                    "attributes": {
+                        "category": "color"
+                    }
+                },
+                "200": {
+                    "value": "#f5a957",
+                    "attributes": {
+                        "category": "color"
+                    }
+                },
+                "300": {
+                    "value": "#dd812f",
+                    "attributes": {
+                        "category": "color"
+                    }
+                },
+                "400": {
+                    "value": "#c46113",
+                    "attributes": {
+                        "category": "color"
+                    }
+                },
+                "500": {
+                    "value": "#ac4700",
+                    "attributes": {
+                        "category": "color"
+                    }
+                },
+                "600": {
+                    "value": "#943a00",
+                    "attributes": {
+                        "category": "color"
+                    }
+                },
+                "700": {
+                    "value": "#7c2e00",
+                    "attributes": {
+                        "category": "color"
+                    }
+                },
+                "800": {
+                    "value": "#632400",
+                    "attributes": {
+                        "category": "color"
+                    }
+                },
+                "900": {
+                    "value": "#4b1b00",
+                    "attributes": {
+                        "category": "color"
+                    }
+                }
+            }
+        }
+    }
+}

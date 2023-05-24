@@ -1,0 +1,23 @@
+{
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "name": "design/tokens",
+    "sourceRoot": "design/tokens",
+    "projectType": "library",
+    "tags": [],
+    "targets": {
+        "serve": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "chokidar 'src/**/*.json' -c 'ts-node src/index'",
+                "cwd": "design/tokens"
+            }
+        },
+        "build": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "node src/index.js",
+                "cwd": "design/tokens"
+            }
+        }
+    }
+}

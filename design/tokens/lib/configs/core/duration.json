@@ -1,0 +1,42 @@
+{
+    "core": {
+        "duration": {
+            "0": {
+                "value": 0,
+                "attributes": {
+                    "category": "time"
+                }
+            },
+            "50": {
+                "value": 50,
+                "attributes": {
+                    "category": "time"
+                }
+            },
+            "100": {
+                "value": 100,
+                "attributes": {
+                    "category": "time"
+                }
+            },
+            "200": {
+                "value": 200,
+                "attributes": {
+                    "category": "time"
+                }
+            },
+            "400": {
+                "value": 400,
+                "attributes": {
+                    "category": "time"
+                }
+            },
+            "800": {
+                "value": 800,
+                "attributes": {
+                    "category": "time"
+                }
+            }
+        }
+    }
+}

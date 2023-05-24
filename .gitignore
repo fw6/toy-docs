@@ -293,3 +293,4 @@ $RECYCLE.BIN/
 .vite-inspect/
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+design/tokens/platforms

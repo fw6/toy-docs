@@ -1,0 +1,21 @@
+{
+    "semantic": {
+        "duration": {
+            "immediately": {
+                "value": "{core.duration.50}"
+            },
+            "instantly": {
+                "value": "{core.duration.0}"
+            },
+            "promptly": {
+                "value": "{core.duration.200}"
+            },
+            "quickly": {
+                "value": "{core.duration.100}"
+            },
+            "slowly": {
+                "value": "{core.duration.400}"
+            }
+        }
+    }
+}

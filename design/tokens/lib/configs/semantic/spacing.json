@@ -1,0 +1,50 @@
+{
+    "semantic": {
+        "margin": {
+            "xxs": {
+                "value": "{core.spacing.4}"
+            },
+            "xs": {
+                "value": "{core.spacing.8}"
+            },
+            "sm": {
+                "value": "calc({core.spacing.8} + {core.spacing.4})"
+            },
+            "md": {
+                "value": "{core.spacing.16}"
+            },
+            "lg": {
+                "value": "{core.spacing.24}"
+            },
+            "xl": {
+                "value": "{core.spacing.32}"
+            },
+            "xxl": {
+                "value": "{core.spacing.48}"
+            }
+        },
+        "padding": {
+            "xxs": {
+                "value": "{core.spacing.4}"
+            },
+            "xs": {
+                "value": "{core.spacing.8}"
+            },
+            "sm": {
+                "value": "calc({core.spacing.8} + {core.spacing.4})"
+            },
+            "md": {
+                "value": "{core.spacing.16}"
+            },
+            "lg": {
+                "value": "{core.spacing.24}"
+            },
+            "xl": {
+                "value": "{core.spacing.32}"
+            },
+            "xxl": {
+                "value": "{core.spacing.48}"
+            }
+        }
+    }
+}

@@ -1,0 +1,104 @@
+{
+    "semantic": {
+        "font-size": {
+            "value": "{core.font.size.16}",
+            "comment": "基础字号"
+        },
+        "font-family": {
+            "value": "{core.font.family.system}",
+            "comment": "基础字体"
+        },
+        "font": {
+            "size": {
+                "sm": {
+                    "value": "{core.font.size.12}"
+                },
+                "md": {
+                    "value": "{core.font.size.13}"
+                },
+                "lg": {
+                    "value": "{core.font.size.14}"
+                },
+                "xl": {
+                    "value": "{core.font.size.16}"
+                }
+            },
+            "family": {
+                "system": {
+                    "value": "{core.font.family.system}"
+                },
+                "sans": {
+                    "value": "{core.font.family.sans}"
+                },
+                "mono": {
+                    "value": "{core.font.family.mono}"
+                }
+            },
+            "weight": {
+                "bold": {
+                    "value": "{core.font.weight.bold}"
+                },
+                "semibold": {
+                    "value": "{core.font.weight.semibold}"
+                },
+                "medium": {
+                    "value": "{core.font.weight.medium}"
+                },
+                "regular": {
+                    "value": "{core.font.weight.regular}"
+                },
+                "light": {
+                    "value": "{core.font.weight.light}"
+                }
+            },
+            "line-height": {
+                "value": "1.5714",
+                "comment": "正文文本，默认行高"
+            },
+            "heading": {
+                "line-height": {
+                    "1": {
+                        "value": "1.2105",
+                        "comment": "一级标题的行高"
+                    },
+                    "2": {
+                        "value": "1.2667",
+                        "comment": "二级标题的行高"
+                    },
+                    "3": {
+                        "value": "1.3333",
+                        "comment": "三级标题的行高"
+                    },
+                    "4": {
+                        "value": "1.4",
+                        "comment": "四级标题的行高"
+                    }
+                },
+                "size": {
+                    "1": {
+                        "value": "38",
+                        "attributes": {
+                            "category": "size"
+                        },
+                        "comment": "一级标题的字体大小"
+                    },
+                    "2": {
+                        "value": "30",
+                        "attributes": {
+                            "category": "size"
+                        },
+                        "comment": "二级标题的字体大小"
+                    },
+                    "3": {
+                        "value": "{core.font.size.24}",
+                        "comment": "三级标题的字体大小"
+                    },
+                    "4": {
+                        "value": "{core.font.size.20}",
+                        "comment": "四级标题的字体大小"
+                    }
+                }
+            }
+        }
+    }
+}
