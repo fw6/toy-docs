@@ -2,11 +2,14 @@
     "compileOnSave": false,
     "compilerOptions": {
         "allowJs": true,
+        "checkJs": true,
         "rootDir": ".",
         "noUnusedLocals": true,
         "sourceMap": true,
         "declaration": false,
-        "moduleResolution": "node",
+        "moduleResolution": "bundler",
+        "verbatimModuleSyntax": true,
+        "isolatedModules": true,
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "importHelpers": true,
@@ -26,7 +29,14 @@
             "@misky/extension-table": [
                 "libs/extension-table/src/lib/index.js"
             ]
-        }
+        },
+        "strict": true,
+        "allowUnreachableCode": false,
+        "noImplicitAny": true,
+        "noImplicitOverride": true,
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "noFallthroughCasesInSwitch": true
     },
     "exclude": [
         "node_modules",

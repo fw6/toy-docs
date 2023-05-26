@@ -1,0 +1,8 @@
+{
+    "name": "@misky/tiptap-extensions",
+    "version": "0.0.1",
+    "type": "module",
+    "volta": {
+        "extends": "../../../package.json"
+    }
+}
