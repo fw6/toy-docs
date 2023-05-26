@@ -21,5 +21,13 @@
     "tags": [
         "scope:shared",
         "type:types"
-    ]
+    ],
+    "namedInputs": {
+        "production": [
+            "default",
+            "!{projectRoot}/**/*.spec.ts",
+            "!{projectRoot}/**/*.spec.tsx",
+            "!{projectRoot}/**/*.md"
+        ]
+    }
 }

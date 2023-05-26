@@ -15,3 +15,8 @@
 - [Get full type support with plain JavaScript](https://www.pausly.app/blog/full-type-support-with-plain-javascript)
 - [Type Safe JavaScript with JSDoc](https://medium.com/@trukrs/type-safe-javascript-with-jsdoc-7a2a63209b76)
 - [How to add JSDoc Typechecking to SvelteKit](https://www.swyx.io/jsdoc-swyxkit)
+
+
+## Q & A
+
+https://stackoverflow.com/questions/72404279/msedge-redirects-http-to-https-even-with-edge-flags-edge-automatic-https-dis

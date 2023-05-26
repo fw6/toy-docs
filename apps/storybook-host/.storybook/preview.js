@@ -1,7 +1,7 @@
 /** @type { import('@storybook/svelte').Preview } */
 const preview = {
     parameters: {
-        actions: { argTypesRegex: "^on[A-Z].*" },
+        actions: { argTypesRegex: "^on:w+" },
         controls: {
             matchers: {
                 color: /(background|color)$/i,

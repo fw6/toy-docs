@@ -85,6 +85,7 @@
     "svelte.plugin.svelte.format.config.printWidth": 999,
     "svelte.plugin.svelte.defaultScriptLanguage": "ts",
     "js/ts.implicitProjectConfig.checkJs": true,
+    "mdx.experimentalLanguageServer": true
     // "svelte.plugin.css.globals": "./design/tokens/platforms/web/tokens.css"
     // https://github.com/sveltejs/language-tools/issues/1665
     // https://github.com/sveltejs/language-tools/blob/master/docs/preprocessors/other-css-preprocessors.md#sass

@@ -10,9 +10,17 @@ const config = {
         autodocs: "tag",
     },
     refs: {
-        "extension-table": {
-            title: "Tiptap extension table",
+        "tiptap extensions": {
+            title: "Tiptap extensions",
             url: "http://localhost:4401",
+        },
+        "tiptap marks": {
+            title: "Tiptap marks",
+            url: "http://localhost:4402",
+        },
+        "tiptap nodes": {
+            title: "Tiptap extensions",
+            url: "http://localhost:4403",
         },
     },
 };

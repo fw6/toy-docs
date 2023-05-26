@@ -149,11 +149,11 @@ importers:
 
   libs/@local/tsconfig: {}
 
-  libs/@tiptap/extension-table:
-    dependencies:
-      svelte:
-        specifier: ^3.54.0
-        version: 3.59.1
+  libs/@tiptap/extensions: {}
+
+  libs/@tiptap/marks: {}
+
+  libs/@tiptap/nodes: {}
 
 packages:
 
@@ -7804,6 +7804,7 @@ packages:
   /svelte@3.59.1:
     resolution: {integrity: sha512-pKj8fEBmqf6mq3/NfrB9SLtcJcUvjYSWyePlfCqN9gujLB25RitWK8PvFzlwim6hD/We35KbPlRteuA6rnPGcQ==}
     engines: {node: '>= 8'}
+    dev: true
 
   /sveltedoc-parser@4.2.1:
     resolution: {integrity: sha512-sWJRa4qOfRdSORSVw9GhfDEwsbsYsegnDzBevUCF6k/Eis/QqCu9lJ6I0+d/E2wOWCjOhlcJ3+jl/Iur+5mmCw==}

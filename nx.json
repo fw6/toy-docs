@@ -25,7 +25,9 @@
     },
     "targetDefaults": {
         "build": {
-            "dependsOn": ["^build"]
+            "dependsOn": [
+                "^build"
+            ]
         },
         "build-storybook": {
             "inputs": [
@@ -37,7 +39,10 @@
         }
     },
     "namedInputs": {
-        "default": ["{projectRoot}/**/*", "sharedGlobals"],
+        "default": [
+            "{projectRoot}/**/*",
+            "sharedGlobals"
+        ],
         "production": [
             "default",
             "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
@@ -47,7 +52,9 @@
             "!{projectRoot}/.storybook/**/*",
             "!{projectRoot}/**/*.stories.@(js|jsx|ts|tsx|mdx)"
         ],
-        "sharedGlobals": []
+        "sharedGlobals": [
+            "{projectRoot}/design/**/*"
+        ]
     },
     "defaultProject": "client"
 }

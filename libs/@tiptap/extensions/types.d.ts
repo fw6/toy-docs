@@ -33,6 +33,17 @@ declare module "@tiptap/core" {
 }
 
 export interface HistoryOptions {
+    /**
+     * The amount of history events that are collected before the oldest events are discarded. Defaults to 100.
+     *
+     * @default 100
+     */
     depth: number;
+
+    /**
+     * The delay between changes after which a new group should be started (in milliseconds). When changes aren’t adjacent, a new group is always started.
+     *
+     * @default 500
+     */
     newGroupDelay: number;
 }

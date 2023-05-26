@@ -8,7 +8,7 @@
         "storybook": {
             "executor": "@nx/storybook:storybook",
             "options": {
-                "port": 4403,
+                "port": 4401,
                 "configDir": "libs/@tiptap/extensions/.storybook"
             },
             "configurations": {
@@ -21,5 +21,13 @@
     "tags": [
         "scope:shared",
         "type:types"
-    ]
+    ],
+    "namedInputs": {
+        "production": [
+            "default",
+            "!{projectRoot}/**/*.spec.ts",
+            "!{projectRoot}/**/*.spec.tsx",
+            "!{projectRoot}/**/*.md"
+        ]
+    }
 }
