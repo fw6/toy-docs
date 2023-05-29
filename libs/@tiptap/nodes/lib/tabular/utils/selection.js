@@ -5,9 +5,11 @@
  * @property {ResolvedPos} $to
  */
 
+import { findParentNodeClosestToPos } from "@tiptap/core";
 import { NodeSelection, SelectionRange, TextSelection } from "@tiptap/pm/state";
 import { CellSelection } from "../helpers/cell-selection";
-import { TableMap } from "../helpers/table-map";
+import { Rect, TableMap } from "../helpers/table-map";
+import { selectionCell } from "./cells";
 
 /**
  * @param {ResolvedPos} $anchorCell
@@ -136,3 +138,159 @@ function isTextSelectionAcrossCells({ $from, $to }) {
     }
     return fromCellBoundaryNode !== toCellBoundaryNode && $to.parentOffset === 0;
 }
+
+/**
+ * @typedef {Rect & import("../helpers/table-map").TableContext} SelectionRect
+ */
+
+/**
+ * Helper to get the selected rectangle in a table, if any. Adds table
+ * map, table node, and table start offset to the object for
+ * convenience.
+ *
+ * @param {EditorState} state
+ * @returns {SelectionRect}
+ */
+export function selectedRect(state) {
+    const sel = state.selection;
+    const $pos = selectionCell(sel);
+    if (!$pos) {
+        throw new Error("selectedRect: invalid $pos for selection");
+    }
+    const table = $pos.node(-1);
+    const tableStart = $pos.start(-1);
+    const map = TableMap.get(table);
+
+    /** @type {Rect} */
+    let rect;
+
+    if (sel instanceof CellSelection) {
+        rect = map.rectBetween(sel.$anchorCell.pos - tableStart, sel.$headCell.pos - tableStart);
+    } else {
+        rect = map.findCell($pos.pos - tableStart);
+    }
+
+    return {
+        ...rect,
+        table,
+        map,
+        tableStart,
+    };
+}
+
+/**
+ * @param {EditorState} state
+ * @returns {Rect | undefined}
+ */
+export const getClosestSelectionRect = (state) => {
+    const selection = state.selection;
+    return isSelectionType(selection, "cell") ? getSelectionRect(selection) : findCellRectClosestToPos(selection.$from);
+};
+
+/**
+ * Checks if entire table is selected
+ *
+ * @param {import('@tiptap/pm/state').Selection} selection
+ * @returns {boolean}
+ */
+export const isTableSelected = (selection) => {
+    if (isSelectionType(selection, "cell")) {
+        const map = TableMap.get(selection.$anchorCell.node(-1));
+        return isRectSelected({
+            left: 0,
+            right: map.width,
+            top: 0,
+            bottom: map.height,
+        })(selection);
+    }
+
+    return false;
+};
+
+/**
+ * Checks if a given CellSelection rect is selected
+ * @param {Rect} rect
+ * @returns {(selection: import('@tiptap/pm/state').Selection) => boolean}
+ */
+export const isRectSelected = (rect) => (selection) => {
+    if (!isSelectionType(selection, "cell")) {
+        return false;
+    }
+
+    const map = TableMap.get(selection.$anchorCell.node(-1));
+    const start = selection.$anchorCell.start(-1);
+    const cells = map.cellsInRect(rect);
+    const selectedCells = map.cellsInRect(
+        map.rectBetween(selection.$anchorCell.pos - start, selection.$headCell.pos - start),
+    );
+
+    for (let i = 0, count = cells.length; i < count; i++) {
+        if (selectedCells.indexOf(cells[i]) === -1) {
+            return false;
+        }
+    }
+
+    return true;
+};
+
+/**
+ * Returns the rectangle spanning a cell closest to a given `$pos`.
+ *
+ * @param {ResolvedPos} $pos
+ * @returns {Rect | undefined}
+ */
+export const findCellRectClosestToPos = ($pos) => {
+    const cell = findCellClosestToPos($pos);
+    if (cell) {
+        const table = findTableClosestToPos($pos);
+        if (table) {
+            const map = TableMap.get(table.node);
+            const cellPos = cell.pos - table.start;
+
+            return map.rectBetween(cellPos, cellPos);
+        }
+    }
+
+    return;
+};
+
+/**
+ * Iterates over parent nodes, returning a table cell or a table header node closest to a given `$pos`.
+ * @param {ResolvedPos} $pos
+ * @returns {ContentNodeWithPos | undefined}
+ */
+export const findCellClosestToPos = ($pos) => {
+    /** @type {Predicate} */
+    const predicate = (node) => node.type.spec.tableRole && /cell/i.test(node.type.spec.tableRole);
+
+    return findParentNodeClosestToPos($pos, predicate);
+};
+
+/**
+ * Iterates over parent nodes, returning a table node closest to a given `$pos`.
+ *
+ * @param {ResolvedPos} $pos
+ * @returns {ContentNodeWithPos | undefined}
+ */
+export const findTableClosestToPos = ($pos) => {
+    /** @type {Predicate} */
+    const predicate = (node) => node.type.spec.tableRole && node.type.spec.tableRole === "table";
+
+    return findParentNodeClosestToPos($pos, predicate);
+};
+
+/**
+ * Get the selection rectangle. Returns `undefined` if selection is not a CellSelection.
+ * @param {import('@tiptap/pm/state').Selection} selection
+ * @returns {Rect | undefined}
+ */
+export const getSelectionRect = (selection) => {
+    if (!isSelectionType(selection, "cell")) {
+        return;
+    }
+
+    const start = selection.$anchorCell.start(-1);
+    const map = TableMap.get(selection.$anchorCell.node(-1));
+
+    return map.rectBetween(selection.$anchorCell.pos - start, selection.$headCell.pos - start);
+};

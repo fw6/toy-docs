@@ -15,7 +15,7 @@ import { PROBLEM_TYPES } from "./enums";
 // compute the start position of the table and offset positions passed
 // to or gotten from this structure by that amount.
 
-class Rect {
+export class Rect {
     /**
      * @constructor
      *

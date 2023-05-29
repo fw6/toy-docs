@@ -4,7 +4,7 @@
         "checkJs": true,
         "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,
-        "skipLibCheck": false,
+        "skipLibCheck": true,
         "resolveJsonModule": true
     }
 }

@@ -1,8 +1,12 @@
 /**
+ * @typedef {import('@tiptap/core').NodeWithPos} NodeWithPos
+ * @typedef {import('@tiptap/core').Predicate} Predicate
+ *
  * @typedef {import('@tiptap/pm/state').Transaction} Transaction
  * @typedef {import('@tiptap/pm/state').EditorState} EditorState
  * @typedef {import('@tiptap/pm/state').SelectionBookmark} SelectionBookmark
  * @typedef {import('@tiptap/pm/state').PluginKey} PluginKey
+ * @typedef {import('@tiptap/pm/state').Command} Command
  *
  * @typedef {import('@tiptap/pm/view').Decoration} Decoration
  * @typedef {import('@tiptap/pm/view').DecorationSet} DecorationSet

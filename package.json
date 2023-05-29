@@ -71,6 +71,7 @@
   "dependencies": {
     "@iconify/json": "^2.2.70",
     "@tiptap/core": "^2.0.3",
-    "@tiptap/pm": "^2.0.3"
+    "@tiptap/pm": "^2.0.3",
+    "prosemirror-utils": "^0.9.6"
   }
 }

@@ -75,3 +75,23 @@ export function selectionCell(selection) {
 
     return cellAround(selection.$head) || cellNear(selection.$head);
 }
+
+/**
+ * @param {ResolvedPos} $pos
+ */
+export function moveCellForward($pos) {
+    return $pos.node(0).resolve($pos.pos + ($pos.nodeAfter?.nodeSize || 0));
+}
+
+/**
+ * @param {PMNode} cell
+ */
+export function isEmptyCell(cell) {
+    const { content } = cell;
+    return (
+        content.childCount === 1 &&
+        content.firstChild &&
+        content.firstChild.isTextblock &&
+        content.firstChild.childCount === 0
+    );
+}

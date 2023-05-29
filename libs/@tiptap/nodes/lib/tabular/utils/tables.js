@@ -1,8 +1,10 @@
+import { findParentNode } from "@tiptap/core";
 import { PROBLEM_TYPES } from "../helpers/enums";
 import { TableMap } from "../helpers/table-map";
 import { FIX_TABLES__KEY } from "../plugins/keys";
 import { tableNodeTypes } from "./node-types";
 import { removeColSpan } from "./spaning";
+import { cloneTr } from "./transforms";
 
 /**
  * @param {ResolvedPos} $a
@@ -68,7 +70,7 @@ function changedDescendants(old, cur, offsetStart, f) {
  * document.
  *
  * @param {EditorState} state
- * @param {EditorState | undefined} oldState
+ * @param {EditorState} [oldState]
  */
 export function fixTables(state, oldState) {
     /** @type {Transaction | undefined} */
@@ -196,3 +198,26 @@ export function fixTable(state, table, tablePos, transaction) {
     }
     return tr.setMeta(FIX_TABLES__KEY, { fixTables: true });
 }
+
+/**
+ * @param {import('@tiptap/pm/state').Selection} selection
+ * @returns {ReturnType<ReturnType<findParentNode>>}
+ */
+export const findTable = (selection) => findParentNode((node) => node.type.spec.tableRole === "table")(selection);
+
+/**
+ * Returns a new transaction that removes a table node if the cursor is inside of it.
+ * @param {Transaction} tr
+ * @returns {Transaction}
+ */
+export const removeTable = (tr) => {
+    const { $from } = tr.selection;
+    for (let depth = $from.depth; depth > 0; depth--) {
+        const node = $from.node(depth);
+        if (node.type.spec.tableRole === "table") {
+            return cloneTr(tr.delete($from.before(depth), $from.after(depth)));
+        }
+    }
+
+    return tr;
+};

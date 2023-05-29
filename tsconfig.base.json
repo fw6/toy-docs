@@ -34,6 +34,9 @@
             ],
             "@misky/tiptap-nodes": [
                 "libs/@tiptap/nodes/lib/index.js"
+            ],
+            "@misky/prose-utils": [
+                "libs/@local/prose-utils/index.js"
             ]
         },
         "strict": true,

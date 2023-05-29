@@ -1,33 +1,35 @@
 import type { ParentConfig } from "@tiptap/core";
-import type { Fragment } from "@tiptap/pm/model";
+import type { Fragment, Node } from "@tiptap/pm/model";
 import type { NodeSelection, Selection, TextSelection } from "@tiptap/pm/state";
 
 declare module "@tiptap/core" {
     interface Commands<ReturnType> {
         table: {
             insertTable: (options?: {
-                rows?: number;
-                cols?: number;
-                withHeaderRow?: boolean;
+                rowsCount?: number;
+                colsCount?: number;
+                cellContent?: Node;
             }) => ReturnType;
+            deleteTable: () => ReturnType;
+
             addColumnBefore: () => ReturnType;
             addColumnAfter: () => ReturnType;
             deleteColumn: () => ReturnType;
+
             addRowBefore: () => ReturnType;
             addRowAfter: () => ReturnType;
             deleteRow: () => ReturnType;
-            deleteTable: () => ReturnType;
+
             mergeCells: () => ReturnType;
             splitCell: () => ReturnType;
-            toggleHeaderColumn: () => ReturnType;
-            toggleHeaderRow: () => ReturnType;
-            toggleHeaderCell: () => ReturnType;
             mergeOrSplit: () => ReturnType;
-            setCellAttribute: (name: string, value: unknown) => ReturnType;
+
             goToNextCell: () => ReturnType;
             goToPreviousCell: () => ReturnType;
-            fixTables: () => ReturnType;
             setCellSelection: (position: { anchorCell: number; headCell?: number }) => ReturnType;
+
+            fixTables: () => ReturnType;
+            setCellAttribute: (name: string, value: unknown) => ReturnType;
         };
     }
 
@@ -85,3 +87,10 @@ export function isSelectionType(selection: Selection, type: "cell"): selection i
 export function isSelectionType(selection: Selection, type: "node"): selection is NodeSelection;
 export function isSelectionType(selection: Selection, type: "text"): selection is TextSelection;
 export function isSelectionType(selection: Selection, type: string): boolean;
+
+export type ContentNodeWithPos = {
+    pos: number;
+    start: number;
+    depth: number;
+    node: Node;
+};

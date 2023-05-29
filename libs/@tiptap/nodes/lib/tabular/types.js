@@ -5,4 +5,5 @@
  * @typedef {import('./types').SerializedCellSelection} SerializedCellSelection
  * @typedef {import('./types').CellSelectionRect} CellSelectionRect
  * @typedef {import('./types').isSelectionType} IsSelectionType
+ * @typedef {import('./types').ContentNodeWithPos} ContentNodeWithPos
  */
