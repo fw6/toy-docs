@@ -1,7 +1,7 @@
 import { mergeAttributes, Node } from "@tiptap/core";
 
 /**
- * @type {Node<ParagraphOptions>}
+ * @type {Node<import("./paragraph").ParagraphOptions>}
  * @see {@link https://tiptap.dev/api/nodes/paragraph | @tiptap/extension-paragraph}
  */
 export const Paragraph = Node.create({

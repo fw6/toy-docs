@@ -1,0 +1,1 @@
+export { tableEditing } from "./plugin";
