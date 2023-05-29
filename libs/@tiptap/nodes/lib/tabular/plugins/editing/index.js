@@ -1,1 +1,1 @@
-export { tableEditing } from "./plugin";
+export { tableEditing } from "./editing";
