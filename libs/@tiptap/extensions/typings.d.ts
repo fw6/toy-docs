@@ -1,4 +1,5 @@
-import type { ParentConfig } from "@tiptap/core";
+import type { Extension, ParentConfig } from "@tiptap/core";
+import type { PluginKey } from "@tiptap/pm/state";
 
 declare module "@tiptap/core" {
     interface Commands<ReturnType> {
@@ -29,6 +30,19 @@ declare module "@tiptap/core" {
                   storage: Storage;
                   parent: ParentConfig<NodeConfig<Options>>["allowGapCursor"];
               }) => boolean | null);
+
+        /**
+         * As the editor content container node
+         */
+        contentContainer?:
+            | boolean
+            | null
+            | ((this: {
+                  name: string;
+                  options: Options;
+                  storage: Storage;
+                  parent: ParentConfig<NodeConfig<Options>>["contentContainer"];
+              }) => boolean | null);
     }
 }
 
@@ -47,3 +61,14 @@ export interface HistoryOptions {
      */
     newGroupDelay: number;
 }
+
+export type WidthPluginState = {
+    width: Record<string, number>;
+    lineLength?: number;
+};
+
+// Exports
+export const Gapcursor: Extension;
+export const History: Extension;
+export const Width: Extension;
+export const EDITOR_WIDTH_PLUGIN_KEY: PluginKey<WidthPluginState>;

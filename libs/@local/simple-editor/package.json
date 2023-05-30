@@ -1,0 +1,13 @@
+{
+    "name": "@local/simple-editor",
+    "version": "0.0.0",
+    "type": "module",
+    "types": "./typings.d.ts",
+    "module": "./index.js",
+    "exports": {
+        ".": {
+            "default": "./index.js",
+            "types": "./typings.d.ts"
+        }
+    }
+}

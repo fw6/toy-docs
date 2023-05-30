@@ -38,7 +38,7 @@
     text-align: left;
 }
 
-table .selectedCell {
+.ProseMirror table .selectedCell {
     position: relative;
     border-color: blue;
 
@@ -50,8 +50,27 @@ table .selectedCell {
     }
 }
 
+.ProseMirror td[data-resize-handle] {
+    position: relative;
+}
+.ProseMirror td[data-resize-handle]::after {
+    content: "";
+    position: absolute;
+    right: -2px;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    z-index: 20;
+    background-color: #adf;
+    pointer-events: none;
+}
+.ProseMirror.resize-cursor {
+    cursor: ew-resize;
+    cursor: col-resize;
+}
+
 /* selected cells blue overlay */
-table .selectedCell::after {
+.ProseMirror table .selectedCell::after {
     height: 100%;
     width: 100%;
     pointer-events: none;
@@ -64,4 +83,24 @@ table .selectedCell::after {
     z-index: 9;
     pointer-events: none;
     background-color: rgba(46, 52, 222, 0.228);
+}
+
+.ProseMirror section {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    border: 1px solid pink;
+}
+
+.ProseMirror header {
+    order: 1;
+    border: 1px solid green;
+}
+.ProseMirror footer {
+    order: 3;
+    border: 1px solid green;
+}
+.ProseMirror main {
+    order: 2;
+    border: 1px solid red;
 }

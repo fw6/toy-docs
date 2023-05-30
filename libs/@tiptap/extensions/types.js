@@ -1,3 +1,4 @@
 /**
- * @typedef {import('./types').HistoryOptions} HistoryOptions
+ * @typedef {import('./typings').HistoryOptions} HistoryOptions
+ * @typedef {import('./typings').WidthPluginState} WidthPluginState
  */

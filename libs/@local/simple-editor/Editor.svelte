@@ -1,7 +1,7 @@
 <script>
-    import { Editor, Node } from "@tiptap/core";
+    import { Editor } from "@tiptap/core";
+    import { StarterKit } from "@tiptap/starter-kit";
     import { onMount } from "svelte";
-    import { Paragraph, Text } from "../lib";
     import MenuBar from "./MenuBar.svelte";
 
     /**
@@ -13,6 +13,9 @@
      * @type {Content}
      */
     export let content;
+
+    /** @type {Partial<import('@tiptap/starter-kit').StarterKitOptions> | undefined} */
+    export let starterKitOptions;
 
     /**
      * @type {Extensions}
@@ -32,17 +35,11 @@
     onMount(() => {
         editor = new Editor({
             element,
-            autofocus: false,
+            autofocus: "start",
             injectCSS: false,
             content,
             extensions: [
-                Node.create({
-                    name: "doc",
-                    content: "block+",
-                    topNode: true,
-                }),
-                Paragraph,
-                Text,
+                StarterKit.configure(starterKitOptions),
                 ...extensions,
             ],
         });
@@ -68,6 +65,8 @@
 </div>
 
 <style>
+    @import url("./prosemirror.css");
+
     .editor {
         display: flex;
         max-height: 26rem;

@@ -1,3 +1,3 @@
 /**
- * @typedef {import('./types').TextStyleOptions} TextStyleOptions
+ * @typedef {import('./typings').TextStyleOptions} TextStyleOptions
  */

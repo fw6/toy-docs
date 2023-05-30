@@ -15,10 +15,10 @@ export function inSameTable($a, $b) {
 }
 
 /**
- * @param {EditorState} state
+ * @param {import('@tiptap/pm/state').Selection} selection
  */
-export function isInTable(state) {
-    const { $head } = state.selection;
+export function isInTable(selection) {
+    const { $head } = selection;
     for (let d = $head.depth; d > 0; d--) {
         if ($head.node(d).type.spec.tableRole === "row") {
             return true;

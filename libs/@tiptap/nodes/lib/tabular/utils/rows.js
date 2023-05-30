@@ -336,3 +336,60 @@ export const removeSelectedRows = (tr) => {
 
     return tr;
 };
+
+/**
+ * returns an object with the node, the position and the section index of a row in a table
+ *
+ * @param {PMNode} table
+ * @param {number} row
+ * @returns {{ node: PMNode | null; pos: number; section: number }}
+ */
+export function getRow(table, row) {
+    let rPos = 0;
+    let prevSectionsRows = 0;
+    let sectionIndex = -1;
+    for (let tc = 0; tc < table.childCount; tc++) {
+        const section = table.child(tc);
+        if (section.type.spec.tableRole === "table") {
+            sectionIndex++;
+            const sectionRows = section.childCount;
+            if (sectionRows > 0) {
+                // if (debug)
+                //   console.log(
+                //     `looking for row ${row} in section ${s}: ${section.type.name} with ${sectionRows} rows; prevSectionRows=${prevSectionsRows}`,
+                //   );
+                if (prevSectionsRows + sectionRows <= row) {
+                    if (tc === table.childCount - 1) {
+                        return {
+                            node: null,
+                            pos: rPos + section.nodeSize - 1,
+                            section: sectionIndex,
+                        };
+                    }
+                    rPos += section.nodeSize;
+                    prevSectionsRows += sectionRows;
+                } else {
+                    rPos++; // section opening tag
+                    let r = 0;
+                    while (r < sectionRows) {
+                        if (prevSectionsRows + r === row) break;
+                        rPos += section.child(r).nodeSize;
+                        r++;
+                    }
+                    if (r === sectionRows) rPos++;
+                    // if (debug)
+                    //   console.log(`row ${row} found @ pos ${rPos}, section ${s}`);
+                    return {
+                        node: r >= sectionRows ? null : section.child(r),
+                        pos: rPos,
+                        section: sectionIndex,
+                    };
+                }
+            }
+        } else {
+            // caption
+            rPos += section.nodeSize;
+        }
+    }
+    return { node: null, pos: rPos, section: sectionIndex };
+}

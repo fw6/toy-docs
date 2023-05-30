@@ -2,10 +2,10 @@ import { Fragment, Slice } from "@tiptap/pm/model";
 import { Transform } from "@tiptap/pm/transform";
 import { CellSelection } from "../helpers/cell-selection";
 import { TableMap } from "../helpers/table-map";
+import { selectionCell } from "./cells";
 import { tableNodeTypes } from "./node-types";
 import { removeColSpan } from "./spaning";
 import { isInTable } from "./tables";
-import { selectionCell } from "./cells";
 
 /**
  * @typedef {import('@tiptap/core').Dispatch} Dispatch
@@ -22,7 +22,7 @@ import { selectionCell } from "./cells";
  * @returns {boolean}
  */
 export function handlePaste(view, _event, slice) {
-    if (!isInTable(view.state)) {
+    if (!isInTable(view.state.selection)) {
         return false;
     }
     let cells = pastedCells(slice);

@@ -1,5 +1,4 @@
 /**
- * @typedef {import('./types').TableOptions} TableOptions
  * @typedef {import('./types').Axis} Axis
  * @typedef {import('./types').CellAttributes} CellAttributes
  * @typedef {import('./types').SerializedCellSelection} SerializedCellSelection

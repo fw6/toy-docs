@@ -27,13 +27,13 @@
         "baseUrl": ".",
         "paths": {
             "@misky/tiptap-extensions": [
-                "libs/@tiptap/extensions/lib/index.js"
+                "libs/@tiptap/extensions/index.js"
             ],
             "@misky/tiptap-marks": [
-                "libs/@tiptap/marks/lib/index.js"
+                "libs/@tiptap/marks/index.js"
             ],
             "@misky/tiptap-nodes": [
-                "libs/@tiptap/nodes/lib/index.js"
+                "libs/@tiptap/nodes/index.js"
             ],
             "@misky/prose-utils": [
                 "libs/@local/prose-utils/index.js"

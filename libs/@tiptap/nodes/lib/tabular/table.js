@@ -4,6 +4,7 @@ import { createTable, insertRow } from "./commands/insert";
 import { setCellAttr } from "./commands/misc";
 import { goToNextCell, setCellSelection } from "./commands/selection";
 import { mergeCells, splitCell } from "./commands/spanning";
+import { columnResizing } from "./plugins/column-resizing/column-resizing";
 import { tableEditing } from "./plugins/editing";
 import { addColumnAt } from "./utils/cols";
 import { getClosestSelectionRect } from "./utils/selection";
@@ -39,12 +40,67 @@ export const Table = Node.create({
         ];
     },
 
-    renderHTML({ HTMLAttributes }) {
-        return ["table", mergeAttributes(this.options.HTMLAttributes, HTMLAttributes), ["tbody", 0]];
+    addAttributes() {
+        return {
+            /**
+             * 计算列宽必备属性！！！
+             */
+            colwidths: {
+                default: [],
+                parseHTML: (ele) => {
+                    return (
+                        ele
+                            .getAttribute("colwidths")
+                            ?.split(",")
+                            .map((v) => (v ? parseFloat(v) : undefined)) || []
+                    );
+                },
+                renderHTML: (attrs) => {
+                    if (!Array.isArray(attrs.colwidths)) throw new Error('The attribute "colwidths" is required.');
+                    return {
+                        colwidths: attrs.colwidths.join(","),
+                    };
+                },
+            },
+            marginLeft: {
+                default: null,
+                parseHTML: (ele) => parseFloat(ele.style.marginLeft || "0"),
+                renderHTML: (attrs) => {
+                    if (!attrs.marginLeft) return {};
+
+                    return {
+                        style: `margin-left: ${attrs.marginLeft}px;`,
+                    };
+                },
+            },
+            marginRight: {
+                default: null,
+                parseHTML: (ele) => parseFloat(ele.style.marginRight || "0"),
+                renderHTML: (attrs) => {
+                    if (!attrs.marginRight) return {};
+
+                    return {
+                        style: `margin-right: ${attrs.marginRight}px;`,
+                    };
+                },
+            },
+        };
+    },
+
+    renderHTML({ HTMLAttributes, node }) {
+        /** @type {number[]} */
+        const colwidths = node.attrs.colwidths;
+
+        return [
+            "table",
+            mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
+            ["colgroup", ...colwidths.map((w) => ["col", { style: `width:${w}%;` }])],
+            ["tbody", 0],
+        ];
     },
 
     addProseMirrorPlugins() {
-        return [tableEditing({ allowTableNodeSelection: this.options.allowTableNodeSelection })];
+        return [columnResizing(), tableEditing({ allowTableNodeSelection: this.options.allowTableNodeSelection })];
     },
 
     addCommands() {

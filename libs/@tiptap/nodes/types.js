@@ -21,4 +21,7 @@
  *
  * @typedef {import('@tiptap/pm/transform').Mapping} Mapping
  * @typedef {import('@tiptap/pm/transform').Mappable} Mappable
+ *
+ * @typedef {import('./typings').TableOptions} TableOptions
+ * @typedef {import('./typings').ParagraphOptions} ParagraphOptions
  */

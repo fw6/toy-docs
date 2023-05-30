@@ -18,7 +18,7 @@
 
 未解决的问题
 - https://github.com/microsoft/TypeScript/issues/30156
-
+- https://github.com/vitejs/vite/pull/12807
 ## Q & A
 
 https://stackoverflow.com/questions/72404279/msedge-redirects-http-to-https-even-with-edge-flags-edge-automatic-https-dis

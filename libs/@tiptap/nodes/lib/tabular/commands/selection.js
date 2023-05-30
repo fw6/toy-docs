@@ -25,7 +25,7 @@ export const setCellSelection = (anchor, head) => (state, dispatch) => {
  */
 export function goToNextCell(direction) {
     return function (state, dispatch) {
-        if (!isInTable(state)) return false;
+        if (!isInTable(state.selection)) return false;
         const $cell = selectionCell(state.selection);
         if (!$cell) return false;
 

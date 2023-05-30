@@ -2,6 +2,14 @@
     "name": "@misky/tiptap-nodes",
     "version": "0.0.1",
     "type": "module",
+    "module": "index.js",
+    "types": "typings.d.ts",
+    "exports": {
+        ".": {
+            "default": "./index.js",
+            "types": "./typings.d.ts"
+        }
+    },
     "volta": {
         "extends": "../../../package.json"
     }

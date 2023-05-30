@@ -53,7 +53,8 @@
             "!{projectRoot}/**/*.stories.@(js|jsx|ts|tsx|mdx)"
         ],
         "sharedGlobals": [
-            "{projectRoot}/design/**/*"
+            "{projectRoot}/design/**/*",
+            "{projectRoot}/libs/@local/**/*"
         ]
     },
     "defaultProject": "client"

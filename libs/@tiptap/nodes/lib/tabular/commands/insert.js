@@ -6,11 +6,11 @@
  */
 
 import { Selection, TextSelection } from "@tiptap/pm/state";
-import { addColumnAt } from "prosemirror-utils";
 import { TableMap } from "../helpers/table-map";
 import { tableNodeTypes } from "../utils/node-types";
 import { addRowAt, copyPreviousRow } from "../utils/rows";
 import { findTable } from "../utils/tables";
+import { addColumnAt } from "../utils/cols";
 
 /**
  * @param {CreateTableProps} [props]

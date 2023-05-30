@@ -1,3 +1,4 @@
+import { resolve } from "node:path";
 import preprocess from "svelte-preprocess";
 import Icons from "unplugin-icons/vite";
 import { mergeConfig } from "vite";
@@ -32,6 +33,15 @@ export default {
          * @type {import('vite').UserConfig}
          */
         const overrides = {
+            resolve: {
+                alias: {
+                    "@misky/tiptap-extensions": resolve(
+                        `${process.env.NX_WORKSPACE_ROOT}/libs/@tiptap/extensions/index.js`,
+                    ),
+                    "@misky/tiptap-marks": resolve(`${process.env.NX_WORKSPACE_ROOT}/libs/@tiptap/marks/index.js`),
+                    "@misky/tiptap-nodes": resolve(`${process.env.NX_WORKSPACE_ROOT}/libs/@tiptap/nodes/index.js`),
+                },
+            },
             plugins: [
                 Icons({
                     compiler: "svelte",

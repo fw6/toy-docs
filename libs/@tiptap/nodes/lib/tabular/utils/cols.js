@@ -1,7 +1,7 @@
-import { findCellRectClosestToPos, setTextSelection } from "prosemirror-utils";
+import { setTextSelection } from "prosemirror-utils";
 import { TableMap } from "../helpers/table-map";
 import { tableNodeTypes } from "./node-types";
-import { isSelectionType, isTableSelected } from "./selection";
+import { findCellRectClosestToPos, isSelectionType, isTableSelected } from "./selection";
 import { addColSpan, assertColspan, removeColSpan } from "./spaning";
 import { findTable, removeTable } from "./tables";
 import { cloneTr } from "./transforms";
