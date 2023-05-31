@@ -1,5 +1,4 @@
-import type { ParentConfig } from "@tiptap/core";
-import type { Fragment, Node } from "@tiptap/pm/model";
+import type { Fragment, Node, ResolvedPos } from "@tiptap/pm/model";
 import type { NodeSelection, Selection, TextSelection } from "@tiptap/pm/state";
 
 export interface CellAttributes {

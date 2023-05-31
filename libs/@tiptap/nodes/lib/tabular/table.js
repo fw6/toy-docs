@@ -62,6 +62,15 @@ export const Table = Node.create({
                     };
                 },
             },
+            width: {
+                default: 100,
+                parseHTML: (ele) => parseFloat(ele.style.width || "100"),
+                renderHTML: (attrs) => {
+                    return {
+                        style: `width: ${attrs.width || 100}%;`,
+                    };
+                },
+            },
             marginLeft: {
                 default: null,
                 parseHTML: (ele) => parseFloat(ele.style.marginLeft || "0"),

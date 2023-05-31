@@ -233,7 +233,7 @@ export const Columnresizing = {
                                 {
                                     type: "table",
                                     attrs: {
-                                        colwidths: [30, 40, 30],
+                                        // colwidths: [],
                                         marginLeft: 0,
                                         marginRight: 0,
                                     },

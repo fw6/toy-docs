@@ -1,4 +1,3 @@
-// import { EDITOR_WIDTH_PLUGIN_KEY } from "@misky/tiptap-extensions";
 import { Plugin, PluginKey } from "@tiptap/pm/state";
 import { Decoration, DecorationSet } from "@tiptap/pm/view";
 import { TableMap } from "../../helpers/table-map";
@@ -14,13 +13,18 @@ export const COLUMN_RESIZING_KEY = new PluginKey("column_resizing");
 
 const RESIZE_HANDLE_WIDTH = 3;
 const CELL_MIN_WIDTH = 32;
+const DECIMAL_PLACES = 2;
+const TABLE_MIN_WIDTH = 30;
 
 /**
- * 列拖动+表格列宽功能
+ * Column resizing feature, support table width percentage, dependent the table node attributes:
+ *  1. colwidths
+ *  2. width
+ *  3. marginLeft
+ *  4. marginRight
  *
- * 1. table 必须有个属性 `colwidths`保存列宽。（自行在nodeview中渲染colgroup）
- * 2. 增加列、移除列，则在剩下的宽度为之前平均值的列中均分，否则？？？，并通过`appendTransaction`更新`colwidths`
- * 3. 拖拽完成，非首列或最后一列，在以左列最终宽度计算百分比并于右列均分，更新`colwidths`
+ * TODO:
+ *  1. support first column resize
  */
 export const columnResizing = () => {
     return new Plugin({
@@ -54,7 +58,7 @@ export const columnResizing = () => {
                     const cellPos = pluginState.activeHandle;
 
                     const $cell = state.doc.resolve(cellPos);
-                    const $block = $cell.blockRange(undefined, (node) => {
+                    const $block = $cell.blockRange($cell, (node) => {
                         if (node.type.spec.tableRole === "table") return true;
                         return false;
                     });
@@ -67,11 +71,26 @@ export const columnResizing = () => {
                     const tableEle = cellEle.closest("table");
                     if (!tableEle) return;
 
-                    const table = $block.parent;
+                    // Table node
+                    const table = $block.$from.node($block.$from.depth - 1);
                     const tableMap = TableMap.get(table);
-                    const tablePos = $block.start - 1;
-                    const colCount = tableMap.colCount(cellPos - $block.start);
+                    // column length
+                    const colLength = tableMap.width;
+                    // table pos
+                    const tablePos = $block.$from.before($block.$from.depth - 1);
+                    // current column index
+                    const colCount = tableMap.colCount(cellPos - tablePos - 1);
+
+                    /**
+                     * Persistent data for storing column widths
+                     * @type {number[]}
+                     */
                     const colwidths = table.attrs.colwidths;
+                    if (!colwidths.length) {
+                        const colwidth = decimalRounding(100 / tableMap.width, DECIMAL_PLACES);
+                        colwidths.splice(0, 0, ...Array(colLength).fill(colwidth));
+                        view.dispatch(view.state.tr.setNodeAttribute(tablePos, "colwidths", colwidths));
+                    }
 
                     const cellRect = cellEle.getBoundingClientRect();
                     const tableRect = tableEle.getBoundingClientRect();
@@ -80,38 +99,12 @@ export const columnResizing = () => {
                     const resizeablePercentage = colwidths[colCount] + (colwidths[colCount + 1] || 0);
                     const resizeableWidth = (tableRect.width * resizeablePercentage) / 100;
 
-                    const isFirstCol = colCount === 0;
+                    // const isFirstCol = colCount === 0;
                     const isLastCol = colCount === tableMap.width - 1;
+                    const tableContainer = tableEle.parentElement;
+                    if (!tableContainer) return;
+                    const tableContainerRect = tableContainer.getBoundingClientRect();
 
-                    // const widthPluginState = EDITOR_WIDTH_PLUGIN_KEY.getState(state);
-                    // // console.log(widthPluginState);
-                    // if (!widthPluginState) return;
-                    // // const maxWidth = widthPluginState.width['page_main'] - cellRect.x - CELL_MIN_WIDTH;
-
-                    // let containerWidth = 0;
-                    // $cell.blockRange(undefined, (node) => {
-                    //     if (node.type.name in widthPluginState.width) {
-                    //         containerWidth = widthPluginState.width[node.type.name];
-                    //         return true;
-                    //     }
-                    //     return false;
-                    // });
-
-                    // console.log("containerWidth:", containerWidth);
-
-                    const startX = event.clientX;
-                    // const minX = cellRect.x + CELL_MIN_WIDTH;
-                    // const maxX = isLastCol ? Infinity : cellRect.x + colwidths[colCount + 1] - CELL_MIN_WIDTH;
-
-                    /**
-                     * 1. 计算此次能拖动的最大和最小位置
-                     *  1.1 非首列、末列：左右两列加起来的左右边界
-                     *  1.2 首列：容器左边界
-                     *  1.2 末列：容器右边界
-                     * 1. 如果是第一列或最后一个一列，更新表格的margin-left或margin-right
-                     */
-
-                    // 保存初始状态
                     view.dispatch(
                         view.state.tr.setMeta(COLUMN_RESIZING_KEY, {
                             setDragging: {
@@ -122,6 +115,9 @@ export const columnResizing = () => {
                         }),
                     );
 
+                    /** @type {number[]?} */
+                    let lastColwidths = null;
+
                     /**
                      * @param {MouseEvent} event
                      */
@@ -130,45 +126,107 @@ export const columnResizing = () => {
                         window.removeEventListener("mouseup", finish);
                         const pluginState = COLUMN_RESIZING_KEY.getState(view.state);
                         if (pluginState?.dragging) {
-                            view.dispatch(
-                                view.state.tr.setMeta(COLUMN_RESIZING_KEY, {
-                                    setDragging: null,
-                                }),
-                            );
+                            const tr = view.state.tr;
+
+                            // #region Fix total column widths
+
+                            if (lastColwidths) {
+                                const colwidths = lastColwidths;
+                                const totalWidth = colwidths.reduce((acc, cur) => acc + cur, 0);
+                                const exceed = totalWidth - 100;
+
+                                // Bias within 1%
+                                if (exceed < -1 || exceed > 1) {
+                                    const mean = decimalRounding(exceed, DECIMAL_PLACES) / colwidths.length;
+                                    let counter = 0;
+                                    tr.setNodeAttribute(
+                                        tablePos,
+                                        "colwidths",
+                                        colwidths.reduce(
+                                            /** @param {number[]} acc */
+                                            (acc, cur, i) => {
+                                                if (i === colwidths.length - 1) {
+                                                    acc.push(decimalRounding(100 - counter, DECIMAL_PLACES));
+                                                } else {
+                                                    const cellwidth = decimalRounding(cur - mean, DECIMAL_PLACES);
+                                                    counter += cellwidth;
+                                                    acc.push(cellwidth);
+                                                }
+                                                return acc;
+                                            },
+                                            [],
+                                        ),
+                                    );
+                                }
+                            }
+
+                            // #endregion
+
+                            tr.setMeta(COLUMN_RESIZING_KEY, {
+                                setDragging: null,
+                            });
+                            view.dispatch(tr);
                         }
                     }
+
+                    const editorRect = view.dom.getBoundingClientRect();
 
                     /**
                      * @param {MouseEvent} event
                      */
                     function move(event) {
+                        // Out of editor area.
+                        if (editorRect.right < event.clientX || editorRect.x > event.clientY) {
+                            finish(event);
+                            return;
+                        }
+
                         const pluginState = COLUMN_RESIZING_KEY.getState(view.state);
                         if (!pluginState) return;
                         if (pluginState.dragging) {
-                            // 非最后一列
                             if (!isLastCol) {
-                                // 计算最新的宽度px
                                 const offset = event.clientX - cellRect.x;
 
-                                // 拖动后超过了列的最小宽度
                                 if (offset < CELL_MIN_WIDTH) {
-                                    console.log('warning: "offset < CELL_MIN_WIDTH"');
+                                    console.warn('warning: "offset < CELL_MIN_WIDTH"');
                                     return;
                                 } else if (offset > resizeableWidth - CELL_MIN_WIDTH) {
-                                    console.log('warning: "offset > (resizeableWidth - CELL_MIN_WIDTH)"');
+                                    console.warn('warning: "offset > (resizeableWidth - CELL_MIN_WIDTH)"');
                                     return;
                                 }
 
-                                const percentL = offset / resizeableWidth;
-                                const finalPercent = Math.ceil(resizeablePercentage * percentL * 100) / 100;
                                 const widths = [...colwidths];
+                                const percentL = offset / resizeableWidth;
+                                const finalPercent = decimalRounding(resizeablePercentage * percentL, DECIMAL_PLACES);
 
-                                // 更新左右两列宽度
                                 widths[colCount] = finalPercent;
-                                widths[colCount + 1] = resizeablePercentage - finalPercent;
+                                widths[colCount + 1] = decimalRounding(
+                                    resizeablePercentage - finalPercent,
+                                    DECIMAL_PLACES,
+                                );
 
                                 const tr = view.state.tr;
                                 tr.setNodeAttribute(tablePos, "colwidths", widths);
+                                view.dispatch(tr);
+
+                                lastColwidths = widths;
+                            } else {
+                                // Move and update table's margin right attribute
+                                const nextMarginWidthRight = tableContainerRect.right - event.clientX;
+                                const marginWidthLeft = tableRect.x - tableContainerRect.x;
+                                const nextTableWidth =
+                                    tableContainerRect.width - nextMarginWidthRight - marginWidthLeft;
+                                const nextRelativeTableWidth = decimalRounding(
+                                    (nextTableWidth * 100) / tableContainerRect.width,
+                                    DECIMAL_PLACES,
+                                );
+
+                                const tr = view.state.tr;
+                                tr.setNodeAttribute(
+                                    tablePos,
+                                    "width",
+                                    Math.max(Math.min(nextRelativeTableWidth, 100), TABLE_MIN_WIDTH),
+                                );
                                 view.dispatch(tr);
                             }
                         }
@@ -331,5 +389,15 @@ function edgeCell(view, event, side) {
  * @returns {node is HTMLTableCellElement}
  */
 const isTableCellElement = (node) => !!node && node instanceof HTMLTableCellElement;
+
+/**
+ * Decimal place rounding
+ *
+ * @param {number} value - value
+ * @param {number} d - decimal place
+ */
+function decimalRounding(value, d) {
+    return Math.round(value * Math.pow(10, d)) / Math.pow(10, d);
+}
 
 // #endregion
