@@ -42,7 +42,7 @@ export class SvelteRenderer {
         });
 
         if (this.teleportElement.children.length !== 1) {
-            throw Error("VueRenderer doesn’t support multiple child elements.");
+            throw Error("SvelteRenderer doesn’t support multiple child elements.");
         }
 
         const firstChild = this.teleportElement.firstElementChild;

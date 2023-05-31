@@ -203,6 +203,9 @@ importers:
       '@misky/prose-utils':
         specifier: workspace:*
         version: link:../../@misky/prose-utils
+      '@misky/tiptap-svelte':
+        specifier: workspace:*
+        version: link:../svelte
 
   libs/@tiptap/svelte:
     devDependencies:

@@ -4,7 +4,6 @@ import { TableMap } from "../helpers/table-map";
 import { FIX_TABLES__KEY } from "../plugins/keys";
 import { tableNodeTypes } from "./node-types";
 import { removeColSpan } from "./spaning";
-import { cloneTr } from "./transforms";
 import { decimalRounding } from "@local/shared";
 
 /**
@@ -216,7 +215,7 @@ export const removeTable = (tr) => {
     for (let depth = $from.depth; depth > 0; depth--) {
         const node = $from.node(depth);
         if (node.type.spec.tableRole === "table") {
-            return cloneTr(tr.delete($from.before(depth), $from.after(depth)));
+            return tr.delete($from.before(depth), $from.after(depth));
         }
     }
 

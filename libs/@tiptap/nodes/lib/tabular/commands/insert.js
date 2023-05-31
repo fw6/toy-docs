@@ -75,7 +75,7 @@ const createCell = (cellType, cellContent) => {
  * @returns {Command}
  */
 export const insertColumn = (column) => (state, dispatch) => {
-    let tr = addColumnAt(column)(state.tr);
+    const tr = addColumnAt(column)(state.tr);
 
     const table = findTable(tr.selection);
     if (!table) {
@@ -90,7 +90,6 @@ export const insertColumn = (column) => (state, dispatch) => {
 
         /** @type {number[]} */
         let colwidths = table.node.attrs.colwidths;
-        console.log("before:", colwidths);
 
         if (!colwidths.length) {
             colwidths = generateColwidths(map.width);
@@ -110,12 +109,10 @@ export const insertColumn = (column) => (state, dispatch) => {
             });
         }
 
-        console.log("after:", colwidths);
-        tr = tr.setNodeAttribute(table.pos, "colwidths", colwidths);
-
+        tr.setNodeAttribute(table.pos, "colwidths", colwidths);
         // #endregion
 
-        tr = tr.setSelection(Selection.near(tr.doc.resolve(table.start + pos)));
+        tr.setSelection(Selection.near(tr.doc.resolve(table.start + pos)));
         dispatch(tr);
     }
     return true;

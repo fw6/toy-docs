@@ -4,7 +4,7 @@ import { tableNodeTypes } from "./node-types";
 import { findCellRectClosestToPos, isSelectionType, isTableSelected } from "./selection";
 import { addColSpan, assertColspan, removeColSpan } from "./spaning";
 import { findTable, generateColwidths, removeTable } from "./tables";
-import { cloneTr, setTextSelection } from "./transforms";
+import { setTextSelection } from "./transforms";
 
 /**
  * Returns a new transaction that adds a new column at index `columnIndex`.
@@ -16,16 +16,14 @@ export const addColumnAt = (columnIndex) => (tr) => {
     if (table) {
         const map = TableMap.get(table.node);
         if (columnIndex >= 0 && columnIndex <= map.width) {
-            return cloneTr(
-                addColumn(
-                    tr,
-                    {
-                        map,
-                        tableStart: table.start,
-                        table: table.node,
-                    },
-                    columnIndex,
-                ),
+            return addColumn(
+                tr,
+                {
+                    map,
+                    tableStart: table.start,
+                    table: table.node,
+                },
+                columnIndex,
             );
         }
     }
@@ -147,7 +145,7 @@ export const removeColumnAt = (columnIndex) => (tr) => {
                 },
                 columnIndex,
             );
-            return cloneTr(tr);
+            return tr;
         }
     }
 
@@ -200,7 +198,7 @@ export const removeSelectedColumns = (tr) => {
             ]);
             tr.setNodeAttribute(pmTableRect.tableStart - 1, "colwidths", colwidths);
 
-            return cloneTr(tr);
+            return tr;
         }
     }
 

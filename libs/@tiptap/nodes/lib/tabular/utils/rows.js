@@ -4,7 +4,7 @@ import { TableMap } from "../helpers/table-map";
 import { tableNodeTypes } from "./node-types";
 import { findCellRectClosestToPos, isSelectionType, isTableSelected } from "./selection";
 import { findTable, removeTable } from "./tables";
-import { cloneTr, setTextSelection } from "./transforms";
+import { setTextSelection } from "./transforms";
 
 /**
  * @param {Schema} schema
@@ -125,20 +125,18 @@ export const addRowAt = (rowIndex, clonePreviousRow) => (tr) => {
         const cloneRowIndex = rowIndex - 1;
 
         if (clonePreviousRow && cloneRowIndex >= 0) {
-            return cloneTr(cloneRowAt(cloneRowIndex)(tr));
+            return cloneRowAt(cloneRowIndex)(tr);
         }
 
         if (rowIndex >= 0 && rowIndex <= map.height) {
-            return cloneTr(
-                addRow(
-                    tr,
-                    {
-                        map,
-                        tableStart: table.start,
-                        table: table.node,
-                    },
-                    rowIndex,
-                ),
+            return addRow(
+                tr,
+                {
+                    map,
+                    tableStart: table.start,
+                    table: table.node,
+                },
+                rowIndex,
             );
         }
     }
@@ -268,7 +266,7 @@ export const removeRowAt = (rowIndex) => (tr) => {
                 },
                 rowIndex,
             );
-            return cloneTr(tr);
+            return tr;
         }
     }
 
@@ -330,7 +328,7 @@ export const removeSelectedRows = (tr) => {
                 pmTableRect.map = TableMap.get(pmTableRect.table);
             }
 
-            return cloneTr(tr);
+            return tr;
         }
     }
 

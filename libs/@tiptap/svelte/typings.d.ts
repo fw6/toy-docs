@@ -21,5 +21,5 @@ export class NodeViewContent extends SvelteComponentTyped<
 
 export const SvelteNodeViewRenderer: <Component extends ComponentType<SvelteComponentTyped>>(
     component: Component,
-    options: Partial<SvelteNodeViewRendererOptions>,
+    options?: Partial<SvelteNodeViewRendererOptions>,
 ) => NodeViewRenderer;

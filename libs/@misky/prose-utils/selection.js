@@ -1,7 +1,7 @@
 import { findParentNode } from "@tiptap/core";
 import { Fragment } from "@tiptap/pm/model";
 import { equalNodeType } from "./helpers";
-import { cloneTr, setTextSelection } from "./transforms";
+import { setTextSelection } from "./transforms";
 
 /**
  * @typedef {(tr: Transaction) => Transaction} ChainTrCallback
@@ -60,7 +60,7 @@ export const replaceNodeAtPos = (position, content) => (_tr) => {
         tr = setTextSelection(Math.max(start, 0), -1)(tr);
         // move cursor to the start of the node
         tr = setTextSelection(tr.selection.$from.start())(tr);
-        return cloneTr(tr);
+        return tr;
     }
     return tr;
 };

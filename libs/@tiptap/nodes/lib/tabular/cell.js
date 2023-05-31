@@ -27,15 +27,6 @@ export const TableCell = Node.create({
                     return Number(dom.getAttribute("colspan") || 1);
                 },
             },
-            colwidth: {
-                default: null,
-                parseHTML: (element) => {
-                    const colwidth = element.getAttribute("colwidth");
-                    const value = colwidth ? [parseInt(colwidth, 10)] : null;
-
-                    return value;
-                },
-            },
         };
     },
     parseHTML() {

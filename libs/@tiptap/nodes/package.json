@@ -11,10 +11,12 @@
         }
     },
     "peerDependencies": {
-        "@misky/prose-utils": "workspace:*"
+        "@misky/prose-utils": "workspace:*",
+        "@misky/tiptap-svelte": "workspace:*"
     },
     "devDependencies": {
-        "@misky/prose-utils": "workspace:*"
+        "@misky/prose-utils": "workspace:*",
+        "@misky/tiptap-svelte": "workspace:*"
     },
     "volta": {
         "extends": "../../../package.json"

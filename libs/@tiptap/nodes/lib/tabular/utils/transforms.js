@@ -1,12 +1,6 @@
 import { Selection } from "@tiptap/pm/state";
 
 /**
- * @param {Transaction} tr
- * @returns {Transaction}
- */
-export const cloneTr = (tr) => Object.assign(Object.create(tr), tr).setTime(Date.now());
-
-/**
  * :: (position: number, dir: ?number) → (tr: Transaction) → Transaction
  * Returns a new transaction that tries to find a valid cursor selection starting at the given `position`
  * and searching back if `dir` is negative, and forward if positive.

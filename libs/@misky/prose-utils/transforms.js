@@ -67,7 +67,7 @@ export const safeInsert = (content, position, tryToReplace) => (_tr) => {
             ? // for atom nodes selection position after insertion is the previous pos
               tr.selection.$anchor.pos - 1
             : tr.selection.$anchor.pos;
-        return cloneTr(setSelection(content, pos, tr));
+        return setSelection(content, pos, tr);
     }
 
     // looking for a place in the doc where the node is allowed
@@ -76,17 +76,11 @@ export const safeInsert = (content, position, tryToReplace) => (_tr) => {
         const $pos = tr.doc.resolve(pos);
         if (canInsert($pos, content)) {
             tr.insert(pos, content);
-            return cloneTr(setSelection(content, pos, tr));
+            return setSelection(content, pos, tr);
         }
     }
     return tr;
 };
-
-/**
- * @param {Transaction} tr
- * @returns {Transaction}
- */
-export const cloneTr = (tr) => Object.assign(Object.create(tr), tr).setTime(Date.now());
 
 /**
  * :: (content: union<ProseMirrorNode, ProseMirrorFragment>) → (tr: Transaction) → Transaction
@@ -111,11 +105,11 @@ export const replaceSelectedNode = (content) => (tr) => {
             if (!$from.parent.canReplace($from.index(), $from.indexAfter(), content)) return tr;
         } else if (!$from.parent.canReplaceWith($from.index(), $from.indexAfter(), content.type)) return tr;
 
-        return cloneTr(
+        return (
             tr
                 .replaceWith($from.pos, $to.pos, content)
                 // restore node selection
-                .setSelection(new NodeSelection(tr.doc.resolve($from.pos))),
+                .setSelection(new NodeSelection(tr.doc.resolve($from.pos)))
         );
     }
     return tr;

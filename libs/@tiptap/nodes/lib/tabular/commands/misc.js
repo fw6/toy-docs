@@ -1,6 +1,5 @@
 import { CellSelection } from "../helpers/cell-selection";
 import { selectionCell } from "../utils/cells";
-import { cloneTr } from "../utils/transforms";
 
 /**
  * @param {string} name
@@ -57,7 +56,7 @@ export const setCellAttr = (name, value) => (state, dispatch) => {
 export const setCellAttrs = (cell, attrs) => (tr) => {
     if (cell) {
         tr.setNodeMarkup(cell.pos, null, Object.assign({}, cell.node.attrs, attrs));
-        return cloneTr(tr);
+        return tr;
     }
     return tr;
 };

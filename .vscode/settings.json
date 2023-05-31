@@ -83,7 +83,7 @@
     // FIXME: 垃圾prettier！printWidth不生效、换行位置很难看，暂时先关掉，移除prettier后再开启（singleAttributePerLine 配置暂不支持）
     // "svelte.plugin.svelte.format.enable": false,
     "svelte.plugin.svelte.format.config.printWidth": 999,
-    "svelte.plugin.svelte.defaultScriptLanguage": "ts",
+    // "svelte.plugin.svelte.defaultScriptLanguage": "ts",
     "js/ts.implicitProjectConfig.checkJs": true,
     "mdx.experimentalLanguageServer": true
     // "svelte.plugin.css.globals": "./design/tokens/platforms/web/tokens.css"

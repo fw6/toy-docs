@@ -27,7 +27,7 @@ class SvelteNodeView extends NodeView {
     /**
      * @param {Component} component
      * @param {NodeViewRendererProps} props
-     * @param {Partial<SvelteNodeViewRendererOptions>} options
+     * @param {Partial<SvelteNodeViewRendererOptions>} [options]
      */
     constructor(component, props, options) {
         super(component, props, options);
@@ -154,7 +154,7 @@ class SvelteNodeView extends NodeView {
  * @template {import('svelte').ComponentType} Component
  *
  * @param {Component} component
- * @param {Partial<SvelteNodeViewRendererOptions>} options
+ * @param {Partial<SvelteNodeViewRendererOptions>} [options]
  * @returns {NodeViewRenderer}
  */
 export const SvelteNodeViewRenderer = (component, options) => {
