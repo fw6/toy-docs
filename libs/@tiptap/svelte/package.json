@@ -1,12 +1,7 @@
 {
-    "name": "@misky/prose-utils",
-    "description": "Utils library for ProseMirror",
-    "peerDependencies": {
-        "@tiptap/pm": "~2.0.3"
-    },
-    "devDependencies": {
-        "@tiptap/pm": "~2.0.3"
-    },
+    "name": "@misky/tiptap-svelte",
+    "version": "0.0.1",
+    "type": "module",
     "module": "index.js",
     "typings": "typings.d.ts",
     "exports": {
@@ -14,6 +9,12 @@
             "default": "./index.js",
             "types": "./typings.d.ts"
         }
+    },
+    "peerDependencies": {
+        "@misky/prose-utils": "workspace:*"
+    },
+    "devDependencies": {
+        "@misky/prose-utils": "workspace:*"
     },
     "volta": {
         "extends": "../../../package.json"

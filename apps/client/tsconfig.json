@@ -26,6 +26,15 @@
             ],
             "@misky/tiptap-nodes": [
                 "../../libs/@tiptap/nodes/lib/index.js"
+            ],
+            "@misky/tiptap-svelte": [
+                "../../libs/@tiptap/svelte/lib/index.js"
+            ],
+            "@misky/prose-utils": [
+                "../../libs/@misky/prose-utils/index.js"
+            ],
+            "@local/shared": [
+                "../../libs/@local/shared/index.js"
             ]
         }
     }

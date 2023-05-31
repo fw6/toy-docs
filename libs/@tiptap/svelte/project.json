@@ -1,0 +1,33 @@
+{
+    "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+    "name": "tiptap/svelte",
+    "sourceRoot": "libs/@tiptap/svelte",
+    "projectType": "library",
+    "generators": {},
+    "targets": {
+        "storybook": {
+            "executor": "@nx/storybook:storybook",
+            "options": {
+                "port": 4404,
+                "configDir": "libs/@tiptap/svelte/.storybook"
+            },
+            "configurations": {
+                "ci": {
+                    "quiet": true
+                }
+            }
+        }
+    },
+    "tags": [
+        "scope:shared",
+        "type:types"
+    ],
+    "namedInputs": {
+        "production": [
+            "default",
+            "!{projectRoot}/**/*.spec.ts",
+            "!{projectRoot}/**/*.spec.tsx",
+            "!{projectRoot}/**/*.md"
+        ]
+    }
+}

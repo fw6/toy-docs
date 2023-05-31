@@ -2,7 +2,7 @@
     "name": "@local/shared",
     "version": "0.0.0",
     "module": "index.js",
-    "types": "typings.d.ts",
+    "typings": "typings.d.ts",
     "exports": {
         ".": {
             "default": "./index.js",

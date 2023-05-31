@@ -20,6 +20,10 @@ const config = {
             title: "Tiptap extensions",
             url: "http://localhost:4403",
         },
+        "tiptap svelte adapter": {
+            title: "Tiptap svelte",
+            url: "http://localhost:4404",
+        },
     },
 };
 export default config;

@@ -40,6 +40,7 @@ export default {
                     ),
                     "@misky/tiptap-marks": resolve(`${process.env.NX_WORKSPACE_ROOT}/libs/@tiptap/marks/index.js`),
                     "@misky/tiptap-nodes": resolve(`${process.env.NX_WORKSPACE_ROOT}/libs/@tiptap/nodes/index.js`),
+                    "@misky/tiptap-svelte": resolve(`${process.env.NX_WORKSPACE_ROOT}/libs/@tiptap/svelte/index.js`),
                     "@misky/prose-utils": resolve(`${process.env.NX_WORKSPACE_ROOT}/libs/@misky/prose-utils/index.js`),
                     "@local/shared": resolve(`${process.env.NX_WORKSPACE_ROOT}/libs/@local/shared/index.js`),
                 },

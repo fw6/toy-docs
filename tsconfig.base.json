@@ -35,6 +35,9 @@
             "@misky/tiptap-nodes": [
                 "libs/@tiptap/nodes/index.js"
             ],
+            "@misky/tiptap-svelte": [
+                "libs/@tiptap/svelte/index.js"
+            ],
             "@misky/prose-utils": [
                 "libs/@misky/prose-utils/index.js"
             ],

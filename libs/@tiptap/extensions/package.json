@@ -3,7 +3,7 @@
     "version": "0.0.1",
     "type": "module",
     "module": "index.js",
-    "types": "typings.d.ts",
+    "typings": "typings.d.ts",
     "exports": {
         ".": {
             "default": "./index.js",

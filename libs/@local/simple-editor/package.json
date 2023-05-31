@@ -2,7 +2,7 @@
     "name": "@local/simple-editor",
     "version": "0.0.0",
     "type": "module",
-    "types": "./typings.d.ts",
+    "typings": "typings.d.ts",
     "module": "./index.js",
     "exports": {
         ".": {
