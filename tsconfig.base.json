@@ -36,7 +36,10 @@
                 "libs/@tiptap/nodes/index.js"
             ],
             "@misky/prose-utils": [
-                "libs/@local/prose-utils/index.js"
+                "libs/@misky/prose-utils/index.js"
+            ],
+            "@local/shared": [
+                "libs/@local/shared/index.js"
             ]
         },
         "strict": true,

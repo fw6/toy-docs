@@ -26,7 +26,7 @@
 <button
     class="menu-item"
     class:is-active={isActive({ editor })}
-    on:click={() => action({ editor })}
+    on:mousedown|preventDefault={() => action({ editor })}
     {title}
 >
     <svelte:component this={icon} />

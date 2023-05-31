@@ -1,5 +1,6 @@
 import { CellSelection } from "../helpers/cell-selection";
 import { selectionCell } from "../utils/cells";
+import { cloneTr } from "../utils/transforms";
 
 /**
  * @param {string} name
@@ -37,4 +38,26 @@ export const setCellAttr = (name, value) => (state, dispatch) => {
         }
     }
     return false;
+};
+
+/**
+ * :: (cell: {pos: number, start: number, node: ProseMirrorNode}, attrs: Object) → (tr: Transaction) → Transaction
+ * Returns a new transaction that sets given `attrs` to a given `cell`.
+ *
+ * ```javascript
+ * dispatch(
+ *   setCellAttrs(findCellClosestToPos($pos), { background: 'blue' })(tr);
+ * );
+ * ```
+ *
+ * @param {NodeWithPos} cell
+ * @param {Attrs} attrs
+ * @returns {(tr: Transaction) => Transaction}
+ */
+export const setCellAttrs = (cell, attrs) => (tr) => {
+    if (cell) {
+        tr.setNodeMarkup(cell.pos, null, Object.assign({}, cell.node.attrs, attrs));
+        return cloneTr(tr);
+    }
+    return tr;
 };

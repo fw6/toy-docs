@@ -1,10 +1,10 @@
-import { setTextSelection } from "prosemirror-utils";
+import { decimalRounding } from "@local/shared";
 import { TableMap } from "../helpers/table-map";
 import { tableNodeTypes } from "./node-types";
 import { findCellRectClosestToPos, isSelectionType, isTableSelected } from "./selection";
 import { addColSpan, assertColspan, removeColSpan } from "./spaning";
-import { findTable, removeTable } from "./tables";
-import { cloneTr } from "./transforms";
+import { findTable, generateColwidths, removeTable } from "./tables";
+import { cloneTr, setTextSelection } from "./transforms";
 
 /**
  * Returns a new transaction that adds a new column at index `columnIndex`.
@@ -193,6 +193,13 @@ export const removeSelectedColumns = (tr) => {
                 if (newTable) pmTableRect.table = newTable;
                 pmTableRect.map = TableMap.get(pmTableRect.table);
             }
+
+            const colwidths = getColwidthsAfterDelete(pmTableRect.table, pmTableRect.map, [
+                pmTableRect.left,
+                pmTableRect.right,
+            ]);
+            tr.setNodeAttribute(pmTableRect.tableStart - 1, "colwidths", colwidths);
+
             return cloneTr(tr);
         }
     }
@@ -205,10 +212,48 @@ export const removeSelectedColumns = (tr) => {
  * @param {ResolvedPos} $pos
  * @returns {(tr: Transaction) => Transaction}
  */
-export const removeColumnClosestToPos = ($pos) => (tr) => {
+export const removeColumnClosestToPos = ($pos) => (_tr) => {
+    let tr = _tr;
     const rect = findCellRectClosestToPos($pos);
     if (rect) {
-        return removeColumnAt(rect.left)(setTextSelection($pos.pos)(tr));
+        tr = removeColumnAt(rect.left)(setTextSelection($pos.pos)(tr));
+
+        const table = findTable(tr.selection);
+        if (table) {
+            const map = TableMap.get(table.node);
+            const colwidths = getColwidthsAfterDelete(table.node, map, [rect.left, rect.left + 1]);
+            tr = tr.setNodeAttribute(table.pos, "colwidths", colwidths);
+        }
     }
+
     return tr;
+};
+
+/**
+ * Overwrite allocates remaining column space
+ *
+ * @param {PMNode} table
+ * @param {TableMap} map
+ * @param {[number, number]} range
+ *
+ * @returns {number[]}
+ */
+const getColwidthsAfterDelete = (table, map, range) => {
+    /** @type {number[]} */
+    let colwidths = table.attrs.colwidths;
+    if (!colwidths.length) {
+        colwidths = generateColwidths(map.width);
+    } else {
+        const [left, right] = range;
+        const removedWidth = colwidths.slice(left, right).reduce((a, b) => a + b, 0);
+
+        colwidths = colwidths.flatMap((width, i) => {
+            if (i < left || i >= right) {
+                return decimalRounding(width * (1 + removedWidth / (100 - removedWidth)), 2);
+            }
+            return [];
+        });
+    }
+
+    return colwidths;
 };

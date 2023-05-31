@@ -1,7 +1,6 @@
 {
-    "name": "@misky/tiptap-nodes",
-    "version": "0.0.1",
-    "type": "module",
+    "name": "@local/shared",
+    "version": "0.0.0",
     "module": "index.js",
     "types": "typings.d.ts",
     "exports": {
@@ -9,12 +8,6 @@
             "default": "./index.js",
             "types": "./typings.d.ts"
         }
-    },
-    "peerDependencies": {
-        "@misky/prose-utils": "workspace:*"
-    },
-    "devDependencies": {
-        "@misky/prose-utils": "workspace:*"
     },
     "volta": {
         "extends": "../../../package.json"

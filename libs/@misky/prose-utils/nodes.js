@@ -1,4 +1,4 @@
-import { hasParentNodeOfType } from "prosemirror-utils";
+import { hasParentNodeOfType } from "./selection";
 
 /**
  * Checks if node is an empty paragraph.

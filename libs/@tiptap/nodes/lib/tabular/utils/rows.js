@@ -1,10 +1,10 @@
-import { cloneRowAt, safeInsert, setTextSelection } from "prosemirror-utils";
-
+import { safeInsert } from "@misky/prose-utils";
+import { setCellAttrs } from "../commands/misc";
 import { TableMap } from "../helpers/table-map";
 import { tableNodeTypes } from "./node-types";
 import { findCellRectClosestToPos, isSelectionType, isTableSelected } from "./selection";
 import { findTable, removeTable } from "./tables";
-import { cloneTr } from "./transforms";
+import { cloneTr, setTextSelection } from "./transforms";
 
 /**
  * @param {Schema} schema
@@ -393,3 +393,141 @@ export function getRow(table, row) {
     }
     return { node: null, pos: rPos, section: sectionIndex };
 }
+
+/**
+ * :: (cloneRowIndex: number) → (tr: Transaction) → Transaction
+ * Returns a new transaction that adds a new row after `cloneRowIndex`, cloning the row attributes at `cloneRowIndex`.
+ *
+ * ```javascript
+ * dispatch(
+ *   cloneRowAt(i)(state.tr)
+ * );
+ *
+ * @param {number} rowIndex
+ * @returns {(tr: Transaction) => Transaction}
+```
+ */
+export const cloneRowAt = (rowIndex) => (_tr) => {
+    let tr = _tr;
+    const table = findTable(tr.selection);
+
+    if (table) {
+        const map = TableMap.get(table.node);
+
+        if (rowIndex >= 0 && rowIndex <= map.height) {
+            const tableNode = table.node;
+            const tableNodes = tableNodeTypes(tableNode.type.schema);
+
+            let rowPos = table.start;
+            for (let i = 0; i < rowIndex + 1; i++) {
+                rowPos += tableNode.child(i).nodeSize;
+            }
+
+            const cloneRow = tableNode.child(rowIndex);
+            // Re-create the same nodes with same attrs, dropping the node content.
+            /** @type {PMNode[]} */
+            const cells = [];
+            let rowWidth = 0;
+            cloneRow.forEach((cell) => {
+                // If we're copying a row with rowspan somewhere, we dont want to copy that cell
+                // We'll increment its span below.
+                if (cell.attrs.rowspan === 1) {
+                    rowWidth += cell.attrs.colspan;
+                    const cellNode = tableNodes[cell.type.spec.tableRole].createAndFill(cell.attrs, null, cell.marks);
+                    if (cellNode) cells.push(cellNode);
+                }
+            });
+
+            // If a higher row spans past our clone row, bump the higher row to cover this new row too.
+            if (rowWidth < map.width) {
+                const rowSpanCells = [];
+                for (let i = rowIndex; i >= 0; i--) {
+                    const foundCells = filterCellsInRow(i, (cell, tr) => {
+                        const rowspan = cell.node.attrs.rowspan;
+                        const spanRange = i + rowspan;
+                        return rowspan > 1 && spanRange > rowIndex;
+                    })(tr);
+                    rowSpanCells.push(...foundCells);
+                }
+
+                if (rowSpanCells.length) {
+                    rowSpanCells.forEach((cell) => {
+                        tr = setCellAttrs(cell, {
+                            rowspan: cell.node.attrs.rowspan + 1,
+                        })(tr);
+                    });
+                }
+            }
+
+            return safeInsert(tableNodes.row.create(cloneRow.attrs, cells), rowPos)(tr);
+        }
+    }
+    return tr;
+};
+
+/**
+ * @param {number} rowIndex
+ * @param {(cell: NodeWithPos & { start: number }, tr: Transaction) => boolean} predicate
+ * @returns {(tr: Transaction) => NodeWithPos[]}
+ */
+const filterCellsInRow = (rowIndex, predicate) => (tr) => {
+    const foundCells = [];
+    const cells = getCellsInRow(rowIndex)(tr.selection);
+    if (cells) {
+        for (let j = cells.length - 1; j >= 0; j--) {
+            if (predicate(cells[j], tr)) {
+                foundCells.push(cells[j]);
+            }
+        }
+    }
+
+    return foundCells;
+};
+
+/**
+ * :: (rowIndex: union<number, [number]>) → (selection: Selection) → ?[{pos: number, start: number, node: ProseMirrorNode}]
+ * Returns an array of cells in a row(s), where `rowIndex` could be a row index or an array of row indexes.
+ *
+ * ```javascript
+ * const cells = getCellsInRow(i)(selection); // [{node, pos}, {node, pos}]
+ * ```
+ *
+ * @param {number | number[]} rowIndex
+ * @returns {(sel: import('@tiptap/pm/state').Selection) => (NodeWithPos & {start: number})[] | undefined}
+ */
+export const getCellsInRow = (rowIndex) => (selection) => {
+    const table = findTable(selection);
+    if (table) {
+        const map = TableMap.get(table.node);
+        const indexes = Array.isArray(rowIndex) ? rowIndex : Array.from([rowIndex]);
+        return indexes.reduce(
+            /** @param {(NodeWithPos & {start: number})[]} acc */
+            (acc, index) => {
+                if (index >= 0 && index <= map.height - 1) {
+                    const cells = map.cellsInRect({
+                        left: 0,
+                        right: map.width,
+                        top: index,
+                        bottom: index + 1,
+                    });
+                    return acc.concat(
+                        cells.flatMap((nodePos) => {
+                            const node = table.node.nodeAt(nodePos);
+                            if (!node) return [];
+                            const pos = nodePos + table.start;
+                            /** @type {NodeWithPos & {start: number}} */
+                            const res = { pos, start: pos + 1, node };
+
+                            return res;
+                        }),
+                    );
+                }
+
+                return acc;
+            },
+            [],
+        );
+    }
+
+    return;
+};

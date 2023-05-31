@@ -1,5 +1,6 @@
-import { removeSelectedColumns } from "../utils/cols";
+import { removeColumnClosestToPos, removeSelectedColumns } from "../utils/cols";
 import { removeSelectedRows } from "../utils/rows";
+import { isSelectionType } from "../utils/selection";
 import { removeTable } from "../utils/tables";
 
 /**
@@ -15,7 +16,14 @@ export const deleteTable = (state, dispatch) => {
  * @type {Command}
  */
 export const deleteColumn = (state, dispatch) => {
-    const tr = removeSelectedColumns(state.tr);
+    let tr = state.tr;
+
+    if (isSelectionType(tr.selection, "cell")) {
+        tr = removeSelectedColumns(tr);
+    } else {
+        tr = removeColumnClosestToPos(tr.selection.$anchor)(tr);
+    }
+
     if (dispatch) dispatch(tr);
     return true;
 };

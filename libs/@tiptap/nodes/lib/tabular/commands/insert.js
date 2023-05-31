@@ -5,12 +5,13 @@
  * @property {PMNode} [cellContent]
  */
 
+import { decimalRounding } from "@local/shared";
 import { Selection, TextSelection } from "@tiptap/pm/state";
 import { TableMap } from "../helpers/table-map";
+import { addColumnAt } from "../utils/cols";
 import { tableNodeTypes } from "../utils/node-types";
 import { addRowAt, copyPreviousRow } from "../utils/rows";
-import { findTable } from "../utils/tables";
-import { addColumnAt } from "../utils/cols";
+import { findTable, generateColwidths } from "../utils/tables";
 
 /**
  * @param {CreateTableProps} [props]
@@ -36,7 +37,12 @@ export const createTable =
             rows.push(tableRow.createChecked(null, cells));
         }
 
-        const tableNode = table.createChecked(null, rows);
+        const tableNode = table.createChecked(
+            {
+                colwidths: generateColwidths(colsCount),
+            },
+            rows,
+        );
         if (dispatch) {
             const tr = state.tr;
             const offset = tr.selection.anchor + 1;
@@ -68,18 +74,49 @@ const createCell = (cellType, cellContent) => {
  * @param {number} column
  * @returns {Command}
  */
-export const insertColumn = (column) => (state, dispatch, view) => {
-    const tr = addColumnAt(column)(state.tr);
+export const insertColumn = (column) => (state, dispatch) => {
+    let tr = addColumnAt(column)(state.tr);
 
     const table = findTable(tr.selection);
     if (!table) {
         return false;
     }
+    const map = TableMap.get(table.node);
     // move the cursor to the newly created column
-    const pos = TableMap.get(table.node).positionAt(0, column, table.node);
+    const pos = map.positionAt(0, column, table.node);
 
     if (dispatch) {
-        dispatch(tr.setSelection(Selection.near(tr.doc.resolve(table.start + pos))));
+        // #region Update table colwidth attribute
+
+        /** @type {number[]} */
+        let colwidths = table.node.attrs.colwidths;
+        console.log("before:", colwidths);
+
+        if (!colwidths.length) {
+            colwidths = generateColwidths(map.width);
+        } else {
+            // the new column width is the lastest average
+            const newColwidth = decimalRounding(100 / map.width, 2);
+
+            // The previous columns share the new extra width proportionally
+            colwidths = colwidths.flatMap((colwidth, index) => {
+                const width = decimalRounding(colwidth * (1 - newColwidth / 100), 2);
+
+                if (index === column) {
+                    return [newColwidth, width];
+                }
+
+                return width;
+            });
+        }
+
+        console.log("after:", colwidths);
+        tr = tr.setNodeAttribute(table.pos, "colwidths", colwidths);
+
+        // #endregion
+
+        tr = tr.setSelection(Selection.near(tr.doc.resolve(table.start + pos)));
+        dispatch(tr);
     }
     return true;
 };

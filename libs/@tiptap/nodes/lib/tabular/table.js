@@ -1,12 +1,11 @@
 import { Node, callOrReturn, getExtensionField, mergeAttributes } from "@tiptap/core";
 import { deleteColumn, deleteRow, deleteTable } from "./commands/delete";
-import { createTable, insertRow } from "./commands/insert";
+import { createTable, insertColumn, insertRow } from "./commands/insert";
 import { setCellAttr } from "./commands/misc";
 import { goToNextCell, setCellSelection } from "./commands/selection";
 import { mergeCells, splitCell } from "./commands/spanning";
 import { columnResizing } from "./plugins/column-resizing/column-resizing";
 import { tableEditing } from "./plugins/editing";
-import { addColumnAt } from "./utils/cols";
 import { getClosestSelectionRect } from "./utils/selection";
 import { fixTables } from "./utils/tables";
 
@@ -103,6 +102,7 @@ export const Table = Node.create({
         return [
             "table",
             mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
+            // FIXME Generate <colgroup> and <col> elements here is not reliable! Doesn't render every time.
             ["colgroup", ...colwidths.map((w) => ["col", { style: `width:${w}%;` }])],
             ["tbody", 0],
         ];
@@ -142,21 +142,21 @@ export const Table = Node.create({
                 return true;
             },
 
-            addColumnAfter: () => ({ state, tr }) => {
+            addColumnAfter: () => ({ state, dispatch }) => {
                 const rect = getClosestSelectionRect(state);
-                const index = rect?.bottom;
+                const index = rect?.right;
 
-                if (index) {
-                    tr = addColumnAt(index)(tr);
+                if (typeof index === "number") {
+                    return insertColumn(index)(state, dispatch);
                 }
                 return true;
             },
-            addColumnBefore: () => ({ state, tr }) => {
+            addColumnBefore: () => ({ state, dispatch }) => {
                 const rect = getClosestSelectionRect(state);
-                const index = rect?.top;
+                const index = rect?.left;
 
-                if (index) {
-                    tr = addColumnAt(index)(tr);
+                if (typeof index === "number") {
+                    return insertColumn(index)(state, dispatch);
                 }
                 return true;
             },

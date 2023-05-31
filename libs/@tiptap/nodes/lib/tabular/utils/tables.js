@@ -5,6 +5,7 @@ import { FIX_TABLES__KEY } from "../plugins/keys";
 import { tableNodeTypes } from "./node-types";
 import { removeColSpan } from "./spaning";
 import { cloneTr } from "./transforms";
+import { decimalRounding } from "@local/shared";
 
 /**
  * @param {ResolvedPos} $a
@@ -221,3 +222,6 @@ export const removeTable = (tr) => {
 
     return tr;
 };
+
+/** @type {(colsCount: number) => number[]} */
+export const generateColwidths = (colsCount) => Array(colsCount).fill(decimalRounding(100 / colsCount, 4));

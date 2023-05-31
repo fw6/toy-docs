@@ -1,3 +1,4 @@
+import { decimalRounding } from "@local/shared";
 import { Plugin, PluginKey } from "@tiptap/pm/state";
 import { Decoration, DecorationSet } from "@tiptap/pm/view";
 import { TableMap } from "../../helpers/table-map";
@@ -389,15 +390,5 @@ function edgeCell(view, event, side) {
  * @returns {node is HTMLTableCellElement}
  */
 const isTableCellElement = (node) => !!node && node instanceof HTMLTableCellElement;
-
-/**
- * Decimal place rounding
- *
- * @param {number} value - value
- * @param {number} d - decimal place
- */
-function decimalRounding(value, d) {
-    return Math.round(value * Math.pow(10, d)) / Math.pow(10, d);
-}
 
 // #endregion
