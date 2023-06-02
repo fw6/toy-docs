@@ -1,7 +1,7 @@
 const TOKEN_PREFIX = "misky";
 
 module.exports = {
-    source: ["src/configs/**/*.json", "src/configs/**/*.jsonc"],
+    source: ["lib/configs/**/*.json", "lib/configs/**/*.jsonc"],
     platforms: {
         web: {
             basePxFontSize: 16,
@@ -12,6 +12,7 @@ module.exports = {
                 {
                     format: "css/variables",
                     destination: "tokens.css",
+                    /** @param {{name: string}} token */
                     filter: (token) => !token.name.endsWith("-primitive"),
                     options: {
                         outputReferences: true,

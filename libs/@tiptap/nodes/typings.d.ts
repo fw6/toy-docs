@@ -60,9 +60,6 @@ export interface ParagraphOptions {
 export interface TableOptions {
     HTMLAttributes: Record<string, unknown>;
     resizable: boolean;
-    handleWidth: number;
-    cellMinWidth: number;
-    lastColumnResizable: boolean;
     allowTableNodeSelection: boolean;
 }
 

@@ -6,6 +6,7 @@ import { goToNextCell, setCellSelection } from "./commands/selection";
 import { mergeCells, splitCell } from "./commands/spanning";
 import { columnResizing } from "./plugins/column-resizing/column-resizing";
 import { tableEditing } from "./plugins/editing";
+import { gridControlsPlugin } from "./plugins/grid-controls";
 import { getClosestSelectionRect } from "./utils/selection";
 import { fixTables } from "./utils/tables";
 
@@ -102,14 +103,17 @@ export const Table = Node.create({
         return [
             "table",
             mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
-            // FIXME Generate <colgroup> and <col> elements here is not reliable! Doesn't render every time.
             ["colgroup", ...colwidths.map((w) => ["col", { style: `width:${w}%;` }])],
             ["tbody", 0],
         ];
     },
 
     addProseMirrorPlugins() {
-        return [columnResizing(), tableEditing({ allowTableNodeSelection: this.options.allowTableNodeSelection })];
+        return [
+            gridControlsPlugin(),
+            columnResizing(),
+            tableEditing({ allowTableNodeSelection: this.options.allowTableNodeSelection }),
+        ];
     },
 
     addCommands() {

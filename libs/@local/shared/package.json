@@ -7,7 +7,17 @@
         ".": {
             "default": "./index.js",
             "types": "./typings.d.ts"
+        },
+        "./postcss": {
+            "require": "./postcss.cjs",
+            "default": "./postcss.cjs"
         }
+    },
+    "peerDependencies": {
+        "@misky-design/tokens": "workspace:*"
+    },
+    "devDependencies": {
+        "@misky-design/tokens": "workspace:*"
     },
     "volta": {
         "extends": "../../../package.json"

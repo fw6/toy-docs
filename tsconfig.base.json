@@ -43,6 +43,9 @@
             ],
             "@local/shared": [
                 "libs/@local/shared/index.js"
+            ],
+            "@local/shared/postcss": [
+                "libs/@local/shared/postcss.cjs"
             ]
         },
         "strict": true,

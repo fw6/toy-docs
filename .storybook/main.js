@@ -1,3 +1,4 @@
+import { basicPostCSSPlugins } from "@local/shared/postcss";
 import { resolve } from "node:path";
 import preprocess from "svelte-preprocess";
 import Icons from "unplugin-icons/vite";
@@ -7,7 +8,11 @@ import { mergeConfig } from "vite";
  * @type {import('@sveltejs/vite-plugin-svelte').Options}
  */
 const svelteOptions = {
-    preprocess: preprocess(),
+    preprocess: preprocess({
+        postcss: {
+            plugins: basicPostCSSPlugins,
+        },
+    }),
     experimental: {
         sendWarningsToBrowser: true,
     },
@@ -33,6 +38,11 @@ export default {
          * @type {import('vite').UserConfig}
          */
         const overrides = {
+            css: {
+                postcss: {
+                    plugins: basicPostCSSPlugins,
+                },
+            },
             resolve: {
                 alias: {
                     "@misky/tiptap-extensions": resolve(

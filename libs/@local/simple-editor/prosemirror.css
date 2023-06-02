@@ -14,93 +14,374 @@
         local("segoe ui emoji"), local("segoe ui symbol");
 }
 
-.ProseMirror {
-    outline: none;
-    word-break: break-word;
-    word-wrap: break-word;
-    white-space: pre-wrap;
-    white-space: break-spaces;
-    font-family: 雅黑;
-    font-size: 12px;
-}
+@layer editor.print {
+    @supports (selector(&)) {
+        .ProseMirror {
+            outline: none;
+            word-break: break-word;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+            white-space: break-spaces;
+            font-family: 雅黑;
+            font-size: 12px;
 
-.ProseMirror table {
-    border-collapse: collapse;
-    table-layout: fixed;
-    width: 100%;
-}
+            /* #region Blocks */
 
-.ProseMirror table td {
-    min-width: 48px;
-    border: 1px solid gray;
-    vertical-align: top;
-    padding: 8px;
-    text-align: left;
-}
+            :is(table) {
+                border-collapse: collapse;
+                width: 100%;
 
-.ProseMirror table .selectedCell {
-    position: relative;
-    border-color: blue;
+                :is(td) {
+                    min-width: 48px;
+                    padding: 3px 5px;
+                    border: 1px solid gray;
+                    vertical-align: top;
+                    text-align: left;
+                }
+            }
 
-    ::selection,*::selection {
-        background-color: transparent;
+            :is(p) {
+                margin: 0;
+                line-height: calc(22 / 14);
+
+                &:empty {
+                    &::after {
+                        content: " ";
+                        white-space: pre;
+                    }
+                }
+            }
+
+            :is(ul),
+            :is(ol) {
+                padding: 0 1rem;
+            }
+
+            :is(blockquote) {
+                border-left: 2px solid #DFE1E6;
+                margin: 12px 0 0;
+                padding-left: 16px;
+                clear: both;
+
+                &::before {
+                    float: left;
+                    width: 1em;
+                    margin-left: -16px;
+                    text-align: right;
+                    content: "";
+                }
+            }
+
+            :is(pre) {
+                background: #0d0d0d;
+                color: #fff;
+                font-family: "JetBrainsMono", monospace;
+                padding: 0.75rem 1rem;
+                border-radius: 0.5rem;
+
+                :is(code) {
+                    color: inherit;
+                    padding: 0;
+                    background: none;
+                    font-size: 0.8rem;
+                }
+            }
+
+            /* #endregion */
+
+            /* #region Marks */
+
+            :is(code) {
+                color: rgb(232, 62, 140);
+                border-radius: 2px;
+                padding: 2px;
+                margin: 0 1px;
+                border: 1px solid rgba(192, 192, 192, 0.5);
+            }
+
+            :is(mark) {
+                background-color: #faf594;
+            }
+
+            /* Indentation */
+            [first-line-indent] {
+                text-indent: 2em;
+            }
+            [indent=1] {
+                padding-left: 2em;
+            }
+            [indent=2] {
+                padding-left: 4em;
+            }
+            [indent=3] {
+                padding-left: 6em;
+            }
+            [indent=4] {
+                padding-left: 8em;
+            }
+            [indent=5] {
+                padding-left: 10em;
+            }
+            [indent=6] {
+                padding-left: 12em;
+            }
+            [indent=7] {
+                padding-left: 14em;
+            }
+            [indent=8] {
+                padding-left: 16em;
+            }
+
+            /* Alignments */
+            [data-align^="t"] {
+                vertical-align: top;
+            }
+            [data-align^="m"] {
+                vertical-align: middle;
+            }
+            [data-align^="b"] {
+                vertical-align: bottom;
+            }
+            [data-align$="l"] {
+                text-align: left;
+            }
+            [data-align$="c"] {
+                text-align: center;
+            }
+            [data-align$="r"] {
+                text-align: right;
+            }
+            [data-align$="j"] {
+                text-align: justify;
+            }
+
+            /* Spacing */
+
+            /*
+            TODO
+            spacing before
+            spacing after
+            line spacing
+             */
+
+            /* #endregion */
+        }
     }
-    ::-moz-selection,*::-moz-selection {
-        background-color: transparent;
+}
+
+@layer editor.edit {
+    .ProseMirror {
+        &.resize-cursor {
+            cursor: ew-resize;
+            cursor: col-resize;
+        }
+
+        :is(table) {
+            :is(td) {
+                position: relative;
+
+                &[data-resize-handle] {
+                    position: relative;
+
+                    &::after {
+                        content: "";
+                        position: absolute;
+                        right: -2px;
+                        top: 0;
+                        bottom: 0;
+                        width: 4px;
+                        z-index: 20;
+                        background-color: #adf;
+                        pointer-events: none;
+                    }
+                }
+
+                &.selectedCell {
+                    position: relative;
+                    caret-color: transparent;
+
+                    ::selection,*::selection {
+                        background-color: transparent;
+                    }
+                    ::-moz-selection,*::-moz-selection {
+                        background-color: transparent;
+                    }
+
+                    &::after {
+                        height: 100%;
+                        width: 100%;
+                        pointer-events: none;
+                        content: "";
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        bottom: 0;
+                        right: 0;
+                        z-index: 9;
+                        pointer-events: none;
+                        background-color: rgba(46, 52, 222, 0.228);
+                    }
+                }
+            }
+        }
+
+        /* #region Extensions */
+
+        /* prosemirror-gapcursor */
+        .ProseMirror-gapcursor {
+            display: none;
+            pointer-events: none;
+            position: absolute;
+        }
+        .ProseMirror-gapcursor:after {
+            content: "";
+            display: block;
+            position: absolute;
+            top: -2px;
+            width: 20px;
+            border-top: 1px solid black;
+            animation: ProseMirror-cursor-blink 1.1s steps(2, start) infinite;
+        }
+        @keyframes ProseMirror-cursor-blink {
+            to {
+                visibility: hidden;
+            }
+        }
+        .ProseMirror-focused .ProseMirror-gapcursor {
+            display: block;
+        }
+
+        /* #endregion */
     }
 }
 
-.ProseMirror td[data-resize-handle] {
-    position: relative;
-}
-.ProseMirror td[data-resize-handle]::after {
-    content: "";
-    position: absolute;
-    right: -2px;
-    top: 0;
-    bottom: 0;
-    width: 4px;
-    z-index: 20;
-    background-color: #adf;
-    pointer-events: none;
-}
-.ProseMirror.resize-cursor {
-    cursor: ew-resize;
-    cursor: col-resize;
-}
+@layer editor.edit.desktop {
+    .ProseMirror {
+        :is(section) {
+            display: flex;
+            flex-direction: column;
+            background: #fff;
 
-/* selected cells blue overlay */
-.ProseMirror table .selectedCell::after {
-    height: 100%;
-    width: 100%;
-    pointer-events: none;
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    z-index: 9;
-    pointer-events: none;
-    background-color: rgba(46, 52, 222, 0.228);
-}
+            &[format="A0"] {
+                width: mm2px(841);
+                min-height: mm2px(1189);
 
-.ProseMirror section {
-    display: flex;
-    flex-direction: column;
-    padding: 16px;
-    border: 1px solid pink;
-}
+                &[landscape] {
+                    width: mm2px(1189);
+                    min-height: mm2px(841);
+                }
+            }
 
-.ProseMirror header {
-    order: 1;
-    border: 1px solid green;
-}
-.ProseMirror footer {
-    order: 3;
-    border: 1px solid green;
-}
-.ProseMirror main {
-    order: 2;
-    border: 1px solid red;
+            &[format="A1"] {
+                width: mm2px(594);
+                min-height: mm2px(841);
+
+                &[landscape] {
+                    width: mm2px(841);
+                    min-height: mm2px(594);
+                }
+            }
+
+            &[format="A2"] {
+                width: mm2px(420);
+                min-height: mm2px(594);
+
+                &[landscape] {
+                    width: mm2px(594);
+                    min-height: mm2px(420);
+                }
+            }
+
+            &[format="A3"] {
+                width: mm2px(297);
+                min-height: mm2px(420);
+
+
+                &[landscape] {
+                    width: mm2px(420);
+                    min-height: mm2px(297);
+                }
+            }
+
+            &[format="A4"] {
+                width: mm2px(210);
+                min-height: mm2px(297);
+
+                &[landscape] {
+                    width: mm2px(297);
+                    min-height: mm2px(210);
+                }
+            }
+
+            &[format="A5"] {
+                width: mm2px(148);
+                min-height: mm2px(210);
+
+                &[landscape] {
+                    width: mm2px(210);
+                    min-height: mm2px(148);
+                }
+            }
+
+            &[format="A6"] {
+                width: mm2px(105);
+                min-height: mm2px(148);
+
+                &[landscape] {
+                    width: mm2px(148);
+                    min-height: mm2px(105);
+                }
+            }
+
+            &[format="Letter"] {
+                width: mm2px(216);
+                min-height: mm2px(279);
+
+
+                &[landscape] {
+                    width: mm2px(279);
+                    min-height: mm2px(216);
+                }
+            }
+            &[format="Legal"] {
+                width: mm2px(216);
+                min-height: mm2px(356);
+
+                &[landscape] {
+                    width: mm2px(356);
+                    min-height: mm2px(216);
+                }
+            }
+            &[format="Tabloid"] {
+                width: mm2px(279);
+                min-height: mm2px(432);
+
+                &[landscape] {
+                    width: mm2px(432);
+                    min-height: mm2px(279);
+                }
+            }
+            &[format="Ledger"] {
+                width: mm2px(432);
+                min-height: mm2px(279);
+
+                &[landscape] {
+                    width: mm2px(279);
+                    min-height: mm2px(432);
+                }
+            }
+
+            :is(header) {
+                order: 1;
+            }
+            :is(main) {
+                order: 2;
+                flex-grow: 1;
+                border: 1px solid var(--misky-semantic-color-border-lvl-1);
+            }
+            :is(footer) {
+                order: 3;
+            }
+        }
+    }
 }

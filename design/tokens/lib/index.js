@@ -1,25 +1,21 @@
 import merge from "deepmerge";
 import fs from "fs-extra";
 import { jsonc } from "jsonc";
-import { createRequire } from "module";
 import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { rimraf } from "rimraf";
-import styleDictionary from "style-dictionary";
+import sd from "style-dictionary";
 
 import { EasingBezier } from "./transformers/css-bezier.js";
 
-const __filename = fileURLToPath(import.meta.url);
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
-
-const { extend } = styleDictionary;
 
 const workspaceRoot = process.env.NX_WORKSPACE_ROOT || process.env.PWD || process.cwd();
 const projectRoot = resolve(workspaceRoot, "design/tokens");
 
 rimraf.sync(resolve(projectRoot, "platforms"));
 
-const StyleDictionary = styleDictionary.extend("src/tokens.config.cjs");
+const StyleDictionary = sd.extend("lib/tokens.config.cjs");
 
 StyleDictionary.registerTransform(EasingBezier);
 StyleDictionary.registerTransformGroup({

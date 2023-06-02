@@ -1,0 +1,45 @@
+@layer editor.edit {
+    .ProseMirror {
+        :is(table) {
+            position: relative;
+
+            :is(tr:first-of-type) {
+                position: relative;
+
+                :is(td) {
+                    position: relative;
+
+                    &.table-column__selected {
+                        .table-column-controls-decoration::before {
+                            content: "";
+                            color: aquamarine;
+                            background-color: gray;
+                            border: 1px solid rosybrown;
+                        }
+                    }
+
+                    .table-column-controls-decoration {
+                        /* display: none; */
+                        cursor: pointer;
+                        position: absolute;
+                        width: calc(100% + 2px);
+                        left: -1px;
+                        top: -26px;
+                        height: 25px;
+                        z-index: 0;
+
+                        &::before {
+                            content: '';
+                            width: 100%;
+                            height: 24px;
+                            position: absolute;
+                            left: 0;
+                            border-right: 1px solid black;
+                            background-color: red;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

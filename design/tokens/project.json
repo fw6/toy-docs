@@ -8,14 +8,14 @@
         "serve": {
             "executor": "nx:run-commands",
             "options": {
-                "command": "chokidar 'src/**/*.json' -c 'ts-node src/index'",
+                "command": "chokidar 'lib/**/*.json' -c 'node lib/index.js'",
                 "cwd": "design/tokens"
             }
         },
         "build": {
             "executor": "nx:run-commands",
             "options": {
-                "command": "node src/index.js",
+                "command": "node lib/index.js",
                 "cwd": "design/tokens"
             }
         }

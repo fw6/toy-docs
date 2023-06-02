@@ -64,7 +64,7 @@
     <slot name="footer" {editor} />
 </div>
 
-<style>
+<style lang="postcss">
     @import url("./prosemirror.css");
 
     .editor {

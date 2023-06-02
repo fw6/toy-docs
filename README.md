@@ -22,3 +22,5 @@
 ## Q & A
 
 https://stackoverflow.com/questions/72404279/msedge-redirects-http-to-https-even-with-edge-flags-edge-automatic-https-dis
+
+https://github.com/microsoft/vscode/issues/147824
