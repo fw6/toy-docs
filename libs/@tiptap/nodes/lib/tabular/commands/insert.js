@@ -6,11 +6,10 @@
  */
 
 import { decimalRounding } from "@local/shared";
-import { Selection, TextSelection } from "@tiptap/pm/state";
-import { TableMap } from "../helpers/table-map";
-import { addColumnAt } from "../utils/cols";
+import { TextSelection } from "@tiptap/pm/state";
+import { addColumn, isInTable, selectedRect, TableMap } from "@tiptap/pm/tables";
+
 import { tableNodeTypes } from "../utils/node-types";
-import { addRowAt, copyPreviousRow } from "../utils/rows";
 import { findTable, generateColwidths } from "../utils/tables";
 
 /**
@@ -71,78 +70,51 @@ const createCell = (cellType, cellContent) => {
 };
 
 /**
- * @param {number} column
- * @returns {Command}
+ * Command to add a column before the column with the selection.
+ *
+ * @public
+ * @param {EditorState} state
+ * @param {(tr: Transaction) => void} [dispatch]
+ * @param {-1 | 1} [side]
+ * @returns {boolean}
  */
-export const insertColumn = (column) => (state, dispatch) => {
-    const tr = addColumnAt(column)(state.tr);
-
-    const table = findTable(tr.selection);
-    if (!table) {
-        return false;
-    }
-    const map = TableMap.get(table.node);
-    // move the cursor to the newly created column
-    const pos = map.positionAt(0, column, table.node);
-
+export function addColumnAt(state, dispatch, side) {
+    if (!isInTable(state)) return false;
     if (dispatch) {
-        // #region Update table colwidth attribute
+        const rect = selectedRect(state);
+        const column = side === 1 ? rect.right : rect.left;
+        const tr = addColumn(state.tr, rect, column);
 
-        /** @type {number[]} */
-        let colwidths = table.node.attrs.colwidths;
+        // #region
+        const table = findTable(tr.selection);
+        if (table) {
+            const map = TableMap.get(table.node);
+            /** @type {number[]} */
+            let colwidths = table.node.attrs.colwidths;
 
-        if (!colwidths.length) {
-            colwidths = generateColwidths(map.width);
-        } else {
-            // the new column width is the lastest average
-            const newColwidth = decimalRounding(100 / map.width, 2);
+            if (!colwidths.length) {
+                colwidths = generateColwidths(map.width);
+            } else {
+                // the new column width is the lastest average
+                const newColwidth = decimalRounding(100 / map.width, 2);
 
-            // The previous columns share the new extra width proportionally
-            colwidths = colwidths.flatMap((colwidth, index) => {
-                const width = decimalRounding(colwidth * (1 - newColwidth / 100), 2);
+                // The previous columns share the new extra width proportionally
+                colwidths = colwidths.flatMap((colwidth, index) => {
+                    const width = decimalRounding(colwidth * (1 - newColwidth / 100), 2);
 
-                if (index === column) {
-                    return [newColwidth, width];
-                }
+                    if (index === column) {
+                        return [newColwidth, width];
+                    }
 
-                return width;
-            });
+                    return width;
+                });
+            }
+
+            tr.setNodeAttribute(table.pos, "colwidths", colwidths);
         }
-
-        tr.setNodeAttribute(table.pos, "colwidths", colwidths);
         // #endregion
 
-        tr.setSelection(Selection.near(tr.doc.resolve(table.start + pos)));
         dispatch(tr);
     }
     return true;
-};
-
-/**
- * @param {number} row
- * @param {boolean} [moveCursorToTheNewRow]
- * @returns {Command}
- */
-export const insertRow = (row, moveCursorToTheNewRow = false) => (state, dispatch) => {
-    const clonePreviousRow = row > 0;
-
-    const tr = clonePreviousRow ? copyPreviousRow(state.schema)(row)(state.tr) : addRowAt(row)(state.tr);
-
-    const table = findTable(tr.selection);
-    if (!table) {
-        return false;
-    }
-    if (dispatch) {
-        const { selection } = state;
-        if (moveCursorToTheNewRow) {
-            // move the cursor to the newly created row
-            const pos = TableMap.get(table.node).positionAt(row, 0, table.node);
-            tr.setSelection(Selection.near(tr.doc.resolve(table.start + pos)));
-        } else {
-            tr.setSelection(selection.map(tr.doc, tr.mapping));
-        }
-
-        dispatch(tr);
-    }
-    return true;
-};
+}

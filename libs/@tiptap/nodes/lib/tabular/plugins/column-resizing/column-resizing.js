@@ -1,8 +1,7 @@
 import { decimalRounding } from "@local/shared";
 import { Plugin, PluginKey } from "@tiptap/pm/state";
+import { TableMap, cellAround, pointsAtCell } from "@tiptap/pm/tables";
 import { Decoration, DecorationSet } from "@tiptap/pm/view";
-import { TableMap } from "../../helpers/table-map";
-import { cellAround, pointsAtCell } from "../../utils/cells";
 
 /**
  * @typedef {0 | 1 | 2} ResizingMetaAction

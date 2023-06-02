@@ -1,14 +1,22 @@
 import { Node, callOrReturn, getExtensionField, mergeAttributes } from "@tiptap/core";
-import { deleteColumn, deleteRow, deleteTable } from "./commands/delete";
-import { createTable, insertColumn, insertRow } from "./commands/insert";
-import { setCellAttr } from "./commands/misc";
-import { goToNextCell, setCellSelection } from "./commands/selection";
-import { mergeCells, splitCell } from "./commands/spanning";
+import {
+    CellSelection,
+    addRowAfter,
+    addRowBefore,
+    deleteRow,
+    deleteTable,
+    fixTables,
+    goToNextCell,
+    mergeCells,
+    setCellAttr,
+    splitCell,
+    tableEditing,
+} from "@tiptap/pm/tables";
+
 import { columnResizing } from "./plugins/column-resizing/column-resizing";
-import { tableEditing } from "./plugins/editing";
-import { gridControlsPlugin } from "./plugins/grid-controls";
-import { getClosestSelectionRect } from "./utils/selection";
-import { fixTables } from "./utils/tables";
+
+import { deleteColumn } from "./commands/delete";
+import { addColumnAt, createTable } from "./commands/insert";
 
 /**
  * @type {Node<TableOptions>}
@@ -19,9 +27,6 @@ export const Table = Node.create({
         return {
             HTMLAttributes: {},
             resizable: false,
-            handleWidth: 5,
-            cellMinWidth: 25,
-            lastColumnResizable: true,
             allowTableNodeSelection: false,
         };
     },
@@ -109,73 +114,37 @@ export const Table = Node.create({
     },
 
     addProseMirrorPlugins() {
-        return [
-            gridControlsPlugin(),
-            columnResizing(),
-            tableEditing({ allowTableNodeSelection: this.options.allowTableNodeSelection }),
-        ];
+        return [columnResizing(), tableEditing({ allowTableNodeSelection: this.options.allowTableNodeSelection })];
     },
 
     addCommands() {
         return {
-            insertTable: (props) => ({ state, dispatch }) => createTable(props)(state, dispatch),
-            deleteTable: () => ({ state, dispatch }) => {
-                return deleteTable(state, dispatch);
-            },
-
-            addRowAfter: () => ({ state, dispatch }) => {
-                const rect = getClosestSelectionRect(state);
-                const index = rect?.bottom;
-                if (index) {
-                    return insertRow(index, true)(state, dispatch);
-                }
-
-                return true;
-            },
-            addRowBefore: () => ({ state, dispatch }) => {
-                const rect = getClosestSelectionRect(state);
-                const index = rect?.bottom;
-                if (index) {
-                    return insertRow(index, true)(state, dispatch);
-                }
-
-                return true;
-            },
-            deleteRow: () => ({ state, dispatch }) => {
-                deleteRow(state, dispatch);
-                return true;
-            },
-
-            addColumnAfter: () => ({ state, dispatch }) => {
-                const rect = getClosestSelectionRect(state);
-                const index = rect?.right;
-
-                if (typeof index === "number") {
-                    return insertColumn(index)(state, dispatch);
-                }
-                return true;
-            },
+            insertTable:
+                ({ rows = 3, cols = 3, cellContent } = {}) =>
+                ({ state, dispatch }) => {
+                    return createTable({ rowsCount: rows, colsCount: cols, cellContent })(state, dispatch);
+                },
             addColumnBefore: () => ({ state, dispatch }) => {
-                const rect = getClosestSelectionRect(state);
-                const index = rect?.left;
-
-                if (typeof index === "number") {
-                    return insertColumn(index)(state, dispatch);
-                }
-                return true;
+                return addColumnAt(state, dispatch);
+            },
+            addColumnAfter: () => ({ state, dispatch }) => {
+                return addColumnAt(state, dispatch, 1);
             },
             deleteColumn: () => ({ state, dispatch }) => {
                 return deleteColumn(state, dispatch);
             },
-
-            goToNextCell: () => ({ state, dispatch }) => goToNextCell(1)(state, dispatch),
-            goToPreviousCell: () => ({ state, dispatch }) => goToNextCell(-1)(state, dispatch),
-            setCellSelection:
-                ({ anchorCell, headCell }) =>
-                ({ state, dispatch }) => {
-                    return setCellSelection(anchorCell, headCell)(state, dispatch);
-                },
-
+            addRowBefore: () => ({ state, dispatch }) => {
+                return addRowBefore(state, dispatch);
+            },
+            addRowAfter: () => ({ state, dispatch }) => {
+                return addRowAfter(state, dispatch);
+            },
+            deleteRow: () => ({ state, dispatch }) => {
+                return deleteRow(state, dispatch);
+            },
+            deleteTable: () => ({ state, dispatch }) => {
+                return deleteTable(state, dispatch);
+            },
             mergeCells: () => ({ state, dispatch }) => {
                 return mergeCells(state, dispatch);
             },
@@ -189,7 +158,15 @@ export const Table = Node.create({
 
                 return splitCell(state, dispatch);
             },
-
+            setCellAttribute: (name, value) => ({ state, dispatch }) => {
+                return setCellAttr(name, value)(state, dispatch);
+            },
+            goToNextCell: () => ({ state, dispatch }) => {
+                return goToNextCell(1)(state, dispatch);
+            },
+            goToPreviousCell: () => ({ state, dispatch }) => {
+                return goToNextCell(-1)(state, dispatch);
+            },
             fixTables: () => ({ state, dispatch }) => {
                 if (dispatch) {
                     fixTables(state);
@@ -197,8 +174,15 @@ export const Table = Node.create({
 
                 return true;
             },
-            setCellAttribute: (name, value) => ({ state, dispatch }) => {
-                return setCellAttr(name, value)(state, dispatch);
+            setCellSelection: (position) => ({ tr, dispatch }) => {
+                if (dispatch) {
+                    const selection = CellSelection.create(tr.doc, position.anchorCell, position.headCell);
+
+                    // @ts-ignore
+                    tr.setSelection(selection);
+                }
+
+                return true;
             },
         };
     },

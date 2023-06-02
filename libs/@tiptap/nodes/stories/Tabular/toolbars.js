@@ -19,7 +19,7 @@ export const defaultToolbars = [
     {
         icon: InsertTable,
         title: "Insert table",
-        action: ({ editor }) => editor.commands.insertTable({ rowsCount: 2, colsCount: 4 }),
+        action: ({ editor }) => editor.commands.insertTable({ rows: 2, cols: 4 }),
         isActive: ({ editor }) => editor.isActive("table"),
     },
 

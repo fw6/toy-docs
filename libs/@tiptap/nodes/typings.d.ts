@@ -12,8 +12,8 @@ declare module "@tiptap/core" {
 
         table: {
             insertTable: (options?: {
-                rowsCount?: number;
-                colsCount?: number;
+                rows?: number;
+                cols?: number;
                 cellContent?: PMNode;
             }) => ReturnType;
             deleteTable: () => ReturnType;
