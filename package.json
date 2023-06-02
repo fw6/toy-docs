@@ -83,6 +83,7 @@
     "dependencies": {
         "@iconify/json": "^2.2.70",
         "@local/simple-editor": "workspace:^",
+        "@tanstack/table-core": "^8.9.1",
         "@tiptap/core": "^2.0.3",
         "@tiptap/pm": "^2.0.3",
         "@tiptap/starter-kit": "^2.0.3",
@@ -93,7 +94,9 @@
     },
     "pnpm": {
         "patchedDependencies": {
-            "mitt@3.0.0": "patches/mitt@3.0.0.patch"
+            "mitt@3.0.0": "patches/mitt@3.0.0.patch",
+            "@tanstack/table-core@8.9.1": "patches/@tanstack__table-core@8.9.1.patch",
+            "@tiptap/core@2.0.3": "patches/@tiptap__core@2.0.3.patch"
         }
     }
 }
