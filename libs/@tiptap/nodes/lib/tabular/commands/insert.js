@@ -11,6 +11,7 @@ import { addColumn, isInTable, selectedRect, TableMap } from "@tiptap/pm/tables"
 
 import { tableNodeTypes } from "../utils/node-types";
 import { findTable, generateColwidths } from "../utils/tables";
+import { CELL_WIDTH_DECIMAL_PLACES } from "../plugins/column-resizing/column-resizing";
 
 /**
  * @param {CreateTableProps} [props]
@@ -96,11 +97,11 @@ export function addColumnAt(state, dispatch, side) {
                 colwidths = generateColwidths(map.width);
             } else {
                 // the new column width is the lastest average
-                const newColwidth = decimalRounding(100 / map.width, 2);
+                const newColwidth = decimalRounding(100 / map.width, CELL_WIDTH_DECIMAL_PLACES);
 
                 // The previous columns share the new extra width proportionally
                 colwidths = colwidths.flatMap((colwidth, index) => {
-                    const width = decimalRounding(colwidth * (1 - newColwidth / 100), 2);
+                    const width = decimalRounding(colwidth * (1 - newColwidth / 100), CELL_WIDTH_DECIMAL_PLACES);
 
                     if (index === column) {
                         return [newColwidth, width];

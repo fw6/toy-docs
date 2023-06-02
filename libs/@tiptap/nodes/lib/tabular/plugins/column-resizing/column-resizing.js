@@ -13,8 +13,8 @@ export const COLUMN_RESIZING_KEY = new PluginKey("column_resizing");
 
 const RESIZE_HANDLE_WIDTH = 3;
 const CELL_MIN_WIDTH = 32;
-const DECIMAL_PLACES = 2;
 const TABLE_MIN_WIDTH = 30;
+export const CELL_WIDTH_DECIMAL_PLACES = 2;
 
 /**
  * Column resizing feature, support table width percentage, dependent the table node attributes:
@@ -87,7 +87,7 @@ export const columnResizing = () => {
                      */
                     const colwidths = table.attrs.colwidths;
                     if (!colwidths.length) {
-                        const colwidth = decimalRounding(100 / tableMap.width, DECIMAL_PLACES);
+                        const colwidth = decimalRounding(100 / tableMap.width, CELL_WIDTH_DECIMAL_PLACES);
                         colwidths.splice(0, 0, ...Array(colLength).fill(colwidth));
                         view.dispatch(view.state.tr.setNodeAttribute(tablePos, "colwidths", colwidths));
                     }
@@ -119,9 +119,9 @@ export const columnResizing = () => {
                     let lastColwidths = null;
 
                     /**
-                     * @param {MouseEvent} event
+                     * @param {MouseEvent} _event
                      */
-                    function finish(event) {
+                    function finish(_event) {
                         window.removeEventListener("mousemove", move);
                         window.removeEventListener("mouseup", finish);
                         const pluginState = COLUMN_RESIZING_KEY.getState(view.state);
@@ -131,33 +131,53 @@ export const columnResizing = () => {
                             // #region Fix total column widths
 
                             if (lastColwidths) {
-                                const colwidths = lastColwidths;
+                                const cellEle = view.nodeDOM(cellPos);
+
+                                // calcute final column widths
+                                if (cellEle instanceof HTMLTableCellElement) {
+                                    const newRect = cellEle.getBoundingClientRect();
+                                    const percentL = (newRect.right - newRect.left) / resizeableWidth;
+                                    const finalPercent = decimalRounding(
+                                        resizeablePercentage * percentL,
+                                        CELL_WIDTH_DECIMAL_PLACES,
+                                    );
+
+                                    lastColwidths[colCount] = finalPercent;
+                                    lastColwidths[colCount + 1] = decimalRounding(
+                                        resizeablePercentage - finalPercent,
+                                        CELL_WIDTH_DECIMAL_PLACES,
+                                    );
+                                }
+
+                                let colwidths = lastColwidths;
                                 const totalWidth = colwidths.reduce((acc, cur) => acc + cur, 0);
                                 const exceed = totalWidth - 100;
 
                                 // Bias within 1%
                                 if (exceed < -1 || exceed > 1) {
-                                    const mean = decimalRounding(exceed, DECIMAL_PLACES) / colwidths.length;
+                                    const mean = decimalRounding(exceed, CELL_WIDTH_DECIMAL_PLACES) / colwidths.length;
                                     let counter = 0;
-                                    tr.setNodeAttribute(
-                                        tablePos,
-                                        "colwidths",
-                                        colwidths.reduce(
-                                            /** @param {number[]} acc */
-                                            (acc, cur, i) => {
-                                                if (i === colwidths.length - 1) {
-                                                    acc.push(decimalRounding(100 - counter, DECIMAL_PLACES));
-                                                } else {
-                                                    const cellwidth = decimalRounding(cur - mean, DECIMAL_PLACES);
-                                                    counter += cellwidth;
-                                                    acc.push(cellwidth);
-                                                }
-                                                return acc;
-                                            },
-                                            [],
-                                        ),
+
+                                    colwidths = colwidths.reduce(
+                                        /** @param {number[]} acc */
+                                        (acc, cur, i) => {
+                                            if (i === colwidths.length - 1) {
+                                                acc.push(decimalRounding(100 - counter, CELL_WIDTH_DECIMAL_PLACES));
+                                            } else {
+                                                const cellwidth = decimalRounding(
+                                                    cur - mean,
+                                                    CELL_WIDTH_DECIMAL_PLACES,
+                                                );
+                                                counter += cellwidth;
+                                                acc.push(cellwidth);
+                                            }
+                                            return acc;
+                                        },
+                                        [],
                                     );
                                 }
+
+                                tr.setNodeAttribute(tablePos, "colwidths", colwidths);
                             }
 
                             // #endregion
@@ -185,24 +205,29 @@ export const columnResizing = () => {
                         if (!pluginState) return;
                         if (pluginState.dragging) {
                             if (!isLastCol) {
-                                const offset = event.clientX - cellRect.x;
+                                let offset = event.clientX - cellRect.x;
 
-                                if (offset < CELL_MIN_WIDTH) {
+                                if (offset <= CELL_MIN_WIDTH) {
                                     console.warn('warning: "offset < CELL_MIN_WIDTH"');
-                                    return;
-                                } else if (offset > resizeableWidth - CELL_MIN_WIDTH) {
+                                    offset = CELL_MIN_WIDTH;
+                                    // return;
+                                } else if (offset >= resizeableWidth - CELL_MIN_WIDTH) {
                                     console.warn('warning: "offset > (resizeableWidth - CELL_MIN_WIDTH)"');
-                                    return;
+                                    // return;
+                                    offset = resizeableWidth - CELL_MIN_WIDTH;
                                 }
 
                                 const widths = [...colwidths];
                                 const percentL = offset / resizeableWidth;
-                                const finalPercent = decimalRounding(resizeablePercentage * percentL, DECIMAL_PLACES);
+                                const finalPercent = decimalRounding(
+                                    resizeablePercentage * percentL,
+                                    CELL_WIDTH_DECIMAL_PLACES,
+                                );
 
                                 widths[colCount] = finalPercent;
                                 widths[colCount + 1] = decimalRounding(
                                     resizeablePercentage - finalPercent,
-                                    DECIMAL_PLACES,
+                                    CELL_WIDTH_DECIMAL_PLACES,
                                 );
 
                                 const tr = view.state.tr;
@@ -218,7 +243,7 @@ export const columnResizing = () => {
                                     tableContainerRect.width - nextMarginWidthRight - marginWidthLeft;
                                 const nextRelativeTableWidth = decimalRounding(
                                     (nextTableWidth * 100) / tableContainerRect.width,
-                                    DECIMAL_PLACES,
+                                    CELL_WIDTH_DECIMAL_PLACES,
                                 );
 
                                 const tr = view.state.tr;
