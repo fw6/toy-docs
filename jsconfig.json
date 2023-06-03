@@ -2,7 +2,7 @@
     "extends": "./tsconfig.base",
     "compilerOptions": {
         "checkJs": true,
-        "moduleResolution": "node",
+        "moduleResolution": "bundler",
         "target": "es5"
     },
     "exclude": [

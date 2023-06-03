@@ -1,0 +1,12 @@
+{
+    "name": "@misky-design/tokens",
+    "version": "0.0.0",
+    "sideEffects": false,
+    "type": "module",
+    "files": [
+        "dist/"
+    ],
+    "volta": {
+        "extends": "../../package.json"
+    }
+}

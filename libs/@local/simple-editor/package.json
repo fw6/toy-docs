@@ -1,0 +1,19 @@
+{
+    "name": "@local/simple-editor",
+    "version": "0.0.0",
+    "type": "module",
+    "typings": "typings.d.ts",
+    "module": "./index.js",
+    "exports": {
+        ".": {
+            "default": "./index.js",
+            "types": "./typings.d.ts"
+        }
+    },
+    "peerDependencies": {
+        "@local/intl": "workspace:*"
+    },
+    "devDependencies": {
+        "@local/intl": "workspace:*"
+    }
+}

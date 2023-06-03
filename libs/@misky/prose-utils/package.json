@@ -1,0 +1,21 @@
+{
+    "name": "@misky/prose-utils",
+    "description": "Utils library for ProseMirror",
+    "peerDependencies": {
+        "@tiptap/pm": "~2.0.3"
+    },
+    "devDependencies": {
+        "@tiptap/pm": "~2.0.3"
+    },
+    "module": "index.js",
+    "typings": "typings.d.ts",
+    "exports": {
+        ".": {
+            "default": "./index.js",
+            "types": "./typings.d.ts"
+        }
+    },
+    "volta": {
+        "extends": "../../../package.json"
+    }
+}

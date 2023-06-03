@@ -1,0 +1,11 @@
+{
+    "extends": "../../../tsconfig.base",
+    "compilerOptions": {
+        "target": "ESNext",
+        "checkJs": true,
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "skipLibCheck": false,
+        "resolveJsonModule": true
+    }
+}

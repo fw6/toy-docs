@@ -1,0 +1,74 @@
+{
+    "core": {
+        "color": {
+            "dipsy": {
+                "0": {
+                    "value": "#f2f8e7",
+                    "attributes": {
+                        "category": "color"
+                    }
+                },
+                "50": {
+                    "value": "#dcecc0",
+                    "attributes": {
+                        "category": "color"
+                    }
+                },
+                "100": {
+                    "value": "#c5e099",
+                    "attributes": {
+                        "category": "color"
+                    }
+                },
+                "200": {
+                    "value": "#afd572",
+                    "attributes": {
+                        "category": "color"
+                    }
+                },
+                "300": {
+                    "value": "#8dc039",
+                    "attributes": {
+                        "category": "color"
+                    }
+                },
+                "400": {
+                    "value": "#7cab30",
+                    "attributes": {
+                        "category": "color"
+                    }
+                },
+                "500": {
+                    "value": "#6e9b27",
+                    "attributes": {
+                        "category": "color"
+                    }
+                },
+                "600": {
+                    "value": "#5d8221",
+                    "attributes": {
+                        "category": "color"
+                    }
+                },
+                "700": {
+                    "value": "#496e0c",
+                    "attributes": {
+                        "category": "color"
+                    }
+                },
+                "800": {
+                    "value": "#3e5c0a",
+                    "attributes": {
+                        "category": "color"
+                    }
+                },
+                "900": {
+                    "value": "#33490e",
+                    "attributes": {
+                        "category": "color"
+                    }
+                }
+            }
+        }
+    }
+}

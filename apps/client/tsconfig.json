@@ -18,8 +18,26 @@
             "$lib/*": [
                 "./src/lib/*"
             ],
-            "@misky/extension-table": [
-                "../../libs/extension-table/src/lib/index.js"
+            "@misky/tiptap-extensions": [
+                "../../libs/@tiptap/extensions/lib/index.js"
+            ],
+            "@misky/tiptap-marks": [
+                "../../libs/@tiptap/marks/lib/index.js"
+            ],
+            "@misky/tiptap-nodes": [
+                "../../libs/@tiptap/nodes/lib/index.js"
+            ],
+            "@misky/tiptap-svelte": [
+                "../../libs/@tiptap/svelte/lib/index.js"
+            ],
+            "@misky/prose-utils": [
+                "../../libs/@misky/prose-utils/index.js"
+            ],
+            "@local/shared": [
+                "../../libs/@local/shared/index.js"
+            ],
+            "@local/intl": [
+                "../../libs/@local/intl/index.js"
             ]
         }
     }

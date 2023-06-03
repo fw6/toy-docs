@@ -2,11 +2,14 @@
     "compileOnSave": false,
     "compilerOptions": {
         "allowJs": true,
+        "checkJs": true,
         "rootDir": ".",
         "noUnusedLocals": true,
         "sourceMap": true,
         "declaration": false,
-        "moduleResolution": "node",
+        "moduleResolution": "bundler",
+        "verbatimModuleSyntax": true,
+        "isolatedModules": true,
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "importHelpers": true,
@@ -23,10 +26,38 @@
         "skipDefaultLibCheck": true,
         "baseUrl": ".",
         "paths": {
-            "@misky/extension-table": [
-                "libs/extension-table/src/lib/index.js"
-            ]
-        }
+            "@misky/tiptap-extensions": [
+                "libs/@tiptap/extensions/index.js"
+            ],
+            "@misky/tiptap-marks": [
+                "libs/@tiptap/marks/index.js"
+            ],
+            "@misky/tiptap-nodes": [
+                "libs/@tiptap/nodes/index.js"
+            ],
+            "@misky/tiptap-svelte": [
+                "libs/@tiptap/svelte/index.js"
+            ],
+            "@misky/prose-utils": [
+                "libs/@misky/prose-utils/index.js"
+            ],
+            "@local/shared": [
+                "libs/@local/shared/index.js"
+            ],
+            "@local/shared/postcss": [
+                "libs/@local/shared/postcss.cjs"
+            ],
+            "@local/intl": [
+                "libs/@local/intl/index.js"
+            ],
+        },
+        "strict": true,
+        "allowUnreachableCode": false,
+        "noImplicitAny": true,
+        "noImplicitOverride": true,
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "noFallthroughCasesInSwitch": true
     },
     "exclude": [
         "node_modules",

@@ -1,0 +1,28 @@
+{
+    "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+    "name": "intl",
+    "sourceRoot": "libs/@local/intl/lib",
+    "projectType": "library",
+    "generators": {},
+    "targets": {
+        "dev": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "typesafe-i18n",
+                "cwd": "libs/@local/intl"
+            }
+        }
+    },
+    "tags": [
+        "scope:shared",
+        "type:types"
+    ],
+    "namedInputs": {
+        "production": [
+            "default",
+            "!{projectRoot}/**/*.spec.ts",
+            "!{projectRoot}/**/*.spec.tsx",
+            "!{projectRoot}/**/*.md"
+        ]
+    }
+}

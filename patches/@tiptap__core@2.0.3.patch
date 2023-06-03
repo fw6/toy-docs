@@ -1,0 +1,38 @@
+diff --git a/dist/packages/core/src/EventEmitter.d.ts b/dist/packages/core/src/EventEmitter.d.ts
+index d217c52f90130ce3bc2baaededbdb35ca0d85295..592f33f360e7832f7af488a57d41e830b17f6c47 100644
+--- a/dist/packages/core/src/EventEmitter.d.ts
++++ b/dist/packages/core/src/EventEmitter.d.ts
+@@ -4,8 +4,8 @@ declare type CallbackFunction<T extends Record<string, any>, EventName extends S
+ export declare class EventEmitter<T extends Record<string, any>> {
+     private callbacks;
+     on<EventName extends StringKeyOf<T>>(event: EventName, fn: CallbackFunction<T, EventName>): this;
+-    protected emit<EventName extends StringKeyOf<T>>(event: EventName, ...args: CallbackType<T, EventName>): this;
++    emit<EventName extends StringKeyOf<T>>(event: EventName, ...args: CallbackType<T, EventName>): this;
+     off<EventName extends StringKeyOf<T>>(event: EventName, fn?: CallbackFunction<T, EventName>): this;
+-    protected removeAllListeners(): void;
++    removeAllListeners(): void;
+ }
+-export {};
++export { };
+diff --git a/src/EventEmitter.ts b/src/EventEmitter.ts
+index 09ff510b8f648ebb3dcfa687c295280b3fec3824..0aa0fe8800551188b1eaece164219ae707236021 100644
+--- a/src/EventEmitter.ts
++++ b/src/EventEmitter.ts
+@@ -22,7 +22,7 @@ export class EventEmitter<T extends Record<string, any>> {
+     return this
+   }
+ 
+-  protected emit<EventName extends StringKeyOf<T>>(event: EventName, ...args: CallbackType<T, EventName>): this {
++  public emit<EventName extends StringKeyOf<T>>(event: EventName, ...args: CallbackType<T, EventName>): this {
+     const callbacks = this.callbacks[event]
+ 
+     if (callbacks) {
+@@ -46,7 +46,7 @@ export class EventEmitter<T extends Record<string, any>> {
+     return this
+   }
+ 
+-  protected removeAllListeners(): void {
++  public removeAllListeners(): void {
+     this.callbacks = {}
+   }
+ }

@@ -1,0 +1,25 @@
+{
+    "name": "@misky/svelte-spreadsheet",
+    "description": "Spreadsheet component for Svelte, base on Tanstack table V8",
+    "version": "0.0.0",
+    "type": "module",
+    "typings": "typings.d.ts",
+    "svelte": "./index.js",
+    "exports": {
+        ".": {
+            "default": "./index.js",
+            "types": "./typings.d.ts"
+        }
+    },
+    "peerDependencies": {
+        "@tanstack/table-core": "~8.9.1",
+        "@local/intl": "workspace:*",
+        "svelte": "^3.54.0"
+    },
+    "devDependencies": {
+        "@local/intl": "workspace:*"
+    },
+    "volta": {
+        "extends": "../../../package.json"
+    }
+}

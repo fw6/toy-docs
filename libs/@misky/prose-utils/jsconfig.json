@@ -1,0 +1,9 @@
+{
+    "extends": "../../../tsconfig.base",
+    "compilerOptions": {
+        "checkJs": true,
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "skipLibCheck": true
+    }
+}

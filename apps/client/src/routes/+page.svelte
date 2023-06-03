@@ -1,7 +1,3 @@
-<script>
-    import { add } from "@misky/extension-table";
-</script>
-
 <svelte:head>
     <title>Home</title>
     <meta name="description" content="Svelte demo app" />

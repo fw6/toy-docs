@@ -1,0 +1,27 @@
+{
+    "core": {
+        "radius": {
+            "small": {
+                "value": "2",
+                "attributes": {
+                    "category": "size"
+                }
+            },
+            "medium": {
+                "value": "4",
+                "attributes": {
+                    "category": "size"
+                }
+            },
+            "large": {
+                "value": "8",
+                "attributes": {
+                    "category": "size"
+                }
+            },
+            "circle": {
+                "value": "50%"
+            }
+        }
+    }
+}

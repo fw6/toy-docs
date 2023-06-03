@@ -1,0 +1,24 @@
+{
+    "name": "@misky/tiptap-nodes",
+    "version": "0.0.1",
+    "type": "module",
+    "module": "index.js",
+    "typings": "typings.d.ts",
+    "exports": {
+        ".": {
+            "default": "./index.js",
+            "types": "./typings.d.ts"
+        }
+    },
+    "peerDependencies": {
+        "@misky/prose-utils": "workspace:*",
+        "@misky/tiptap-svelte": "workspace:*"
+    },
+    "devDependencies": {
+        "@misky/prose-utils": "workspace:*",
+        "@misky/tiptap-svelte": "workspace:*"
+    },
+    "volta": {
+        "extends": "../../../package.json"
+    }
+}

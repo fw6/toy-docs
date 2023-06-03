@@ -6,7 +6,7 @@
         "ignoreDeprecations": "5.0",
         "sourceMap": true,
         "declaration": true,
-        "moduleResolution": "node",
+        "moduleResolution": "bundler",
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "useDefineForClassFields": false,
