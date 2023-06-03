@@ -13,7 +13,11 @@
     },
     "peerDependencies": {
         "@tanstack/table-core": "~8.9.1",
+        "@local/intl": "workspace:*",
         "svelte": "^3.54.0"
+    },
+    "devDependencies": {
+        "@local/intl": "workspace:*"
     },
     "volta": {
         "extends": "../../../package.json"

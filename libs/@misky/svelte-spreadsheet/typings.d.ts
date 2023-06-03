@@ -1,7 +1,2 @@
-import type { SvelteComponentTyped } from "svelte";
-
-export interface SvelteSpreadsheetProps {
-    data: string[][];
-}
-
-export class SvelteSpreadsheet extends SvelteComponentTyped<{}> {}
+import type { ComponentProps } from "svelte";
+export { SpreadsheetProps, default as SvelteSpreadsheet } from "./lib/Spreadsheet.svelte";

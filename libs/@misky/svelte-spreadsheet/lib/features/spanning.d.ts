@@ -1,4 +1,4 @@
-import type { Cell, RowData } from "@tanstack/table-core";
+import type { Cell, RowData, TableFeature } from "@tanstack/table-core";
 
 declare module "@tanstack/table-core" {
     interface FeatureOptions<TData extends RowData> extends SpanningOptions<TData> {}
@@ -201,3 +201,11 @@ interface SpanningRow<TData extends RowData> {
 export interface SpanningOptions<TData> {
     enableSpanning?: boolean;
 }
+
+export const OSpanningData: {
+    readonly ROW: SpanningData.ROW;
+    readonly COLUMN: SpanningData.COLUMN;
+    readonly BOTH: SpanningData.BOTH;
+};
+export const isSpanningData: (value: unknown) => boolean;
+export const Spanning: TableFeature;

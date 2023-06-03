@@ -1,17 +1,14 @@
 import { SvelteSpreadsheet } from "..";
 import SheetDecorator from "./SheetDecorator.svelte";
-
-/**
- * @typedef {import('../typings').SvelteSpreadsheetProps} SvelteSpreadsheetProps
- */
+import { columns, data } from "./fixtures";
 
 /**
  * Svelte spreadsheet like Google Sheets
  *
- * @type {import('@storybook/svelte').Meta<import('svelte').SvelteComponentTyped<SvelteSpreadsheetProps>>}
+ * @type {StoryMetaSpec}
  */
 export default {
-    title: "Tiptap svelte/NodeViewRenderer",
+    title: "Spreadsheet/Sheet",
     component: SvelteSpreadsheet,
     decorators: [
         () => ({
@@ -23,10 +20,11 @@ export default {
 
 /**
  * More on writing stories with args: https://storybook.js.org/docs/svelte/writing-stories/args
- * @type {import('@storybook/svelte').StoryObj<SvelteSpreadsheetProps>}
+ * @type {StoryObjSpec}
  */
 export const Primary = {
     args: {
-        data: [["1"]],
+        data,
+        columns,
     },
 };

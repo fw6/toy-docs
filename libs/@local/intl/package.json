@@ -2,6 +2,18 @@
     "name": "@local/intl",
     "version": "0.0.0",
     "type": "module",
+    "module": "index.js",
+    "typings": "typings.d.ts",
+    "exports": {
+        ".": {
+            "default": "./index.js",
+            "types": "./typings.d.ts"
+        },
+        "./postcss": {
+            "require": "./postcss.cjs",
+            "default": "./postcss.cjs"
+        }
+    },
     "peerDependencies": {
         "typesafe-i18n": "^5.24.3"
     },

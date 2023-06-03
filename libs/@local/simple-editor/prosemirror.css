@@ -377,7 +377,7 @@
             :is(main) {
                 order: 2;
                 flex-grow: 1;
-                border: 1px solid var(--misky-semantic-color-border-lvl-1);
+                border: 1px solid var(--mds-semantic-color-border-lvl-1);
             }
             :is(footer) {
                 order: 3;

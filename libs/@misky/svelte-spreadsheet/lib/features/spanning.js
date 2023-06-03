@@ -1,3 +1,4 @@
+import { memo } from "@tanstack/table-core";
 import { last } from "lodash-es";
 
 /**
@@ -19,10 +20,6 @@ export const OSpanningData = /** @type {const} */ ({
 
 /** @param {unknown} value */
 export const isSpanningData = (value) => Object.values(OSpanningData).findIndex((v) => v === value) > -1;
-
-/**
- * @typedef {import("./spanning").Command} ECommand
- */
 
 export const Command = /** @type {const} */ ({
     /** @type {import('./spanning').Command.MERGE} */
@@ -434,6 +431,214 @@ export const Spanning = {
                     scope: [startIndex, endIndex],
                     data,
                 };
+            },
+        };
+    },
+
+    /**
+     * @template {import("@tanstack/table-core").RowData} TData
+     * @template TValue
+     *
+     * @param {import("@tanstack/table-core").Column<TData, TValue>} column
+     * @param {import("@tanstack/table-core").Table<TData>} table
+     * @returns {import("./spanning").SpanningColumn<TData, TValue>}
+     */
+    createColumn: (column, table) => {
+        return {
+            getSpanningColumnIndex: () => table.getAllColumns().findIndex((c) => c.id === column.id),
+        };
+    },
+
+    /**
+     * @template {import("@tanstack/table-core").RowData} TData
+     *
+     * @param {import("@tanstack/table-core").Row<TData>} row
+     * @param {import("@tanstack/table-core").Table<TData>} table
+     * @returns {import("./spanning").SpanningRow<TData>}
+     */
+    createRow: (row, table) => {
+        return {
+            getSpanningCells: memo(
+                () => [table.options.data, row.getAllCells()],
+                (_data, allCells) => {
+                    // 上一个有效的单元格，作为向左查找的目标指针
+                    let left = 0;
+                    // 记录右侧指针位置，用于向左查找🫱
+                    // let right = 0;
+                    // 用于向上查找🔝
+                    // let _top = row.index;
+
+                    const rows = table.getCoreRowModel().rows;
+
+                    const cells = allCells.flatMap((cell, index) => {
+                        cell.colSpan ||= 1;
+                        cell.rowSpan ||= 1;
+
+                        const cellValue = cell.getValue();
+                        // right = index;
+
+                        if (cellValue === OSpanningData.ROW) {
+                            // 左⬅️
+                            const prevCell = allCells[left];
+
+                            if (prevCell) {
+                                prevCell.colSpan += 1;
+                            }
+                            return [];
+                        } else if (cellValue === OSpanningData.COLUMN) {
+                            // 上⬆️
+                            let prevRowIndex = row.index;
+
+                            while (--prevRowIndex > -1) {
+                                const topRow = rows[prevRowIndex];
+                                const topCells = topRow.getAllCells();
+                                const topCell = topCells[index];
+                                if (!topCell) throw new Error(`Invalid table data: cell at ${prevRowIndex} not found`);
+
+                                if (topCell.getValue() !== OSpanningData.COLUMN) {
+                                    topCell.rowSpan += 1;
+                                    break;
+                                }
+                            }
+
+                            return [];
+                        } else if (cellValue === OSpanningData.BOTH) {
+                            // 上左⬆️⬅️
+                            return [];
+                        }
+
+                        left = index;
+                        return [cell];
+                    });
+
+                    // TODO
+                    return cells;
+                },
+                {
+                    key: process.env.NODE_ENV === "production" && "row.getSpanningCells",
+                    debug: () => table.options.debugAll ?? table.options.debugRows,
+                },
+            ),
+        };
+    },
+
+    /**
+     * @template {import("@tanstack/table-core").RowData} TData
+     * @template TValue
+     *
+     * @param {import("@tanstack/table-core").Cell<TData, TValue>} cell
+     * @param {import("@tanstack/table-core").Column<TData, TValue>} column
+     * @param {import("@tanstack/table-core").Row<TData>} row
+     * @param {import("@tanstack/table-core").Table<TData>} table
+     * @returns {import("./spanning").SpanningCell<TData, TValue>}
+     */
+    createCell: (cell, column, row, table) => {
+        return {
+            colSpan: 1,
+            rowSpan: 1,
+
+            getIndex() {
+                return row.getAllCells().findIndex((c) => c.id === cell.id);
+            },
+
+            getSpanningCell() {
+                const value = cell.getValue();
+                if (!isSpanningData(value)) return;
+
+                let index = cell.getIndex();
+                /** @type {import("@tanstack/table-core").Cell<TData, unknown> | undefined} */
+                let spanningCell;
+
+                if (value === OSpanningData.ROW) {
+                    const allCells = row.getAllCells();
+                    // rome-ignore lint/suspicious/noAssignInExpressions: <explanation>
+                    while (--index > -1 && (spanningCell = allCells[index])) {}
+                } else if (value === OSpanningData.COLUMN) {
+                    let rowIndex = row.index;
+                    const rows = table.getRowModel().rows;
+                    /** @type {import("@tanstack/table-core").Row<TData> | undefined} */
+                    let upperRow;
+                    // rome-ignore lint/suspicious/noAssignInExpressions: <explanation>
+                    while (--rowIndex > -1 && (upperRow = rows[rowIndex])) {}
+
+                    if (upperRow) spanningCell = upperRow.getAllCells()[cell.getIndex()];
+                } else if (value === OSpanningData.BOTH) {
+                    /** @type {import("@tanstack/table-core").Cell<TData, unknown> | undefined} */
+                    let leftCell;
+                    const allCells = row.getAllCells();
+
+                    while (
+                        --index > -1 &&
+                        // rome-ignore lint/suspicious/noAssignInExpressions: <explanation>
+                        (leftCell = allCells[index]) &&
+                        leftCell.getValue() !== OSpanningData.BOTH
+                    ) {}
+                    if (leftCell && leftCell.getValue() === OSpanningData.COLUMN) {
+                        let rowIndex = row.index;
+                        const rows = table.getRowModel().rows;
+                        /** @type {import("@tanstack/table-core").Row<TData> | undefined} */
+                        let upperRow;
+                        // rome-ignore lint/suspicious/noAssignInExpressions: <explanation>
+                        while (--rowIndex > -1 && (upperRow = rows[rowIndex])) {}
+
+                        if (upperRow) spanningCell = upperRow.getAllCells()[leftCell.getIndex()];
+                    }
+                }
+
+                if (!spanningCell)
+                    throw new Error(`Invalid table spanning data: row(${row.index}) col(${cell.getIndex()}`);
+
+                return spanningCell;
+            },
+
+            getSpanningCornerCells: () => {
+                if (!table.options.enableSpanning) return;
+                const value = cell.getValue();
+                const colSpan = cell.colSpan;
+                const rowSpan = cell.rowSpan;
+
+                if (isSpanningData(value)) {
+                    // 被合并的单元格
+                    // 调用所属单元格的`getSpanningCornerCells`方法
+                    const spanningCell = cell.getSpanningCell();
+                    if (spanningCell) return spanningCell.getSpanningCornerCells();
+                    return;
+                }
+
+                // 未合并其他单元格
+                if (colSpan < 2 && rowSpan < 2) return;
+
+                const cellIndex = cell.getIndex();
+
+                /** @type {import("@tanstack/table-core").Cell<TData, unknown> | undefined} */
+                let cornerCell;
+
+                // 仅左合并
+                if (colSpan > 1 && rowSpan < 2) {
+                    const allCells = row.getAllCells();
+
+                    cornerCell = allCells[cellIndex + colSpan - 1];
+
+                    if (!cornerCell) throw new Error("Table cell at right corner not found");
+                } else if (colSpan < 2 && rowSpan > 1) {
+                    const rows = table.getRowModel().rows;
+                    const lowerRow = rows[row.index + rowSpan - 1];
+
+                    cornerCell = lowerRow.getAllCells()[cellIndex];
+
+                    if (!cornerCell) throw new Error("Table cell at bottom corner not found");
+                } else {
+                    const rows = table.getRowModel().rows;
+                    const cornerCellIndex = cellIndex + colSpan - 1;
+                    const cornerCellRowIndex = row.index + rowSpan - 1;
+                    const lowerRow = rows[cornerCellRowIndex];
+
+                    cornerCell = lowerRow.getAllCells()[cornerCellIndex];
+
+                    if (!cornerCell) throw new Error("Table cell at bottom right corner not found");
+                }
+
+                return [cell, cornerCell];
             },
         };
     },

@@ -44,12 +44,12 @@
             "@local/shared": [
                 "libs/@local/shared/index.js"
             ],
+            "@local/shared/postcss": [
+                "libs/@local/shared/postcss.cjs"
+            ],
             "@local/intl": [
                 "libs/@local/intl/index.js"
             ],
-            "@local/shared/postcss": [
-                "libs/@local/shared/postcss.cjs"
-            ]
         },
         "strict": true,
         "allowUnreachableCode": false,

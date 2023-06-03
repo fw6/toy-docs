@@ -9,5 +9,11 @@
             "default": "./index.js",
             "types": "./typings.d.ts"
         }
+    },
+    "peerDependencies": {
+        "@local/intl": "workspace:*"
+    },
+    "devDependencies": {
+        "@local/intl": "workspace:*"
     }
 }

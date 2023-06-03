@@ -68,7 +68,7 @@ exports.basicPostCSSPlugins = [
     // Another way to use design tokens：`design-token("semantic.color.primary");`
     // require('@csstools/postcss-design-tokens'),
 
-    // Last way to use design tokens：`border: 1px solid token(--lmds-core-color-violet-200);`
+    // Last way to use design tokens：`border: 1px solid token(--mds-core-color-violet-200);`
     require("postcss-replace")({
         pattern: /token\(.*?--([^\s]+?)\)/gi,
         data: flatTokens,

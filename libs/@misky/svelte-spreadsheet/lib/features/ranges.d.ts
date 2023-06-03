@@ -4,7 +4,7 @@
  * - https://www.w3schools.com/googlesheets/google_sheets_ranges.php
  */
 
-import type { Cell, Column, OnChangeFn, RowData, Table, Updater } from "@tanstack/table-core";
+import type { Cell, Column, OnChangeFn, RowData, Table, TableFeature, Updater } from "@tanstack/table-core";
 import type { RangesRowModel } from "./utils/getRangesRowModel";
 
 declare module "@tanstack/table-core" {
@@ -201,3 +201,5 @@ export interface RangeInstance<TData extends RowData> {
 
     getRangeSelectingHandler: () => (event: unknown) => void;
 }
+
+export const Ranges: TableFeature;

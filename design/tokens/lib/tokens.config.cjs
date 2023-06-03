@@ -1,4 +1,7 @@
-const TOKEN_PREFIX = "misky";
+/**
+ * Misky design system
+ */
+const TOKEN_PREFIX = "mds";
 
 module.exports = {
     source: ["lib/configs/**/*.json", "lib/configs/**/*.jsonc"],

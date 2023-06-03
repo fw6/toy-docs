@@ -55,7 +55,7 @@ export type FieldConfig = {
      *
      * TODO
      */
-    align?: AlignType;
+    align?: Align;
 
     /**
      * 对单个列的配置项，key为行的索引
@@ -233,4 +233,7 @@ export type AutoSerialCustomOption =
               | "dd"; // 30
       };
 
-export type AlignType = `${"t" | "m" | "b"} ${"l" | "c" | "r"}`;
+export type AlignX = "l" | "c" | "r" | "j";
+export type AlignY = "t" | "m" | "b";
+
+export type Align = `${AlignY} ${AlignX}`;
