@@ -1,7 +1,9 @@
 <script>
+    import { detectLocale, loadLocaleAsync, setLocale } from "@local/intl";
     import { Editor } from "@tiptap/core";
     import { StarterKit } from "@tiptap/starter-kit";
     import { onMount } from "svelte";
+    import { localStorageDetector } from "typesafe-i18n/detectors";
     import MenuBar from "./MenuBar.svelte";
 
     /**
@@ -32,7 +34,11 @@
      */
     let editor;
 
-    onMount(() => {
+    onMount(async () => {
+        const detectedLocale = detectLocale(localStorageDetector);
+        await loadLocaleAsync(detectedLocale);
+        setLocale(detectedLocale);
+
         editor = new Editor({
             element,
             autofocus: "start",

@@ -1,15 +1,15 @@
 {
     "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-    "name": "tiptap/marks",
-    "sourceRoot": "libs/@tiptap/marks",
+    "name": "svelte-spreadsheet",
+    "sourceRoot": "libs/@misky/svelte-spreadsheet",
     "projectType": "library",
     "generators": {},
     "targets": {
         "storybook": {
             "executor": "@nx/storybook:storybook",
             "options": {
-                "port": 4402,
-                "configDir": "libs/@tiptap/marks/.storybook"
+                "port": 4405,
+                "configDir": "libs/@misky/svelte-spreadsheet/.storybook"
             },
             "configurations": {
                 "ci": {
@@ -19,7 +19,7 @@
         }
     },
     "tags": [
-        "scope:tiptap",
+        "scope:components",
         "type:types"
     ],
     "namedInputs": {

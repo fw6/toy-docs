@@ -1,25 +1,20 @@
 {
     "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-    "name": "tiptap/marks",
-    "sourceRoot": "libs/@tiptap/marks",
+    "name": "intl",
+    "sourceRoot": "libs/@local/intl/lib",
     "projectType": "library",
     "generators": {},
     "targets": {
-        "storybook": {
-            "executor": "@nx/storybook:storybook",
+        "dev": {
+            "executor": "nx:run-commands",
             "options": {
-                "port": 4402,
-                "configDir": "libs/@tiptap/marks/.storybook"
-            },
-            "configurations": {
-                "ci": {
-                    "quiet": true
-                }
+                "command": "typesafe-i18n",
+                "cwd": "libs/@local/intl"
             }
         }
     },
     "tags": [
-        "scope:tiptap",
+        "scope:shared",
         "type:types"
     ],
     "namedInputs": {

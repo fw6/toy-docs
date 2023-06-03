@@ -17,7 +17,14 @@
     "linter": {
         "enabled": true,
         "rules": {
-            "recommended": true
+            "recommended": true,
+            "suspicious": {
+                "noEmptyInterface": "off",
+                "noRedeclare": "off"
+            },
+            "style": {
+                "noParameterAssign": "warn"
+            }
         }
     }
 }

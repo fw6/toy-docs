@@ -1,4 +1,8 @@
-lockfileVersion: '6.0'
+lockfileVersion: '6.1'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
 
 patchedDependencies:
   '@tanstack/table-core@8.9.1':
@@ -42,9 +46,15 @@ importers:
       mitt:
         specifier: ^3.0.0
         version: 3.0.0(patch_hash=4gwmhmjqmdcx2eqz3s6leupoa4)
+      nanoid:
+        specifier: ^4.0.2
+        version: 4.0.2
       prosemirror-virtual-cursor:
         specifier: ^0.3.5
         version: 0.3.5(prosemirror-model@1.19.2)(prosemirror-state@1.4.3)(prosemirror-view@1.31.3)
+      typesafe-i18n:
+        specifier: ^5.24.3
+        version: 5.24.3(typescript@5.0.4)
     devDependencies:
       '@csstools/postcss-design-tokens':
         specifier: ^2.0.4
@@ -246,6 +256,15 @@ importers:
         specifier: ~2.0.3
         version: 2.0.3(@tiptap/core@2.0.3)
 
+  libs/@misky/svelte-spreadsheet:
+    dependencies:
+      '@tanstack/table-core':
+        specifier: ~8.9.1
+        version: 8.9.1(patch_hash=fjne5uqnqkvbitvgen5ilwpnei)
+      svelte:
+        specifier: ^3.54.0
+        version: 3.59.1
+
   libs/@tiptap/extensions: {}
 
   libs/@tiptap/marks: {}
@@ -260,6 +279,10 @@ importers:
         version: link:../svelte
 
   libs/@tiptap/svelte:
+    dependencies:
+      svelte:
+        specifier: ^3.54.0
+        version: 3.59.1
     devDependencies:
       '@misky/prose-utils':
         specifier: workspace:*
@@ -7275,6 +7298,12 @@ packages:
     hasBin: true
     dev: true
 
+  /nanoid@4.0.2:
+    resolution: {integrity: sha512-7ZtY5KTCNheRGfEFxnedV5zFiORN1+Y1N6zvPTnHQd8ENUvfaDBeuJDZb2bN/oXwXxu3qkTXDzy57W5vAmDTBw==}
+    engines: {node: ^14 || ^16 || >=18}
+    hasBin: true
+    dev: false
+
   /natural-compare@1.4.0:
     resolution: {integrity: sha1-Sr6/7tdUHywnrPspvbvRXI1bpPc=}
     dev: true
@@ -9136,7 +9165,6 @@ packages:
   /svelte@3.59.1:
     resolution: {integrity: sha512-pKj8fEBmqf6mq3/NfrB9SLtcJcUvjYSWyePlfCqN9gujLB25RitWK8PvFzlwim6hD/We35KbPlRteuA6rnPGcQ==}
     engines: {node: '>= 8'}
-    dev: true
 
   /sveltedoc-parser@4.2.1:
     resolution: {integrity: sha512-sWJRa4qOfRdSORSVw9GhfDEwsbsYsegnDzBevUCF6k/Eis/QqCu9lJ6I0+d/E2wOWCjOhlcJ3+jl/Iur+5mmCw==}
@@ -9315,11 +9343,19 @@ packages:
       mime-types: 2.1.35
     dev: true
 
+  /typesafe-i18n@5.24.3(typescript@5.0.4):
+    resolution: {integrity: sha512-VqjGbIydOqtQjO81mGo++TjuqeC8YoxxgYrO1/ikXIS/l/Q6mAcz4yrt5AvqjdFHMt3gRm7oGbVI/yLyV+VTOg==}
+    hasBin: true
+    peerDependencies:
+      typescript: '>=3.5.1'
+    dependencies:
+      typescript: 5.0.4
+    dev: false
+
   /typescript@5.0.4:
     resolution: {integrity: sha512-cW9T5W9xY37cc+jfEnaUvX91foxtHkza3Nw3wkoF4sSlKn0MONdkdEndig/qPBWXNkmplh3NzayQzCiHM4/hqw==}
     engines: {node: '>=12.20'}
     hasBin: true
-    dev: true
 
   /uc.micro@1.0.6:
     resolution: {integrity: sha512-8Y75pvTYkLJW2hWQHXxoqRgV7qb9B+9vFEtidML+7koHUFapnVJAZ6cKs+Qjz5Aw3aZWHMC6u0wJE3At+nSGwA==}

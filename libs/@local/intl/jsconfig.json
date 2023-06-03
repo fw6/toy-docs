@@ -1,0 +1,8 @@
+{
+    "extends": "../../../tsconfig.base",
+    "include": [
+        "index.js",
+        "lib/**/*.ts",
+        "typings.d.ts"
+    ]
+}

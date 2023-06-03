@@ -35,6 +35,9 @@
             ],
             "@local/shared": [
                 "../../libs/@local/shared/index.js"
+            ],
+            "@local/intl": [
+                "../../libs/@local/intl/index.js"
             ]
         }
     }

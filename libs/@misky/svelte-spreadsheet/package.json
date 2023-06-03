@@ -1,8 +1,8 @@
 {
-    "name": "@misky/tiptap-svelte",
-    "version": "0.0.1",
+    "name": "@misky/svelte-spreadsheet",
+    "description": "Spreadsheet component for Svelte, base on Tanstack table V8",
+    "version": "0.0.0",
     "type": "module",
-    "module": "index.js",
     "typings": "typings.d.ts",
     "svelte": "./index.js",
     "exports": {
@@ -12,11 +12,8 @@
         }
     },
     "peerDependencies": {
-        "@misky/prose-utils": "workspace:*",
+        "@tanstack/table-core": "~8.9.1",
         "svelte": "^3.54.0"
-    },
-    "devDependencies": {
-        "@misky/prose-utils": "workspace:*"
     },
     "volta": {
         "extends": "../../../package.json"

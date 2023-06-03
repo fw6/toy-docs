@@ -24,6 +24,10 @@ const config = {
             title: "Tiptap svelte",
             url: "http://localhost:4404",
         },
+        "svelte-spreadsheet": {
+            title: "Spreadsheet",
+            url: "http://localhost:4405",
+        },
     },
 };
 export default config;

@@ -53,6 +53,7 @@ export default {
                     "@misky/tiptap-svelte": resolve(`${process.env.NX_WORKSPACE_ROOT}/libs/@tiptap/svelte/index.js`),
                     "@misky/prose-utils": resolve(`${process.env.NX_WORKSPACE_ROOT}/libs/@misky/prose-utils/index.js`),
                     "@local/shared": resolve(`${process.env.NX_WORKSPACE_ROOT}/libs/@local/shared/index.js`),
+                    "@local/intl": resolve(`${process.env.NX_WORKSPACE_ROOT}/libs/@local/intl/index.js`),
                 },
             },
             plugins: [

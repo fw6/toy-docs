@@ -1,0 +1,9 @@
+{
+    "extends": "../../../tsconfig.base",
+    "compilerOptions": {
+        "skipLibCheck": false,
+        "target": "ESNext",
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true
+    }
+}

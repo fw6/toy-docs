@@ -1,0 +1,12 @@
+{
+    "name": "@local/intl",
+    "version": "0.0.0",
+    "type": "module",
+    "peerDependencies": {
+        "typesafe-i18n": "^5.24.3"
+    },
+    "scripts": {
+        "dev": "typesafe-i18n",
+        "build": "typesafe-i18n"
+    }
+}
