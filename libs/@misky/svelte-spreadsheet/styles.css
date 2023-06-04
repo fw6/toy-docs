@@ -1,0 +1,30 @@
+.border-collapse\:collapse{
+	border-collapse: collapse
+}
+.display\:block{
+	display: block
+}
+.margin\:0{
+	margin: 0
+}
+.max-width\:100\%{
+	max-width: 100%
+}
+.overflow\:visible{
+	overflow: visible
+}
+.position\:relative{
+	position: relative
+}
+.user-select\:none{
+	-webkit-user-select: none;
+	   -moz-user-select: none;
+	        user-select: none
+}
+.white-space\:nowrap{
+	white-space: nowrap
+}
+.width\:fit-content{
+	width: -moz-fit-content;
+	width: fit-content
+}

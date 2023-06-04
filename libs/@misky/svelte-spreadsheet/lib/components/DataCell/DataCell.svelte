@@ -115,7 +115,7 @@
     {/if}
 </td>
 
-<style lang="postcss">
+<style lang="css">
     .data-cell {
         position: relative;
         cursor: cell;

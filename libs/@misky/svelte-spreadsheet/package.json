@@ -9,7 +9,8 @@
         ".": {
             "default": "./index.js",
             "types": "./typings.d.ts"
-        }
+        },
+        "./styles.css": "./styles.css"
     },
     "peerDependencies": {
         "@tanstack/table-core": "~8.9.1",

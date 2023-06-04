@@ -451,17 +451,20 @@
 多维表格组件
 -->
 
-<div class="svelte-spreadsheet" bind:this={containerElementRef}>
+<div
+    class="svelte-spreadsheet position:relative width:fit-content overflow:visible"
+    bind:this={containerElementRef}
+>
     <table
         bind:this={tableRef}
         on:dragstart|stopPropagation|preventDefault
-        class="inner-table"
+        class="inner-table display:block width:fit-content max-width:100% margin:0 white-space:nowrap user-select:none border-collapse:collapse"
         class:table-active={isTableInRange}
         data-align={align}
         on:contextmenu|preventDefault|stopPropagation={onContextmenu}
         on:mousedown={rangeSelectingHandler}
     >
-        <thead>
+        <thead class="position:relative">
             {#each headerGroups as headerGroup}
                 <tr bind:this={rowElements[0]}>
                     {#each headerGroup.headers as header}
@@ -506,31 +509,10 @@
 </div>
 
 <style lang="css">
-    :global(.svelte-spreadsheet) {
-        --size: 12px;
-    }
-
     .svelte-spreadsheet {
-        position: relative;
-        width: fit-content;
-        overflow: visible;
-
         & .inner-table {
-            display: block;
-            width: fit-content;
-            max-width: 100%;
-            margin: 0;
-            white-space: nowrap;
-            user-select: none;
-            table-layout: fixed;
-            border-collapse: collapse;
-
             &.table-active {
                 background-color: rgb(30 110 207 / 20%);
-            }
-
-            & thead {
-                position: relative;
             }
 
             & tbody {
