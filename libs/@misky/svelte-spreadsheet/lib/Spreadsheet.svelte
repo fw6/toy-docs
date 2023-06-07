@@ -451,20 +451,33 @@
 多维表格组件
 -->
 
-<div
-    class="svelte-spreadsheet position:relative width:fit-content overflow:visible"
-    bind:this={containerElementRef}
->
+<!--
+stylify-customSelectors
+    '.svelte-spreadsheet': `
+        position:relative width:fit-content overflow:visible
+
+        table {
+            display:block width:fit-content max-width:100% margin:0 white-space:nowrap user-select:none border-collapse:collapse
+
+            thead {
+                position:relative
+            }
+        }
+    `
+/stylify-customSelectors
+-->
+
+<div class="svelte-spreadsheet" bind:this={containerElementRef}>
     <table
         bind:this={tableRef}
         on:dragstart|stopPropagation|preventDefault
-        class="inner-table display:block width:fit-content max-width:100% margin:0 white-space:nowrap user-select:none border-collapse:collapse"
+        class="inner-table"
         class:table-active={isTableInRange}
         data-align={align}
         on:contextmenu|preventDefault|stopPropagation={onContextmenu}
         on:mousedown={rangeSelectingHandler}
     >
-        <thead class="position:relative">
+        <thead>
             {#each headerGroups as headerGroup}
                 <tr bind:this={rowElements[0]}>
                     {#each headerGroup.headers as header}

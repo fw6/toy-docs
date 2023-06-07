@@ -289,8 +289,14 @@ $RECYCLE.BIN/
 
 # End of https://www.toptal.com/developers/gitignore/api/vue,node,macos,windows,linux,vscode,intellij+all
 
-# custom
+# #region custom
+
 .vite-inspect/
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+# design tokens which automatically generated through style-dictionary
 design/tokens/platforms
+# automatically generated through stylify!
+styles-dev.css
+
+# #endregion

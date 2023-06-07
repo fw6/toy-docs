@@ -6,7 +6,8 @@
         "mikestead.dotenv",
         "usernamehw.errorlens",
         "rome.rome",
-        "svelte.svelte-vscode"
+        "svelte.svelte-vscode",
+        "unifiedjs.vscode-mdx"
     ],
     "unwantedRecommendations": [
         "Vue.volar",

@@ -1,6 +1,6 @@
 import { basicPostCSSPlugins } from "@local/shared/postcss";
 import { resolve } from "node:path";
-import preprocess from "svelte-preprocess";
+import { globalStyle, postcss, replace } from "svelte-preprocess";
 import Icons from "unplugin-icons/vite";
 import { mergeConfig } from "vite";
 
@@ -8,11 +8,15 @@ import { mergeConfig } from "vite";
  * @type {import('@sveltejs/vite-plugin-svelte').Options}
  */
 export const svelteOptions = {
-    preprocess: preprocess({
-        postcss: {
+    preprocess: [
+        replace([[/process\.env\.(\w+)/g, (_, prop) => JSON.stringify(process.env[prop])]]),
+
+        postcss({
             plugins: basicPostCSSPlugins,
-        },
-    }),
+        }),
+
+        globalStyle(),
+    ],
     experimental: {
         sendWarningsToBrowser: true,
     },

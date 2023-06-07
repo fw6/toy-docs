@@ -3,6 +3,8 @@
     "description": "Spreadsheet component for Svelte, base on Tanstack table V8",
     "version": "0.0.0",
     "type": "module",
+    "main": "index.js",
+    "module": "index.js",
     "typings": "typings.d.ts",
     "svelte": "./index.js",
     "exports": {
@@ -12,6 +14,12 @@
         },
         "./styles.css": "./styles.css"
     },
+    "files": [
+        "styles.css",
+        "lib",
+        "index.js",
+        "typings.d.ts"
+    ],
     "peerDependencies": {
         "@tanstack/table-core": "~8.9.1",
         "@local/intl": "workspace:*",
