@@ -290,6 +290,9 @@ importers:
       '@local/intl':
         specifier: workspace:*
         version: link:../../@local/intl
+      '@misky-design/tokens':
+        specifier: workspace:*
+        version: link:../../../design/tokens
 
   libs/@tiptap/extensions: {}
 

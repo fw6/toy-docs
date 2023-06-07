@@ -82,6 +82,28 @@
     };
 </script>
 
+<!--
+stylify-customSelectors
+    '.data-cell': `
+        position:relative cursor:cell border:1px_solid_$mds-semantic-color-border-lvl-1
+
+        &.col-active,&.row-active,&.range-covered:not(&.range-anchor) {
+            background-color:lightenAll(^mds-semantic-color-bg-primary^,50)
+        }
+        &.range-anchor {
+            outline:1px_solid_$mds-semantic-color-primary
+        }
+
+        .cell-last-cornor {
+            position:absolute right:-5px bottom:-5px z-index:2
+            width:4px height:4px padding:2px
+            background-color:$mds-semantic-color-primary background-clip:content-box
+            cursor:crosshair box-sizing:content-box
+        }
+    `
+/stylify-customSelectors
+-->
+
 <td
     class="data-cell"
     class:range-anchor={info.cell.getIsRangeAnchor()}
@@ -114,35 +136,3 @@
         />
     {/if}
 </td>
-
-<style lang="css">
-    .data-cell {
-        position: relative;
-        cursor: cell;
-        border: 1px solid var(--mds-semantic-color-border-lvl-1);
-
-        &.col-active,
-        &.row-active,
-        &.range-covered:not(&.range-anchor) {
-            background-color: rgb(200 200 255 / 40%);
-        }
-
-        &.range-anchor {
-            outline: 1px solid var(--mds-semantic-color-primary);
-        }
-
-        & .cell-last-cornor {
-            position: absolute;
-            right: -5px;
-            bottom: -5px;
-            z-index: 2;
-            width: 4px;
-            height: 4px;
-            padding: 2px;
-            cursor: crosshair;
-            background-color: var(--mds-semantic-color-primary);
-            box-sizing: content-box;
-            background-clip: content-box;
-        }
-    }
-</style>

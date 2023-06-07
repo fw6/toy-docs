@@ -23,10 +23,12 @@
     "peerDependencies": {
         "@tanstack/table-core": "~8.9.1",
         "@local/intl": "workspace:*",
+        "@misky-design/tokens": "workspace:*",
         "svelte": "^3.54.0"
     },
     "devDependencies": {
-        "@local/intl": "workspace:*"
+        "@local/intl": "workspace:*",
+        "@misky-design/tokens": "workspace:*"
     },
     "volta": {
         "extends": "../../../package.json"

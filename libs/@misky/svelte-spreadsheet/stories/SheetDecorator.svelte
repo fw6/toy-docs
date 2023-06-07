@@ -10,7 +10,6 @@
     });
 </script>
 
-<div>
-    <h1>svelte spreadsheet decorator</h1>
+<div class="spreadsheet-decorator">
     <slot />
 </div>

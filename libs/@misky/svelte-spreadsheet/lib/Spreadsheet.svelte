@@ -31,9 +31,6 @@
     /** @type {DataSource} */
     export let data;
 
-    /** @type {import('@local/intl').Locales} */
-    export let locale = "zh-CN";
-
     /** @type {Align} */
     export let align = "t l";
 
@@ -459,8 +456,18 @@ stylify-customSelectors
         table {
             display:block width:fit-content max-width:100% margin:0 white-space:nowrap user-select:none border-collapse:collapse
 
+            &.table-active {
+                background-color:lightenAll(^mds-core-color-blue-500^,50)
+            }
+
             thead {
                 position:relative
+            }
+
+            tbody {
+                tr.active {
+                    background-color:lightenAll(^mds-core-color-blue-400^,50)
+                }
             }
         }
     `
@@ -520,21 +527,3 @@ stylify-customSelectors
         />
     {/if}
 </div>
-
-<style lang="css">
-    .svelte-spreadsheet {
-        & .inner-table {
-            &.table-active {
-                background-color: rgb(30 110 207 / 20%);
-            }
-
-            & tbody {
-                & tr {
-                    &.active {
-                        background-color: rgb(30 110 207 / 20%);
-                    }
-                }
-            }
-        }
-    }
-</style>

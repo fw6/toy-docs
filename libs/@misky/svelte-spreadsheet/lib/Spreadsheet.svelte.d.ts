@@ -1,4 +1,3 @@
-import type { Locales } from "@local/intl";
 import type { RowData } from "@tanstack/table-core";
 import type { SvelteComponentTyped } from "svelte";
 import type { Command } from "./features/spanning";
@@ -29,7 +28,6 @@ declare const __propDef: {
     props: {
         columns: FieldConfig[];
         data: DataSource;
-        locale?: Locales | undefined;
         align?: Align | undefined;
         permission?: Permission | undefined;
 

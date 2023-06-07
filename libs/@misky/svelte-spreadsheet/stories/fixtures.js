@@ -23,7 +23,7 @@ export const data = [
 export const columns = [
     {
         fieldId: "serial_1",
-        fieldName: "🔢自动序号",
+        fieldName: "🔢",
         type: FIELD_TYPE.AUTO_SERIAL,
         size: 300,
         property: {
@@ -32,13 +32,13 @@ export const columns = [
     },
     {
         fieldId: "text_1",
-        fieldName: "😊文本",
+        fieldName: "😊",
         type: FIELD_TYPE.TEXT,
         size: 300,
     },
     {
         fieldId: "datetime_1",
-        fieldName: "📅日期",
+        fieldName: "📅",
         type: FIELD_TYPE.DATETIME,
         size: 300,
         property: {
@@ -47,7 +47,7 @@ export const columns = [
     },
     {
         fieldId: "number_1",
-        fieldName: "🪙数字",
+        fieldName: "🪙",
         type: FIELD_TYPE.NUMBER,
         size: 300,
         property: {
