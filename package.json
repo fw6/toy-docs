@@ -1,6 +1,6 @@
 {
     "name": "toy-docs",
-    "version": "0.0.0",
+    "version": "0.1.0",
     "license": "MIT",
     "private": true,
     "packageManager": "pnpm@8.5.1",

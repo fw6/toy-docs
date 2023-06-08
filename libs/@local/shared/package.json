@@ -1,6 +1,6 @@
 {
     "name": "@local/shared",
-    "version": "0.0.0",
+    "version": "0.1.0",
     "type": "module",
     "module": "index.js",
     "typings": "typings.d.ts",
