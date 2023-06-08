@@ -1,8 +1,40 @@
 import { decimalRounding } from "@local/shared";
-import { TableMap, isInTable, removeColumn, selectedRect } from "@tiptap/pm/tables";
+import { TableMap, deleteTable, isInTable, removeColumn, removeRow, selectedRect } from "@tiptap/pm/tables";
 
-import { generateColwidths } from "../utils/tables";
 import { CELL_WIDTH_DECIMAL_PLACES } from "../plugins/column-resizing/column-resizing";
+import { generateColwidths } from "../utils/tables";
+
+/**
+ * Command function that removes the selected rows from a table.
+ *
+ * @public
+ *
+ * @type {Command}
+ */
+export function deleteRow(state, dispatch) {
+    if (!isInTable(state)) return false;
+    if (dispatch) {
+        const rect = selectedRect(state);
+        // Select the entire column to delete the row, then remove the entire table
+        if (rect.bottom - rect.top === rect.map.height) return deleteTable(state, dispatch);
+
+        const tr = state.tr;
+        if (rect.top === 0 && rect.bottom === rect.map.height) return false;
+
+        for (let i = rect.bottom - 1; ; i--) {
+            removeRow(tr, rect, i);
+            if (i === rect.top) break;
+            const table = rect.tableStart ? tr.doc.nodeAt(rect.tableStart - 1) : tr.doc;
+            if (!table) {
+                throw RangeError("No table found");
+            }
+            rect.table = table;
+            rect.map = TableMap.get(rect.table);
+        }
+        dispatch(tr);
+    }
+    return true;
+}
 
 /**
  * Command function that removes the selected columns from a table.
@@ -15,6 +47,10 @@ export function deleteColumn(state, dispatch) {
     if (!isInTable(state)) return false;
     if (dispatch) {
         const rect = selectedRect(state);
+
+        // Select the entire row to delete the column, then remove the entire table
+        if (rect.right - rect.left === rect.map.width) return deleteTable(state, dispatch);
+
         const tr = state.tr;
         if (rect.left === 0 && rect.right === rect.map.width) return false;
         for (let i = rect.right - 1; ; i--) {

@@ -40,6 +40,7 @@
 <svelte:element
     this={as}
     data-node-view-wrapper=""
+    style:white-space="normal"
     on:dragstart={onDragStart}
     use:action
     {...restProps}><slot /></svelte:element

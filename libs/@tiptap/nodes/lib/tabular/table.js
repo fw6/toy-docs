@@ -3,7 +3,6 @@ import {
     CellSelection,
     addRowAfter,
     addRowBefore,
-    deleteRow,
     deleteTable,
     fixTables,
     goToNextCell,
@@ -15,7 +14,7 @@ import {
 
 import { columnResizing } from "./plugins/column-resizing/column-resizing";
 
-import { deleteColumn } from "./commands/delete";
+import { deleteColumn, deleteRow } from "./commands/delete";
 import { addColumnAt, createTable } from "./commands/insert";
 
 /**
