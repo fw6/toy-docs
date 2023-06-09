@@ -1,6 +1,7 @@
 <script>
     import { addColumn, addRow, selectedRect } from "@tiptap/pm/tables";
     import { evenColumnWidthAfterInsert } from "../../commands/insert";
+    import GridBacksightLiner from "./GridBacksightLiner.svelte";
     /**
      * Grid cell belongs
      *
@@ -51,7 +52,7 @@
     style={`${dir === -1 ? "height" : "width"}:${size}px;`}
 >
     <div class="grid-backsight__pin" on:mousedown={handleMousedown} />
-    <div class="grid-backsight__line" />
+    <GridBacksightLiner {editor} />
 </div>
 
 <style lang="css">
@@ -62,6 +63,7 @@
         left: -1px;
         width: 2px;
         height: 2px;
+        cursor: pointer;
     }
 
     .grid-backsight[data-last="true"][data-dir="-1"] {
@@ -98,8 +100,9 @@
     .grid-backsight__pin:hover {
         opacity: 1;
     }
-    .grid-backsight__pin:hover + .grid-backsight__line {
-        visibility: visible;
+
+    :global(.grid-backsight__pin:hover + .grid-backsight__liner) {
+        opacity: 1;
     }
 
     .grid-backsight[data-dir="1"] .grid-backsight__pin {
@@ -109,15 +112,5 @@
 
     .grid-backsight__pin::after {
         transform: translateX(-50%) translateY(-50%);
-    }
-
-    .grid-backsight__line {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: var(--mds-semantic-color-bg-primary);
-        visibility: hidden;
     }
 </style>

@@ -46,7 +46,6 @@ export const getGridCellPlugin = (editor) => {
             },
             {
                 ignoreSelection: true,
-                stopEvent: () => true,
                 destroy: () => {
                     component?.$destroy();
                     component = null;
@@ -74,18 +73,22 @@ export const getGridCellPlugin = (editor) => {
                 if (oldTable && oldTable.start === rect.tableStart) {
                     const oldMap = TableMap.get(oldTable.node);
                     if (!tr.docChanged) {
-                        pluginState.forEach((deco) => {
-                            /** @type {?GirdCell} */
-                            const gridCell = deco.spec.getGirdCell();
-                            gridCell?.$set({
-                                editor,
-                            });
-                        });
-                        return pluginState;
+                        if (
+                            pluginState.every((deco) => {
+                                /** @type {?GirdCell} */
+                                const gridCell = deco.spec.getGirdCell();
+                                if (!gridCell) return false;
+                                gridCell.$set({
+                                    editor,
+                                });
+                                return true;
+                            })
+                        )
+                            return pluginState;
                     }
 
                     // If the number of rows and columns in the table has not changed, use the previous state.
-                    if (oldMap.width === rect.map.width && oldMap.height === rect.map.height) {
+                    else if (oldMap.width === rect.map.width && oldMap.height === rect.map.height) {
                         return pluginState.map((deco) => {
                             const newPos = tr.mapping.map(deco.from);
                             if (newPos !== deco.from) {

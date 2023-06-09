@@ -5,7 +5,7 @@
         isInTable,
         selectedRect,
     } from "@tiptap/pm/tables";
-    import GridCellBacksight from "./GridCellBacksight.svelte";
+    import GridBacksight from "./GridBacksight.svelte";
 
     /** @type {Editor} */
     export let editor;
@@ -176,9 +176,9 @@
 />
 
 {#if dir !== 0}
-    <GridCellBacksight {editor} {dir} {index} {size} />
+    <GridBacksight {editor} {dir} {index} {size} />
     {#if isLast}
-        <GridCellBacksight {editor} {dir} {index} {size} last={isLast} />
+        <GridBacksight {editor} {dir} {index} {size} last={isLast} />
     {/if}
 {/if}
 
@@ -191,6 +191,7 @@
         top: 0;
         background-color: var(--mds-core-color-neutral-50);
         pointer-events: auto;
+        cursor: pointer;
 
         --grid-cell-size: 12px;
         --grid-cell-gap-size: 2px;
