@@ -5,6 +5,7 @@
         isInTable,
         selectedRect,
     } from "@tiptap/pm/tables";
+    import GridCellBacksight from "./GridCellBacksight.svelte";
 
     /** @type {Editor} */
     export let editor;
@@ -37,6 +38,16 @@
     /** some cells selected in row or column */
     let isPartiallyActive = false;
 
+    /** @type {?HTMLTableElement} */
+    let tableEle = null;
+
+    let size = 0;
+
+    $: {
+        if (tableEle) {
+            size = dir === -1 ? tableEle.clientHeight : tableEle.clientWidth;
+        }
+    }
     $: rect = isInTable(editor.state) && selectedRect(editor.state);
     $: {
         if (rect) {
@@ -54,6 +65,14 @@
                 isActive =
                     rect.bottom - rect.top === rect.map.height &&
                     rect.right - rect.left === rect.map.width;
+            }
+
+            if (!tableEle?.isConnected) {
+                const ele = editor.view.nodeDOM(rect.tableStart - 1);
+                if (ele instanceof HTMLTableElement) tableEle = ele;
+                else tableEle = null;
+            } else {
+                tableEle = tableEle;
             }
         }
     }
@@ -136,7 +155,7 @@
     };
 
     /** @type {MouseEventHandler} */
-    const handleMouseup = (event) => {
+    const handleMouseup = () => {
         if (!isSelecting) return;
         isSelecting = false;
     };
@@ -151,9 +170,17 @@
     class:active={isActive}
     class:partially-active={isPartiallyActive}
     class:isLast
+    class:isFirst={dir !== 0 && index === 0}
     data-index={dir === 0 ? -1 : index}
     on:mousedown={handleMousedown}
 />
+
+{#if dir !== 0}
+    <GridCellBacksight {editor} {dir} {index} {size} />
+    {#if isLast}
+        <GridCellBacksight {editor} {dir} {index} {size} last={isLast} />
+    {/if}
+{/if}
 
 <style style="css">
     .grid-cell {
@@ -162,18 +189,21 @@
         height: 100%;
         left: 0;
         top: 0;
-        background-color: var(--mds-semantic-color-bg-layout);
+        background-color: var(--mds-core-color-neutral-50);
+        pointer-events: auto;
 
         --grid-cell-size: 12px;
         --grid-cell-gap-size: 2px;
+        --grid-cell-active: var(--mds-core-color-neutral-300);
+        --grid-cell-partially-active: var(--mds-core-color-neutral-100);
+
+        &.partially-active {
+            background-color: var(--grid-cell-partially-active);
+        }
     }
 
-    .grid-cell.partially-active {
-        background-color: var(--mds-semantic-color-bg-container-active);
-    }
-
-    .grid-cell.active {
-        background-color: var(--mds-semantic-color-bg-primary-active);
+    .grid-cell.partially-active.active {
+        background-color: var(--grid-cell-active);
     }
 
     .grid-cell.row-corner {
@@ -186,16 +216,27 @@
     .grid-cell.row {
         height: var(--grid-cell-size);
         top: calc(-1 * var(--grid-cell-size) - var(--grid-cell-gap-size));
+
+        &.isFirst,
+        &.isLast {
+            width: calc(100% + 1px);
+        }
+    }
+    .grid-cell.row.isFirst {
+        left: -1px;
     }
 
     .grid-cell.col {
         width: var(--grid-cell-size);
         left: calc(-1 * var(--grid-cell-size) - var(--grid-cell-gap-size));
+
+        &.col.isFirst,
+        &.isLast {
+            height: calc(100% + 1px);
+        }
     }
-    .grid-cell.col.isLast {
-        border-bottom: 1px solid var(--mds-semantic-color-border-lvl-1);
-    }
-    .grid-cell.row.isLast {
-        border-right: 1px solid var(--mds-semantic-color-border-lvl-1);
+
+    .grid-cell.col.isFirst {
+        top: -1px;
     }
 </style>

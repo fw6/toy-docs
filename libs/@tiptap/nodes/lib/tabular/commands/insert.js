@@ -9,9 +9,9 @@ import { decimalRounding } from "@local/shared";
 import { TextSelection } from "@tiptap/pm/state";
 import { addColumn, isInTable, selectedRect, TableMap } from "@tiptap/pm/tables";
 
+import { CELL_WIDTH_DECIMAL_PLACES } from "../plugins/column-resizing/column-resizing";
 import { tableNodeTypes } from "../utils/node-types";
 import { findTable, generateColwidths } from "../utils/tables";
-import { CELL_WIDTH_DECIMAL_PLACES } from "../plugins/column-resizing/column-resizing";
 
 /**
  * @param {CreateTableProps} [props]
@@ -86,36 +86,44 @@ export function addColumnAt(state, dispatch, side) {
         const column = side === 1 ? rect.right : rect.left;
         const tr = addColumn(state.tr, rect, column);
 
-        // #region
-        const table = findTable(tr.selection);
-        if (table) {
-            const map = TableMap.get(table.node);
-            /** @type {number[]} */
-            let colwidths = table.node.attrs.colwidths;
-
-            if (!colwidths.length) {
-                colwidths = generateColwidths(map.width);
-            } else {
-                // the new column width is the lastest average
-                const newColwidth = decimalRounding(100 / map.width, CELL_WIDTH_DECIMAL_PLACES);
-
-                // The previous columns share the new extra width proportionally
-                colwidths = colwidths.flatMap((colwidth, index) => {
-                    const width = decimalRounding(colwidth * (1 - newColwidth / 100), CELL_WIDTH_DECIMAL_PLACES);
-
-                    if (index === column) {
-                        return [newColwidth, width];
-                    }
-
-                    return width;
-                });
-            }
-
-            tr.setNodeAttribute(table.pos, "colwidths", colwidths);
-        }
-        // #endregion
-
-        dispatch(tr);
+        dispatch(evenColumnWidthAfterInsert(tr, column));
     }
     return true;
+}
+
+/**
+ * After inserting a column, the column widths should be even.
+ *
+ * @param {Transaction} tr
+ * @param {number} column
+ */
+export function evenColumnWidthAfterInsert(tr, column) {
+    const table = findTable(tr.selection);
+    if (table) {
+        const map = TableMap.get(table.node);
+        /** @type {number[]} */
+        let colwidths = table.node.attrs.colwidths;
+
+        if (!colwidths.length) {
+            colwidths = generateColwidths(map.width);
+        } else {
+            // the new column width is the lastest average
+            const newColwidth = decimalRounding(100 / map.width, CELL_WIDTH_DECIMAL_PLACES);
+
+            // The previous columns share the new extra width proportionally
+            colwidths = colwidths.flatMap((colwidth, index) => {
+                const width = decimalRounding(colwidth * (1 - newColwidth / 100), CELL_WIDTH_DECIMAL_PLACES);
+
+                if (index === column) {
+                    return [newColwidth, width];
+                }
+
+                return width;
+            });
+        }
+
+        tr.setNodeAttribute(table.pos, "colwidths", colwidths);
+    }
+
+    return tr;
 }

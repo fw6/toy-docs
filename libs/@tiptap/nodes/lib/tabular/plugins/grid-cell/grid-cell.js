@@ -28,7 +28,8 @@ export const getGridCellPlugin = (editor) => {
             () => {
                 // delay render
                 if (!dom) {
-                    dom = document.createElement("a");
+                    dom = document.createElement("div");
+                    dom.style.cssText = "position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none";
                 }
                 if (!component)
                     component = new GirdCell({
@@ -73,7 +74,6 @@ export const getGridCellPlugin = (editor) => {
                 if (oldTable && oldTable.start === rect.tableStart) {
                     const oldMap = TableMap.get(oldTable.node);
                     if (!tr.docChanged) {
-                        console.log("selection change");
                         pluginState.forEach((deco) => {
                             /** @type {?GirdCell} */
                             const gridCell = deco.spec.getGirdCell();
@@ -86,7 +86,6 @@ export const getGridCellPlugin = (editor) => {
 
                     // If the number of rows and columns in the table has not changed, use the previous state.
                     if (oldMap.width === rect.map.width && oldMap.height === rect.map.height) {
-                        console.log("cell content change");
                         return pluginState.map((deco) => {
                             const newPos = tr.mapping.map(deco.from);
                             if (newPos !== deco.from) {
@@ -105,8 +104,6 @@ export const getGridCellPlugin = (editor) => {
                         });
                     }
                 }
-
-                console.log("generate grid cell controller");
 
                 /** @type {Decoration[]} */
                 const decos = [];
