@@ -36,6 +36,10 @@ declare module "@tiptap/core" {
 
             fixTables: () => ReturnType;
             setCellAttribute: (name: string, value: unknown) => ReturnType;
+
+            selectTable: () => ReturnType;
+            selectRows: (from: number, to?: number) => ReturnType;
+            selectColumns: (from: number, to?: number) => ReturnType;
         };
     }
 

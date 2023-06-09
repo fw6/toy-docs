@@ -16,6 +16,8 @@ import { columnResizing } from "./plugins/column-resizing/column-resizing";
 
 import { deleteColumn, deleteRow } from "./commands/delete";
 import { addColumnAt, createTable } from "./commands/insert";
+import { selectColumns, selectRows, selectTable } from "./commands/select";
+import { getGridCellPlugin } from "./plugins/grid-cell/grid-cell";
 
 /**
  * @type {Node<TableOptions>}
@@ -113,7 +115,11 @@ export const Table = Node.create({
     },
 
     addProseMirrorPlugins() {
-        return [columnResizing(), tableEditing({ allowTableNodeSelection: this.options.allowTableNodeSelection })];
+        return [
+            columnResizing(),
+            tableEditing({ allowTableNodeSelection: this.options.allowTableNodeSelection }),
+            getGridCellPlugin(this.editor),
+        ];
     },
 
     addCommands() {
@@ -183,6 +189,10 @@ export const Table = Node.create({
 
                 return true;
             },
+
+            selectTable: () => ({ state, dispatch }) => selectTable(state, dispatch),
+            selectRows: (from, to) => ({ state, dispatch }) => selectRows(from, to)(state, dispatch),
+            selectColumns: (from, to) => ({ state, dispatch }) => selectColumns(from, to)(state, dispatch),
         };
     },
 

@@ -23,7 +23,7 @@
                 "noRedeclare": "off"
             },
             "style": {
-                "noParameterAssign": "warn"
+                "noParameterAssign": "off"
             }
         }
     }
