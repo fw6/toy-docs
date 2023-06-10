@@ -116,7 +116,7 @@ export const Table = Node.create({
 
     addProseMirrorPlugins() {
         return [
-            columnResizing(),
+            // columnResizing(),
             tableEditing({ allowTableNodeSelection: this.options.allowTableNodeSelection }),
             getGridCellPlugin(this.editor),
         ];

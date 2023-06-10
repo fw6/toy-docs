@@ -52,7 +52,7 @@
     style={`${dir === -1 ? "height" : "width"}:${size}px;`}
 >
     <div class="grid-backsight__pin" on:mousedown={handleMousedown} />
-    <GridBacksightLiner {editor} />
+    <GridBacksightLiner {editor} {dir} {index} {last} />
 </div>
 
 <style lang="css">
@@ -103,6 +103,8 @@
 
     :global(.grid-backsight__pin:hover + .grid-backsight__liner) {
         opacity: 1;
+        width: 100% !important;
+        height: 100% !important;
     }
 
     .grid-backsight[data-dir="1"] .grid-backsight__pin {
