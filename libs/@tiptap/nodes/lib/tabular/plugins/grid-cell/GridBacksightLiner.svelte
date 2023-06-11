@@ -3,8 +3,8 @@
     import { TableMap } from "@tiptap/pm/tables";
     import { throttle } from "lodash-es";
     import { onMount } from "svelte";
-    import { findTable } from "../../utils/tables";
     import { WIDTH_DECIMAL_PLACES } from "../../constants";
+    import { findTable } from "../../utils/tables";
 
     /**
      * @typedef {import('svelte/elements').MouseEventHandler<HTMLElement>} MouseEventHandler
@@ -259,6 +259,7 @@
 
     .grid-backsight__liner.resizable {
         pointer-events: auto;
+        transition: opacity 0.2s linear 0.1s;
 
         &:hover {
             opacity: 1;

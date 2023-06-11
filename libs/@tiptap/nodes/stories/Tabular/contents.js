@@ -178,7 +178,6 @@ export const resizingContent = {
                             attrs: {
                                 // colwidths: [],
                                 marginLeft: 0,
-                                marginRight: 0,
                             },
                             content: [
                                 {

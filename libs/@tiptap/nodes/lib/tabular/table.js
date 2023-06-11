@@ -86,14 +86,47 @@ export const Table = Node.create({
                     };
                 },
             },
-            marginRight: {
-                default: null,
-                parseHTML: (ele) => parseFloat(ele.style.marginRight || "0"),
-                renderHTML: (attrs) => {
-                    if (!attrs.marginRight) return {};
 
+            /**
+             * Default table cell border color
+             */
+            borderColor: {
+                default: null,
+                parseHTML: (ele) => ele.dataset.borderColor,
+                renderHTML: (attrs) => {
+                    if (!attrs.borderColor) return {};
                     return {
-                        style: `margin-right: ${attrs.marginRight}px;`,
+                        "data-border-color": attrs.borderColor,
+                        style: `--table-border-color: ${attrs.borderColor};`,
+                    };
+                },
+            },
+
+            /**
+             * Default table cell border style
+             */
+            borderStyle: {
+                default: null,
+                parseHTML: (ele) => ele.dataset.borderStyle,
+                renderHTML: (attrs) => {
+                    if (!attrs.borderStyle || attrs.borderStyle === "solid") return {};
+                    return {
+                        "data-border-style": attrs.borderStyle,
+                    };
+                },
+            },
+
+            /**
+             * Zebra effect, the value is the background color of even rows
+             */
+            alternateRows: {
+                default: null,
+                parseHTML: (ele) => ele.dataset.alternateRows,
+                renderHTML: (attrs) => {
+                    if (!attrs.alternateRows) return {};
+                    return {
+                        "data-alternate-rows": attrs.alternateRows,
+                        style: `--alternate-rows-color: ${attrs.alternateRows};`,
                     };
                 },
             },
@@ -194,6 +227,7 @@ export const Table = Node.create({
     },
 
     addKeyboardShortcuts() {
+        // FIXME
         return {
             Tab: ({ editor }) => editor.commands.goToNextCell(),
             "Shift-Tab": ({ editor }) => editor.commands.goToPreviousCell(),
