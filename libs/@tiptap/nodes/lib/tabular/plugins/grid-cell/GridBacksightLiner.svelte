@@ -2,7 +2,6 @@
     import { decimalRounding } from "@local/shared";
     import { TableMap } from "@tiptap/pm/tables";
     import { throttle } from "lodash-es";
-    import { onMount } from "svelte";
     import { WIDTH_DECIMAL_PLACES } from "../../constants";
     import { findTable } from "../../utils/tables";
 
@@ -116,7 +115,7 @@
             // Out of editor area.
             if (
                 editorClientRect.right < event.clientX ||
-                editorClientRect.x > event.clientY
+                editorClientRect.x > event.clientX
             ) {
                 finishResize(event);
                 return;
@@ -228,10 +227,6 @@
         if (!isResizing) return;
         isResizing = false;
     };
-
-    onMount(() => {
-        console.log("mount");
-    });
 </script>
 
 <svelte:document on:mousemove={handleMouseMove} on:mouseup={finishResize} />
@@ -257,7 +252,8 @@
         z-index: 9;
     }
 
-    .grid-backsight__liner.resizable {
+    /* .grid-backsight__liner.resizable { */
+    .grid-backsight__liner.resizable[data-dir="-1"] {
         pointer-events: auto;
         transition: opacity 0.2s linear 0.1s;
 

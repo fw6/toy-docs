@@ -203,7 +203,8 @@
         }
     }
 
-    .grid-cell.partially-active.active {
+    .grid-cell.partially-active.active,
+    .grid-cell.row-corner.active {
         background-color: var(--grid-cell-active);
     }
 

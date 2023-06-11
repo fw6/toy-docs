@@ -1,12 +1,15 @@
 import { Node, callOrReturn, getExtensionField, mergeAttributes } from "@tiptap/core";
 import {
     CellSelection,
+    TableMap,
     addRowAfter,
     addRowBefore,
     deleteTable,
     fixTables,
     goToNextCell,
+    isInTable,
     mergeCells,
+    selectedRect,
     setCellAttr,
     splitCell,
     tableEditing,
@@ -227,10 +230,56 @@ export const Table = Node.create({
     },
 
     addKeyboardShortcuts() {
-        // FIXME
         return {
-            Tab: ({ editor }) => editor.commands.goToNextCell(),
+            Tab: ({ editor }) => {
+                if (!isInTable(editor.state)) return false;
+                const rect = selectedRect(editor.state);
+
+                if (rect.map.width === rect.right && rect.map.height === rect.bottom) {
+                    return editor.chain().addRowAfter().goToNextCell().run();
+                }
+
+                return editor.commands.goToNextCell();
+            },
             "Shift-Tab": ({ editor }) => editor.commands.goToPreviousCell(),
+            Backspace: ({ editor }) => {
+                const state = editor.state;
+
+                if (isInTable(state)) {
+                    const rect = selectedRect(state);
+
+                    const selectRow = rect.right - rect.left === rect.map.width;
+                    const selectCol = rect.bottom - rect.top === rect.map.height;
+
+                    if (selectRow && selectCol) {
+                        return editor.commands.deleteTable();
+                    } else if (selectCol) {
+                        return editor.commands.deleteColumn();
+                    } else if (selectRow) {
+                        return editor.commands.deleteRow();
+                    }
+
+                    return false;
+                }
+
+                const { selection } = state;
+                if (selection.$head.parentOffset === 0 && selection.from === selection.to) {
+                    const $pos = state.doc.resolve(selection.from - 1);
+                    if ($pos.nodeBefore?.type.spec.tableRole === "table") {
+                        const map = TableMap.get($pos.nodeBefore);
+                        const tableStart = selection.from - $pos.nodeBefore.nodeSize;
+                        const anchorPos = tableStart + map.map[0];
+                        const headPos = tableStart + map.map[map.width * map.height - 1];
+
+                        return editor.commands.command(({ tr }) => {
+                            tr.setSelection(CellSelection.create(tr.doc, anchorPos, headPos));
+                            return true;
+                        });
+                    }
+                }
+
+                return false;
+            },
         };
     },
 
