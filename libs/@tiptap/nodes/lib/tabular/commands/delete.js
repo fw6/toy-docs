@@ -1,7 +1,7 @@
 import { decimalRounding } from "@local/shared";
 import { TableMap, deleteTable, isInTable, removeColumn, removeRow, selectedRect } from "@tiptap/pm/tables";
 
-import { CELL_WIDTH_DECIMAL_PLACES } from "../plugins/column-resizing/column-resizing";
+import { WIDTH_DECIMAL_PLACES } from "../constants";
 import { generateColwidths } from "../utils/tables";
 
 /**
@@ -93,7 +93,7 @@ const getColwidthsAfterDelete = (table, map, range) => {
 
         colwidths = colwidths.flatMap((width, i) => {
             if (i < left || i >= right) {
-                return decimalRounding(width * (1 + removedWidth / (100 - removedWidth)), CELL_WIDTH_DECIMAL_PLACES);
+                return decimalRounding(width * (1 + removedWidth / (100 - removedWidth)), WIDTH_DECIMAL_PLACES);
             }
             return [];
         });

@@ -12,8 +12,6 @@ import {
     tableEditing,
 } from "@tiptap/pm/tables";
 
-import { columnResizing } from "./plugins/column-resizing/column-resizing";
-
 import { deleteColumn, deleteRow } from "./commands/delete";
 import { addColumnAt, createTable } from "./commands/insert";
 import { selectColumns, selectRows, selectTable } from "./commands/select";
@@ -116,7 +114,6 @@ export const Table = Node.create({
 
     addProseMirrorPlugins() {
         return [
-            // columnResizing(),
             tableEditing({ allowTableNodeSelection: this.options.allowTableNodeSelection }),
             getGridCellPlugin(this.editor),
         ];

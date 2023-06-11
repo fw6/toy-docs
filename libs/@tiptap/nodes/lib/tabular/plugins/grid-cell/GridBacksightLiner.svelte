@@ -4,7 +4,7 @@
     import { throttle } from "lodash-es";
     import { onMount } from "svelte";
     import { findTable } from "../../utils/tables";
-    import { CELL_WIDTH_DECIMAL_PLACES } from "../column-resizing/column-resizing";
+    import { WIDTH_DECIMAL_PLACES } from "../../constants";
 
     /**
      * @typedef {import('svelte/elements').MouseEventHandler<HTMLElement>} MouseEventHandler
@@ -88,7 +88,7 @@
         if (!colwidths.length) {
             const colwidth = decimalRounding(
                 100 / map.width,
-                CELL_WIDTH_DECIMAL_PLACES
+                WIDTH_DECIMAL_PLACES
             );
             colwidths.splice(0, 0, ...Array(map.width).fill(colwidth));
             updateTableNodeAttributes(table.pos, { colwidths });
@@ -139,7 +139,7 @@
                     Math.min(
                         decimalRounding(
                             (nextTableWidth * 100) / tableParentDOMRect.width,
-                            CELL_WIDTH_DECIMAL_PLACES
+                            WIDTH_DECIMAL_PLACES
                         ),
                         100
                     ),
@@ -169,7 +169,7 @@
                     Math.min(
                         decimalRounding(
                             (tableWidth * 100) / tableParentDOMRect.width,
-                            CELL_WIDTH_DECIMAL_PLACES
+                            WIDTH_DECIMAL_PLACES
                         ),
                         100
                     ),
@@ -206,13 +206,13 @@
                 const percentR = offset / resizeableWidth;
                 const finalPercent = decimalRounding(
                     resizeablePercentage * percentR,
-                    CELL_WIDTH_DECIMAL_PLACES
+                    WIDTH_DECIMAL_PLACES
                 );
 
                 widths[index] = finalPercent;
                 widths[index - 1] = decimalRounding(
                     resizeablePercentage - finalPercent,
-                    CELL_WIDTH_DECIMAL_PLACES
+                    WIDTH_DECIMAL_PLACES
                 );
 
                 updateTableNodeAttributes(table.pos, { colwidths: widths });

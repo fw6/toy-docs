@@ -9,7 +9,7 @@ import { decimalRounding } from "@local/shared";
 import { TextSelection } from "@tiptap/pm/state";
 import { addColumn, isInTable, selectedRect, TableMap } from "@tiptap/pm/tables";
 
-import { CELL_WIDTH_DECIMAL_PLACES } from "../plugins/column-resizing/column-resizing";
+import { WIDTH_DECIMAL_PLACES } from "../constants";
 import { tableNodeTypes } from "../utils/node-types";
 import { findTable, generateColwidths } from "../utils/tables";
 
@@ -108,11 +108,11 @@ export function evenColumnWidthAfterInsert(tr, column) {
             colwidths = generateColwidths(map.width);
         } else {
             // the new column width is the lastest average
-            const newColwidth = decimalRounding(100 / map.width, CELL_WIDTH_DECIMAL_PLACES);
+            const newColwidth = decimalRounding(100 / map.width, WIDTH_DECIMAL_PLACES);
 
             // The previous columns share the new extra width proportionally
             colwidths = colwidths.flatMap((colwidth, index) => {
-                const width = decimalRounding(colwidth * (1 - newColwidth / 100), CELL_WIDTH_DECIMAL_PLACES);
+                const width = decimalRounding(colwidth * (1 - newColwidth / 100), WIDTH_DECIMAL_PLACES);
 
                 if (index === column) {
                     return [newColwidth, width];
