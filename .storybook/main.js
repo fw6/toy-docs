@@ -59,6 +59,7 @@ export default {
     features: {},
     stories: [],
     addons: [
+        "storybook-addon-swc",
         "@storybook/addon-links",
         "@storybook/addon-essentials",
         "@storybook/addon-interactions",
