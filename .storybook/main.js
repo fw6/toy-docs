@@ -56,7 +56,9 @@ export default {
         name: "@storybook/svelte-vite",
         options: {},
     },
-    features: {},
+    features: {
+        buildStoriesJson: true,
+    },
     stories: [],
     addons: [
         "storybook-addon-swc",
