@@ -30,9 +30,4 @@ jobs:
               run: pnpm install
 
             - name: Build storybook
-              uses: mansagroup/nrwl-nx-action@v3
-              with:
-                targets: build-storybook
-                all: 'true'
-                parallel: 3
-                nxCloud: 'true'
+              run: pnpm build:storybook
