@@ -48,8 +48,8 @@
         }
     },
     "tags": [
-        "scope:components",
-        "type:types"
+        "storybook:ref",
+        "scope:components"
     ],
     "namedInputs": {
         "production": [

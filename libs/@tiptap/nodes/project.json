@@ -34,8 +34,8 @@
         }
     },
     "tags": [
-        "scope:tiptap",
-        "type:types"
+        "storybook:ref",
+        "scope:tiptap"
     ],
     "namedInputs": {
         "production": [

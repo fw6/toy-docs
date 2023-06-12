@@ -23,7 +23,7 @@
                 "{options.outputDir}"
             ],
             "options": {
-                "outputDir": "dist/storybook/storybook-host",
+                "outputDir": "dist/storybook",
                 "configDir": "apps/storybook-host/.storybook"
             },
             "configurations": {
@@ -34,7 +34,7 @@
         }
     },
     "tags": [
-        "type:app",
-        "scope:storybook"
+        "storybook:host",
+        "type:app"
     ]
 }

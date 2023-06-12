@@ -5,6 +5,7 @@
     "private": true,
     "packageManager": "pnpm@8.5.1",
     "scripts": {
+        "build:storybook": "nx build-storybook storybook-host && nx run-many -t build-storybook --parallel=5 --projects=tag:storybook:ref",
         "build:all": "nx run-many -t build",
         "build:since": "nx affected -t build",
         "test:all": "nx run-many -t test",

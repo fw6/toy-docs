@@ -1,5 +1,7 @@
 import sharedConfig from "../../../.storybook/main";
 
+const isDev = process.env.NODE_ENV === "development";
+
 /** @type { import('@storybook/svelte-vite').StorybookConfig } */
 const config = {
     ...sharedConfig,
@@ -10,23 +12,23 @@ const config = {
     refs: {
         "tiptap extensions": {
             title: "Tiptap extensions",
-            url: "http://localhost:4401",
+            url: isDev ? "http://localhost:4401" : "tiptap-extensions/",
         },
         "tiptap marks": {
             title: "Tiptap marks",
-            url: "http://localhost:4402",
+            url: isDev ? "http://localhost:4402" : "tiptap-marks/",
         },
         "tiptap nodes": {
             title: "Tiptap extensions",
-            url: "http://localhost:4403",
+            url: isDev ? "http://localhost:4403" : "tiptap-nodes/",
         },
         "tiptap svelte adapter": {
             title: "Tiptap svelte",
-            url: "http://localhost:4404",
+            url: isDev ? "http://localhost:4404" : "tiptap-svelte/",
         },
         "svelte-spreadsheet": {
             title: "Spreadsheet",
-            url: "http://localhost:4405",
+            url: isDev ? "http://localhost:4405" : "svelte-spreadsheet/",
         },
     },
 };

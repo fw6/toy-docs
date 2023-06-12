@@ -260,7 +260,23 @@ importers:
 
   apps/client: {}
 
-  apps/storybook-host: {}
+  apps/storybook-host:
+    dependencies:
+      '@misky/svelte-spreadsheet':
+        specifier: workspace:*
+        version: link:../../libs/@misky/svelte-spreadsheet
+      '@misky/tiptap-extensions':
+        specifier: workspace:*
+        version: link:../../libs/@tiptap/extensions
+      '@misky/tiptap-marks':
+        specifier: workspace:*
+        version: link:../../libs/@tiptap/marks
+      '@misky/tiptap-nodes':
+        specifier: workspace:*
+        version: link:../../libs/@tiptap/nodes
+      '@misky/tiptap-svelte':
+        specifier: workspace:*
+        version: link:../../libs/@tiptap/svelte
 
   design/tokens: {}
 
