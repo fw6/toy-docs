@@ -17,6 +17,21 @@
                 }
             }
         },
+        "build-storybook": {
+            "executor": "@nx/storybook:build",
+            "outputs": [
+                "{options.outputDir}"
+            ],
+            "options": {
+                "outputDir": "dist/storybook/svelte-spreadsheet",
+                "configDir": "libs/@misky/svelte-spreadsheet/.storybook"
+            },
+            "configurations": {
+                "ci": {
+                    "quiet": true
+                }
+            }
+        },
         "build": {
             "executor": "nx:run-commands",
             "options": {
