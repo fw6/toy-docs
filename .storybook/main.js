@@ -55,7 +55,10 @@ export const viteConfigOverrides = {
 
 /** @type { import('@storybook/svelte-vite').StorybookConfig } */
 export default {
-    core: { builder: "@storybook/builder-vite", disableTelemetry: true },
+    core: {
+        builder: "@storybook/builder-vite",
+        disableTelemetry: true,
+    },
     framework: {
         name: "@storybook/svelte-vite",
         options: {},
@@ -65,7 +68,10 @@ export default {
     },
     stories: [],
     addons: [
+        "storybook-addon-performance",
         "storybook-addon-swc",
+        "@storybook/addon-docs",
+        "@storybook/addon-a11y",
         "@storybook/addon-links",
         "@storybook/addon-essentials",
         "@storybook/addon-interactions",

@@ -4,7 +4,6 @@ import { Node } from "@tiptap/core";
 import { Section, Table, TableCell, TableRow } from "../../";
 import { primaryContent, resizingContent } from "./contents";
 import { defaultToolbars } from "./toolbars";
-
 /**
  * More on how to set up stories at: https://storybook.js.org/docs/svelte/writing-stories/introduction
  *

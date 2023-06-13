@@ -1,3 +1,7 @@
+import { withLinks } from "@storybook/addon-links";
+
+export const decorators = [withLinks];
+
 /** @type { import('@storybook/svelte').Preview } */
 const preview = {
     parameters: {
