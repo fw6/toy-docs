@@ -9,7 +9,11 @@
             "executor": "@nx/storybook:storybook",
             "options": {
                 "port": 4404,
-                "configDir": "libs/@tiptap/svelte/.storybook"
+                "configDir": "libs/@tiptap/svelte/.storybook",
+                "https": true,
+                "host": "127.0.0.1",
+                "sslCert": "cert.pem",
+                "sslKey": "key.pem"
             },
             "configurations": {
                 "ci": {

@@ -12,23 +12,23 @@ const config = {
     refs: {
         "tiptap extensions": {
             title: "Tiptap extensions",
-            url: isDev ? "http://localhost:4401" : "tiptap-extensions/",
+            url: isDev ? "https://127.0.0.1:4401" : "tiptap-extensions/",
         },
         "tiptap marks": {
             title: "Tiptap marks",
-            url: isDev ? "http://localhost:4402" : "tiptap-marks/",
+            url: isDev ? "https://127.0.0.1:4402" : "tiptap-marks/",
         },
         "tiptap nodes": {
             title: "Tiptap extensions",
-            url: isDev ? "http://localhost:4403" : "tiptap-nodes/",
+            url: isDev ? "https://127.0.0.1:4403" : "tiptap-nodes/",
         },
         "tiptap svelte adapter": {
             title: "Tiptap svelte",
-            url: isDev ? "http://localhost:4404" : "tiptap-svelte/",
+            url: isDev ? "https://127.0.0.1:4404" : "tiptap-svelte/",
         },
         "svelte-spreadsheet": {
             title: "Spreadsheet",
-            url: isDev ? "http://localhost:4405" : "svelte-spreadsheet/",
+            url: isDev ? "https://127.0.0.1:4405" : "svelte-spreadsheet/",
         },
     },
 };

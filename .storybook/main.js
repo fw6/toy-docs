@@ -26,6 +26,10 @@ export const svelteOptions = {
  * @type {import('vite').UserConfig}
  */
 export const viteConfigOverrides = {
+    server: {
+        https: true,
+        host: true,
+    },
     css: {
         postcss: {
             plugins: basicPostCSSPlugins,

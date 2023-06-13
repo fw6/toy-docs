@@ -10,6 +10,7 @@
         "build:since": "nx affected -t build",
         "test:all": "nx run-many -t test",
         "test:since": "nx affected -t test",
+        "gen:cert": "mkcert -key-file key.pem -cert-file cert.pem localhost 127.0.0.1 ::1",
         "dev": "nx run-many -t dev"
     },
     "devDependencies": {

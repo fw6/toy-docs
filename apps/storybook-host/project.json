@@ -9,7 +9,11 @@
             "executor": "@nx/storybook:storybook",
             "options": {
                 "port": 4400,
-                "configDir": "apps/storybook-host/.storybook"
+                "configDir": "apps/storybook-host/.storybook",
+                "https": true,
+                "host": "127.0.0.1",
+                "sslCert": "cert.pem",
+                "sslKey": "key.pem"
             },
             "configurations": {
                 "ci": {
