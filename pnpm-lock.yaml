@@ -1,9 +1,5 @@
 lockfileVersion: '6.0'
 
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
-
 patchedDependencies:
   '@tanstack/table-core@8.9.1':
     hash: fjne5uqnqkvbitvgen5ilwpnei
@@ -75,8 +71,8 @@ importers:
         specifier: ^1.0.3
         version: 1.0.3(postcss@8.4.24)
       '@fontsource/fira-mono':
-        specifier: ^4.5.10
-        version: 4.5.10
+        specifier: ^5.0.0
+        version: 5.0.3
       '@local/shared':
         specifier: workspace:*
         version: link:libs/@local/shared
@@ -2201,8 +2197,8 @@ packages:
     resolution: {integrity: sha512-cEee/Z+I12mZcFJshKcCqC8tuX5hG3s+d+9nZ3LabqKF1vKdF41B92pJVCBggjAGORAeOzyyDDKrZwIkLffeOQ==}
     dev: true
 
-  /@fontsource/fira-mono@4.5.10:
-    resolution: {integrity: sha512-bxUnRP8xptGRo8YXeY073DSpfK74XpSb0ZyRNpHV9WvLnJ7TwPOjZll8hTMin7zLC6iOp59pDZ8EQDj1gzgAQQ==}
+  /@fontsource/fira-mono@5.0.3:
+    resolution: {integrity: sha512-AN08SykeaFazTC0d0HHOZeQ3jmHyn2Qs5bGEjhxuNp9NjUqg9rL8x+LxrXWdVIo8PBg0xbnkcA3KR6RVvQeRAg==}
     dev: true
 
   /@humanwhocodes/config-array@0.9.5:
@@ -4955,7 +4951,7 @@ packages:
     dev: true
 
   /ajv-keywords@3.5.2(ajv@6.12.6):
-    resolution: {integrity: sha1-MfKdpatuANHC0yms97WSlhTVAU0=}
+    resolution: {integrity: sha512-5p6WTN0DdTGVQk6VjcEju19IgaHudalcfabD7yhDGeA6bcQnmL+CpveLJq/3hvfwd1aof6L386Ougkx6RfyMIQ==}
     peerDependencies:
       ajv: ^6.9.1
     dependencies:
@@ -5495,7 +5491,7 @@ packages:
     dev: true
 
   /chrome-trace-event@1.0.3:
-    resolution: {integrity: sha1-EBXs7UdB4V0GZkqVfbv1DQQeJqw=}
+    resolution: {integrity: sha512-p3KULyQg4S7NIHixdwbGX+nFHkoBiA4YQmyWtjb8XngSKV124nJmRysgAeujbUVb15vh+RvFUfCPqU7rXk+hZg==}
     engines: {node: '>=6.0'}
     dev: true
 
@@ -5584,7 +5580,7 @@ packages:
     dev: true
 
   /commander@2.20.3:
-    resolution: {integrity: sha1-/UhehMA+tIgcIHIrpIA16FMa6zM=}
+    resolution: {integrity: sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==}
     dev: true
 
   /commander@8.3.0:
@@ -6136,7 +6132,7 @@ packages:
     engines: {node: '>=10'}
 
   /eslint-scope@5.1.1:
-    resolution: {integrity: sha1-54blmmbLkrP2wfsNUIqrF0hI9Iw=}
+    resolution: {integrity: sha512-2NxwbF/hZ0KpepYN0cNbo+FN6XoK7GaHlQhgx/hIZl6Va0bF45RQOOwhLIy8lQDbuCiadSLCBnH2CFYquit5bw==}
     engines: {node: '>=8.0.0'}
     dependencies:
       esrecurse: 4.3.0
@@ -6281,7 +6277,7 @@ packages:
     dev: true
 
   /events@3.3.0:
-    resolution: {integrity: sha1-Mala0Kkk4tLEGagTrrLE6HjqdAA=}
+    resolution: {integrity: sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q==}
     engines: {node: '>=0.8.x'}
     dev: true
 
@@ -6579,7 +6575,7 @@ packages:
     dev: true
 
   /fsevents@2.3.2:
-    resolution: {integrity: sha1-ilJveLj99GI7cJ4Ll1xSwkwC/Ro=}
+    resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
     os: [darwin]
     requiresBuild: true
@@ -9415,7 +9411,7 @@ packages:
     dev: true
 
   /source-map-support@0.5.21:
-    resolution: {integrity: sha1-BP58f54e0tZiIzwoyys1ufY/bk8=}
+    resolution: {integrity: sha512-uBHU3L3czsIyYXKX88fdrGovxdSCoTGDRZ6SYXtSRxLZUzHg5P/66Ht6uoUlHu9EZod+inXhKo3qQgwXUT/y1w==}
     dependencies:
       buffer-from: 1.1.2
       source-map: 0.6.1
@@ -9746,7 +9742,7 @@ packages:
     dev: true
 
   /tapable@2.2.1:
-    resolution: {integrity: sha1-GWenPvQGCoLxKrlq+G1S/bdu7KA=}
+    resolution: {integrity: sha512-GNzQvQTOIP6RyTfE2Qxb8ZVlNmw0n88vp1szwWRimP02mnTsx3Wtn5qRdqY9w2XduFNUgvOwhNnQsjwCp+kqaQ==}
     engines: {node: '>=6'}
     dev: true
 
@@ -10513,3 +10509,7 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
     dev: true
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false

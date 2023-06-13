@@ -16,7 +16,7 @@
     "devDependencies": {
         "@csstools/postcss-design-tokens": "^2.0.4",
         "@csstools/postcss-global-data": "^1.0.3",
-        "@fontsource/fira-mono": "^4.5.10",
+        "@fontsource/fira-mono": "^5.0.0",
         "@local/shared": "workspace:*",
         "@neoconfetti/svelte": "^1.0.0",
         "@nrwl/devkit": "16.3.2",
