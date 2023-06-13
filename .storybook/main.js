@@ -70,14 +70,6 @@ export default {
         "@storybook/addon-essentials",
         "@storybook/addon-interactions",
         "@storybook/addon-svelte-csf",
-        {
-            name: "@storybook/addon-styling",
-            options: {
-                postCss: {
-                    implementation: require("postcss"),
-                },
-            },
-        },
     ],
     viteFinal(config) {
         return mergeConfig(config, viteConfigOverrides);
