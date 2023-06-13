@@ -51,7 +51,10 @@
     data-last={last}
     style={`${dir === -1 ? "height" : "width"}:${size}px;`}
 >
-    <div class="grid-backsight__pin" on:mousedown={handleMousedown} />
+    <div
+        class="grid-backsight__pin"
+        on:mousedown|preventDefault|stopPropagation={handleMousedown}
+    />
     <GridBacksightLiner {editor} {dir} {index} {last} />
 </div>
 

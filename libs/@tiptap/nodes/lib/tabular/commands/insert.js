@@ -86,7 +86,13 @@ export function addColumnAt(state, dispatch, side) {
         const column = side === 1 ? rect.right : rect.left;
         const tr = addColumn(state.tr, rect, column);
 
-        dispatch(evenColumnWidthAfterInsert(tr, column));
+        evenColumnWidthAfterInsert(tr, column);
+
+        // move cursor to the new column
+        const anchorPos = rect.tableStart + rect.map.map[column + rect.top * rect.map.width];
+        tr.setSelection(TextSelection.create(tr.doc, tr.mapping.map(anchorPos) - 2));
+
+        dispatch(tr);
     }
     return true;
 }

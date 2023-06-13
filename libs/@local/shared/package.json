@@ -17,7 +17,7 @@
     "peerDependencies": {
         "@misky-design/tokens": "workspace:*"
     },
-    "devDependencies": {
+    "dependencies": {
         "@misky-design/tokens": "workspace:*"
     },
     "volta": {

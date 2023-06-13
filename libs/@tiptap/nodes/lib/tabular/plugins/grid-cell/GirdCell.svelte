@@ -173,7 +173,14 @@
     class:isFirst={dir !== 0 && index === 0}
     data-index={dir === 0 ? -1 : index}
     on:mousedown={handleMousedown}
-/>
+>
+    {#if isActive}
+        <button
+            class="btn__delete-column"
+            on:mousedown={() => editor.commands.deleteColumn()}>X</button
+        >
+    {/if}
+</div>
 
 {#if dir !== 0}
     <GridBacksight {editor} {dir} {index} {size} />
@@ -183,6 +190,14 @@
 {/if}
 
 <style style="css">
+    .btn__delete-column {
+        position: absolute;
+        bottom: 120%;
+        left: 50%;
+        transform: translateX(-50%);
+        pointer-events: auto;
+    }
+
     .grid-cell {
         position: absolute;
         width: 100%;
