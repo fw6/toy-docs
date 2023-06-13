@@ -6,6 +6,10 @@
     import MenuItem from "./MenuItem.svelte";
 
     /**
+     * @typedef {import('./typings').EditorToolbarProfile} EditorToolbarProfile
+     */
+
+    /**
      * @type {EditorToolbarProfile[]}
      */
     export let additionalToolbars = [];

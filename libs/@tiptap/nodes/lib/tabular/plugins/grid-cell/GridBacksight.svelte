@@ -1,7 +1,7 @@
 <script>
     import { addColumn, addRow, selectedRect } from "@tiptap/pm/tables";
-    import { evenColumnWidthAfterInsert } from "../../commands/insert";
     import GridBacksightLiner from "./GridBacksightLiner.svelte";
+    import { evenColumnWidthAfterInsert } from "../../utils/column";
     /**
      * Grid cell belongs
      *

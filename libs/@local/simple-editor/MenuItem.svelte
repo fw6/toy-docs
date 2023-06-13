@@ -12,6 +12,10 @@
      * @type {(props: { editor: Editor }) => boolean}
      */
     export let action = () => false;
+    /**
+     * @type {(props: { editor: Editor }) => boolean}
+     */
+    export let disabled = () => false;
 
     /**
      * @type {string | undefined}
@@ -26,6 +30,7 @@
 <button
     class="menu-item"
     class:is-active={isActive({ editor })}
+    class:disabled={disabled({ editor })}
     on:mousedown|preventDefault={() => action({ editor })}
     {title}
 >
@@ -48,5 +53,11 @@
             color: #fff;
             background-color: #0d0d0d;
         }
+    }
+
+    .menu-item.disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        background-color: var(--mds-semantic-color-bg-container-disabled);
     }
 </style>

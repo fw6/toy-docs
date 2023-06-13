@@ -15,6 +15,7 @@ export type EditorToolbarProfile =
           title: string;
           action: (props: { editor: Editor }) => boolean;
           isActive?: (props: { editor: Editor }) => boolean;
+          disabled?: (props: { editor: Editor }) => boolean;
       }
     | { type: "divider" }
     | ComponentType<SvelteComponentTyped<{ editor: Editor; readOnly?: boolean }>>;

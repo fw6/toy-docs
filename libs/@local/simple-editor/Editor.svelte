@@ -2,9 +2,13 @@
     import { detectLocale, loadLocaleAsync, setLocale } from "@local/intl";
     import { Editor } from "@tiptap/core";
     import { StarterKit } from "@tiptap/starter-kit";
-    import { onMount } from "svelte";
+    import { onMount, tick } from "svelte";
     import { localStorageDetector } from "typesafe-i18n/detectors";
     import MenuBar from "./MenuBar.svelte";
+
+    /**
+     * @typedef {import('./typings').EditorToolbarProfile} EditorToolbarProfile
+     */
 
     /**
      * @type {EditorToolbarProfile[]}
@@ -48,6 +52,10 @@
                 StarterKit.configure(starterKitOptions),
                 ...extensions,
             ],
+            async onTransaction({ editor: _editor }) {
+                await tick();
+                editor = _editor;
+            },
         });
 
         return () => {

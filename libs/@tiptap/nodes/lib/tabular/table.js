@@ -2,8 +2,6 @@ import { Node, callOrReturn, getExtensionField, mergeAttributes } from "@tiptap/
 import {
     CellSelection,
     TableMap,
-    addRowAfter,
-    addRowBefore,
     deleteTable,
     fixTables,
     goToNextCell,
@@ -16,7 +14,7 @@ import {
 } from "@tiptap/pm/tables";
 
 import { deleteColumn, deleteRow } from "./commands/delete";
-import { addColumnAt, createTable } from "./commands/insert";
+import { addColumnAt, addRowAt, createTable } from "./commands/insert";
 import { selectColumns, selectRows, selectTable } from "./commands/select";
 import { getGridCellPlugin } from "./plugins/grid-cell/grid-cell";
 
@@ -172,10 +170,10 @@ export const Table = Node.create({
                 return deleteColumn(state, dispatch);
             },
             addRowBefore: () => ({ state, dispatch }) => {
-                return addRowBefore(state, dispatch);
+                return addRowAt(state, dispatch, -1);
             },
             addRowAfter: () => ({ state, dispatch }) => {
-                return addRowAfter(state, dispatch);
+                return addRowAt(state, dispatch, 1);
             },
             deleteRow: () => ({ state, dispatch }) => {
                 return deleteRow(state, dispatch);

@@ -5,13 +5,11 @@
  * @property {PMNode} [cellContent]
  */
 
-import { decimalRounding } from "@local/shared";
 import { TextSelection } from "@tiptap/pm/state";
-import { addColumn, isInTable, selectedRect, TableMap } from "@tiptap/pm/tables";
-
-import { WIDTH_DECIMAL_PLACES } from "../constants";
+import { addColumn, addRow, isInTable, selectedRect } from "@tiptap/pm/tables";
+import { evenColumnWidthAfterInsert } from "../utils/column";
 import { tableNodeTypes } from "../utils/node-types";
-import { findTable, generateColwidths } from "../utils/tables";
+import { generateColwidths } from "../utils/tables";
 
 /**
  * @param {CreateTableProps} [props]
@@ -76,7 +74,7 @@ const createCell = (cellType, cellContent) => {
  * @public
  * @param {EditorState} state
  * @param {(tr: Transaction) => void} [dispatch]
- * @param {-1 | 1} [side]
+ * @param {-1 | 1} [side] -1 left, 1 right
  * @returns {boolean}
  */
 export function addColumnAt(state, dispatch, side) {
@@ -90,7 +88,7 @@ export function addColumnAt(state, dispatch, side) {
 
         // move cursor to the new column
         const anchorPos = rect.tableStart + rect.map.map[column + rect.top * rect.map.width];
-        tr.setSelection(TextSelection.create(tr.doc, tr.mapping.map(anchorPos) - 2));
+        tr.setSelection(TextSelection.near(tr.doc.resolve(tr.mapping.map(anchorPos) - 2), -1));
 
         dispatch(tr);
     }
@@ -98,38 +96,26 @@ export function addColumnAt(state, dispatch, side) {
 }
 
 /**
- * After inserting a column, the column widths should be even.
- *
- * @param {Transaction} tr
- * @param {number} column
+ * @public
+ * @param {EditorState} state
+ * @param {(tr: Transaction) => void} [dispatch]
+ * @param {-1 | 1} [side] -1 top, 1 bottom
+ * @returns {boolean}
  */
-export function evenColumnWidthAfterInsert(tr, column) {
-    const table = findTable(tr.selection);
-    if (table) {
-        const map = TableMap.get(table.node);
-        /** @type {number[]} */
-        let colwidths = table.node.attrs.colwidths;
+export function addRowAt(state, dispatch, side) {
+    if (!isInTable(state)) return false;
+    if (dispatch) {
+        const rect = selectedRect(state);
+        const row = side === 1 ? rect.bottom : rect.top;
+        const tr = addRow(state.tr, rect, row);
 
-        if (!colwidths.length) {
-            colwidths = generateColwidths(map.width);
-        } else {
-            // the new column width is the lastest average
-            const newColwidth = decimalRounding(100 / map.width, WIDTH_DECIMAL_PLACES);
+        // const anchorPos = rect.tableStart + rect.map.map[rect.right + Math.max(row, 0) * rect.map.width];
 
-            // The previous columns share the new extra width proportionally
-            colwidths = colwidths.flatMap((colwidth, index) => {
-                const width = decimalRounding(colwidth * (1 - newColwidth / 100), WIDTH_DECIMAL_PLACES);
+        // console.log(tr.doc.resolve(tr.mapping.map(anchorPos) - 2));
+        // tr.setSelection(TextSelection.create(tr.doc, tr.mapping.map(anchorPos) - 2));
 
-                if (index === column) {
-                    return [newColwidth, width];
-                }
-
-                return width;
-            });
-        }
-
-        tr.setNodeAttribute(table.pos, "colwidths", colwidths);
+        dispatch(tr);
     }
 
-    return tr;
+    return true;
 }
