@@ -10,6 +10,10 @@
 - vite
 
 
+## Requirements
+
+[mkcert](https://github.com/FiloSottile/mkcert)
+
 为啥没用TS？
 - [Using TypeScript without TypeScript](https://puruvj.dev/blog/get-to-know-typescript--using-typescript-without-typescript#Using-TypeScript-in-JavaScript-files)
 - [Get full type support with plain JavaScript](https://www.pausly.app/blog/full-type-support-with-plain-javascript)
