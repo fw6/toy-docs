@@ -6,10 +6,10 @@
  */
 
 import { TextSelection } from "@tiptap/pm/state";
-import { addColumn, addRow, isInTable, selectedRect } from "@tiptap/pm/tables";
+import { TableMap, addColumn, addRow, isInTable, selectedRect } from "@tiptap/pm/tables";
 import { evenColumnWidthAfterInsert } from "../utils/column";
 import { tableNodeTypes } from "../utils/node-types";
-import { generateColwidths } from "../utils/tables";
+import { findTable, generateColwidths } from "../utils/tables";
 
 /**
  * @param {CreateTableProps} [props]
@@ -109,10 +109,12 @@ export function addRowAt(state, dispatch, side) {
         const row = side === 1 ? rect.bottom : rect.top;
         const tr = addRow(state.tr, rect, row);
 
-        // const anchorPos = rect.tableStart + rect.map.map[rect.right + Math.max(row, 0) * rect.map.width];
-
-        // console.log(tr.doc.resolve(tr.mapping.map(anchorPos) - 2));
-        // tr.setSelection(TextSelection.create(tr.doc, tr.mapping.map(anchorPos) - 2));
+        const table = findTable(tr.selection);
+        if (table) {
+            const map = TableMap.get(table.node);
+            const cellPos = map.positionAt(row, rect.left, table.node);
+            tr.setSelection(TextSelection.create(tr.doc, table.pos + 1 + cellPos));
+        }
 
         dispatch(tr);
     }
