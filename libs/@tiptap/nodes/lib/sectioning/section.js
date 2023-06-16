@@ -8,10 +8,12 @@ const marginDirections = /** @type {const} */ (["top", "left", "bottom", "right"
 
 export const Section = Node.create({
     name: "page_section",
+    content: "page_main page_header page_footer",
+
+    allowGapCursor: false,
+    draggable: false,
     isolating: true,
     selectable: false,
-    content: "page_main page_header page_footer",
-    draggable: false,
 
     parseHTML() {
         return [

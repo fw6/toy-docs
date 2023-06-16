@@ -2,7 +2,6 @@ import { Node, callOrReturn, getExtensionField, mergeAttributes } from "@tiptap/
 import {
     CellSelection,
     TableMap,
-    deleteTable,
     fixTables,
     goToNextCell,
     isInTable,
@@ -13,7 +12,7 @@ import {
     tableEditing,
 } from "@tiptap/pm/tables";
 
-import { deleteColumn, deleteRow } from "./commands/delete";
+import { deleteColumn, deleteRow, deleteTable } from "./commands/delete";
 import { addColumnAt, addRowAt, createTable } from "./commands/insert";
 import { selectColumns, selectRows, selectTable } from "./commands/select";
 import { getGridCellPlugin } from "./plugins/grid-cell/grid-cell";

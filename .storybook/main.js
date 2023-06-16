@@ -76,6 +76,8 @@ export default {
         "@storybook/addon-essentials",
         "@storybook/addon-interactions",
         "@storybook/addon-svelte-csf",
+        "@storybook/addon-highlight",
+        "@storybook/addon-backgrounds",
     ],
     viteFinal(config) {
         return mergeConfig(config, viteConfigOverrides);

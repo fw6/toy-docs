@@ -5,11 +5,11 @@ export const Header = Node.create({
 
     content: "paragraph{1,5}",
 
-    selectable: false,
-    draggable: false,
-    defining: true,
-    isolating: true,
     allowGapCursor: false,
+    draggable: false,
+    isolating: true,
+    selectable: false,
+    defining: true,
 
     // #region Custom Schema
 

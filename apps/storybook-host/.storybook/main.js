@@ -26,9 +26,13 @@ const config = {
             title: "Tiptap svelte",
             url: isDev ? "https://127.0.0.1:4404" : "tiptap-svelte/",
         },
-        "svelte-spreadsheet": {
+        "svelte spreadsheet": {
             title: "Spreadsheet",
             url: isDev ? "https://127.0.0.1:4405" : "svelte-spreadsheet/",
+        },
+        "design components": {
+            title: "Components",
+            url: isDev ? "https://127.0.0.1:4406" : "design-components/",
         },
     },
 };

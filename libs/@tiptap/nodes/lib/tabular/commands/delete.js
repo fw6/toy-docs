@@ -1,8 +1,28 @@
 import { decimalRounding } from "@local/shared";
-import { TableMap, deleteTable, isInTable, removeColumn, removeRow, selectedRect } from "@tiptap/pm/tables";
+import { TextSelection } from "@tiptap/pm/state";
+import { TableMap, isInTable, removeColumn, removeRow, selectedRect } from "@tiptap/pm/tables";
 
 import { WIDTH_DECIMAL_PLACES } from "../constants";
 import { generateColwidths } from "../utils/tables";
+
+/** @type {Command} */
+export function deleteTable(state, dispatch) {
+    const $pos = state.selection.$anchor;
+    for (let d = $pos.depth; d > 0; d--) {
+        const node = $pos.node(d);
+        if (node.type.spec.tableRole === "table") {
+            if (dispatch)
+                dispatch(
+                    state.tr
+                        .delete($pos.before(d), $pos.after(d))
+                        .setSelection(TextSelection.near(state.tr.doc.resolve($pos.before(d))))
+                        .scrollIntoView(),
+                );
+            return true;
+        }
+    }
+    return false;
+}
 
 /**
  * Command function that removes the selected rows from a table.

@@ -19,6 +19,6 @@
     },
     "scripts": {
         "dev": "typesafe-i18n",
-        "build": "typesafe-i18n"
+        "build": "typesafe-i18n --no-watch"
     }
 }

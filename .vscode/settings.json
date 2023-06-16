@@ -1,4 +1,5 @@
 {
+    "json.schemaDownload.enable": true,
     "stylelint.enable": true,
     "stylelint.validate": [
         "html",

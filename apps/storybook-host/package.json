@@ -7,6 +7,7 @@
         "extends": "../../package.json"
     },
     "dependencies": {
+        "@misky-design/tokens": "workspace:*",
         "@misky/tiptap-marks": "workspace:*",
         "@misky/tiptap-svelte": "workspace:*",
         "@misky/tiptap-extensions": "workspace:*",

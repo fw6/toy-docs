@@ -5,11 +5,11 @@ export const Main = Node.create({
 
     content: "block+",
 
-    selectable: false,
-    draggable: false,
-    defining: true,
-    isolating: true,
     allowGapCursor: false,
+    draggable: false,
+    isolating: true,
+    selectable: false,
+    defining: true,
 
     // #region Custom Schema
 
