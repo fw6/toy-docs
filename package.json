@@ -7,7 +7,7 @@
     "scripts": {
         "build:all": "nx run-many -t build",
         "build:since": "nx affected -t build",
-        "build:storybook": "nx build storybook-host && nx run-many -t build-storybook --parallel=5 --projects=tag:storybook:ref",
+        "build:storybook": "pnpm build:all && nx run-many -t build-storybook --parallel=5 --projects=tag:storybook:ref",
         "preview:storybook": "serve ./dist/storybook",
         "test:all": "nx run-many -t test",
         "test:since": "nx affected -t test",

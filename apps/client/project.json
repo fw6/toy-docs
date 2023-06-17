@@ -4,11 +4,21 @@
     "sourceRoot": "apps/client/src",
     "projectType": "application",
     "generators": {},
-    "targets": {},
+    "targets": {
+        "build": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "echo \"Build apps/client\"",
+                "cwd": "apps/client"
+            }
+        }
+    },
     "tags": [
         "type:app"
     ],
     "implicitDependencies": [
-        "tiptap/*"
+        "tiptap/*",
+        "design/*",
+        "svelte-spreadsheet"
     ]
 }

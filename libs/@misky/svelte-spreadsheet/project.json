@@ -55,6 +55,9 @@
         "storybook:ref",
         "scope:components"
     ],
+    "implicitDependencies": [
+        "design/tokens"
+    ],
     "namedInputs": {
         "production": [
             "default",
