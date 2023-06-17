@@ -31,3 +31,6 @@ jobs:
 
             - name: Build storybook
               run: pnpm build:storybook
+              env:
+                NODE_ENV: 'production'
+
