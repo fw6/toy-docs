@@ -8,16 +8,21 @@ import { generateColwidths } from "../utils/tables";
 /** @type {Command} */
 export function deleteTable(state, dispatch) {
     const $pos = state.selection.$anchor;
+    const tr = state.tr;
+
     for (let d = $pos.depth; d > 0; d--) {
         const node = $pos.node(d);
         if (node.type.spec.tableRole === "table") {
-            if (dispatch)
-                dispatch(
-                    state.tr
-                        .delete($pos.before(d), $pos.after(d))
-                        .setSelection(TextSelection.near(state.tr.doc.resolve($pos.before(d))))
-                        .scrollIntoView(),
-                );
+            if (dispatch) {
+                const pos = $pos.before(d);
+                tr.delete($pos.before(d), $pos.after(d));
+                const $anchor = tr.doc.resolve(pos);
+
+                tr.setSelection(TextSelection.near($anchor, $anchor.nodeBefore ? -1 : 1));
+                tr.scrollIntoView();
+
+                dispatch(tr);
+            }
             return true;
         }
     }
