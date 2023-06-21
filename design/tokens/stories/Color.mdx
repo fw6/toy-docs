@@ -1,0 +1,101 @@
+import { Meta, ColorPalette, ColorItem } from '@storybook/blocks';
+import tokens from '../platforms/web/tokens.nested.json'
+import { startCase } from 'lodash-es';
+
+<Meta title="Colors" />
+
+# Color Guidence
+
+## Source
+
+<ColorPalette>
+    <ColorItem title="Seed" colors={[tokens.source.seed]} />
+</ColorPalette>
+
+## Tonal Palettes
+
+export const steps = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 95, 99, 100];
+
+<ColorPalette>
+    {
+        Object.entries(tokens.ref).map(([title, colors]) => (
+            <ColorItem title={startCase(title)} colors={
+                    Object.entries(colors).reduce((res, [k, v]) => {
+                        const step = parseInt(k.replace(/[^\d]/g, ''));
+                        if (!steps.includes(step)) return res;
+                        res[step] = v;
+                        return res
+                    }, {})
+            } />
+        ))
+    }
+</ColorPalette>
+
+## Light Theme
+
+export const brandColors = ['primary', 'secondary', 'tertiary', 'error'];
+
+<ColorPalette>
+
+
+    {
+        Object.entries(tokens.surfaces.light).map(([title, colors]) => (
+            <ColorItem title={title} colors={
+                Object.entries(colors).reduce((res, [k, v]) => {
+                    res[k] = v;
+                    return res
+                }, {})
+            } />
+        ))
+    }
+
+    {
+        brandColors.flatMap(name => {
+            const title = startCase(name);
+            const component = <ColorItem title={title} colors={{
+                [title]: tokens.sys.light[name],
+                [`On ${title}`]: tokens.sys.light[`on-${name}`],
+                [`${title} Container`]: tokens.sys.light[`${name}-container`],
+                [`On ${title} Container`]: tokens.sys.light[`on-${name}-container`],
+            }} />;
+            if (!tokens.sys.light[`${name}-fixed`]) return component;
+
+            return [
+                component,
+                <ColorItem title={`${title} Fixed`} colors={{
+                    [`${title} Fixed`]: tokens.sys.light[`${name}-fixed`],
+                    [`On ${title} Fixed`]: tokens.sys.light[`on-${name}-fixed`],
+                    [`${title} Fixed Dim`]: tokens.sys.light[`${name}-fixed-dim`],
+                    [`On ${title} Fixed Variant`]: tokens.sys.light[`on-${name}-fixed-variant`],
+                }} />,
+            ]
+        })
+    }
+</ColorPalette>
+
+## Dark Theme
+
+<ColorPalette>
+    {
+        brandColors.flatMap(name => {
+            const title = startCase(name);
+            const component = <ColorItem title={title} colors={{
+                [title]: tokens.sys.dark[name],
+                [`On ${title}`]: tokens.sys.dark[`on-${name}`],
+                [`${title} Container`]: tokens.sys.dark[`${name}-container`],
+                [`On ${title} Container`]: tokens.sys.dark[`on-${name}-container`],
+            }} />;
+            if (!tokens.sys.dark[`${name}-fixed`]) return component;
+
+            return [
+                component,
+                <ColorItem title={`${title} Fixed`} colors={{
+                    [`${title} Fixed`]: tokens.sys.dark[`${name}-fixed`],
+                    [`On ${title} Fixed`]: tokens.sys.dark[`on-${name}-fixed`],
+                    [`${title} Fixed Dim`]: tokens.sys.dark[`${name}-fixed-dim`],
+                    [`On ${title} Fixed Variant`]: tokens.sys.dark[`on-${name}-fixed-variant`],
+                }} />,
+            ]
+        })
+    }
+</ColorPalette>

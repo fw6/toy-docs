@@ -1,0 +1,30 @@
+import { Meta, Unstyled } from '@storybook/blocks';
+import tokens from '../platforms/web/tokens.nested.json'
+import { startCase } from 'lodash-es';
+
+<Meta title="Elevation" />
+
+# Elevation
+
+{
+    ['light', 'dark'].map((type) => Array.from({length: 10}, (_, i) => {
+        const j = Math.floor(i / 2) + 1;
+        const k = i % 2;
+        const value = tokens.elevation[type][j][k];
+
+        return <Unstyled><div style={{
+            display: 'flex',
+            alignItems: 'center',
+            marginBottom: 32,
+            backgroundColor: tokens.sys[type]['surface-container-highest'],
+            color: type === 'light' ? '#000' : '#fff',
+            padding: '24px 16px',
+            borderRadius: 4,
+        }}>
+            <p style={{ fontSize: 18, marginRight: 16 }}>elevation.{type}.{j}.{k}</p>
+            <div style={{ boxShadow: value, width: 540, height: 80, lineHeight: '80px', textAlign: 'center', borderRadius: 4 }}>
+                {value}
+            </div>
+        </div></Unstyled>
+    }))
+}

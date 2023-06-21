@@ -34,6 +34,10 @@ const config = {
             title: "Components",
             url: isDev ? "https://127.0.0.1:4406" : "design-components/",
         },
+        "design tokens": {
+            title: "Tokens",
+            url: isDev ? "https://127.0.0.1:4407" : "design-tokens/",
+        },
     },
 };
 export default config;

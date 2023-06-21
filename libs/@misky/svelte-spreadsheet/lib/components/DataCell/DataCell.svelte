@@ -85,19 +85,19 @@
 <!--
 stylify-customSelectors
     '.data-cell': `
-        position:relative cursor:cell border:1px_solid_$mds-semantic-color-border-lvl-1
+        position:relative cursor:cell border:1px_solid_$mds-sys-light-surface-bright
 
         &.col-active,&.row-active,&.range-covered:not(&.range-anchor) {
-            background-color:lightenAll(^mds-semantic-color-bg-primary^,50)
+            background-color:lightenAll(^mds-sys-light-primary^,50)
         }
         &.range-anchor {
-            outline:1px_solid_$mds-semantic-color-primary
+            outline:1px_solid_$mds-sys-light-primary
         }
 
         .cell-last-cornor {
             position:absolute right:-5px bottom:-5px z-index:2
             width:4px height:4px padding:2px
-            background-color:$mds-semantic-color-primary background-clip:content-box
+            background-color:$mds-sys-light-primary background-clip:content-box
             cursor:crosshair box-sizing:content-box
         }
     `

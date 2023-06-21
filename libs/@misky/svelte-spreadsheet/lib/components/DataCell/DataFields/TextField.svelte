@@ -77,6 +77,6 @@
         border: none;
         outline: none;
         resize: none;
-        caret-color: var(--mds-semantic-color-primary);
+        caret-color: var(--mds-sys-light-primary);
     }
 </style>

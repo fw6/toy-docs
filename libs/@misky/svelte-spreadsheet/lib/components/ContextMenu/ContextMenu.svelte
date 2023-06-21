@@ -34,7 +34,7 @@
         z-index: 12;
         width: 160px;
         background-color: white;
-        box-shadow: var(--mds-semantic-shadow-drop-right);
-        border-radius: var(--mds-semantic-radius-default);
+        box-shadow: var(--mds-elevation-light-1-0);
+        border-radius: 4px;
     }
 </style>

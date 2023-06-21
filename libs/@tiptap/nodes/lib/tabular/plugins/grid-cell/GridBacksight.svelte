@@ -1,7 +1,7 @@
 <script>
     import { addColumn, addRow, selectedRect } from "@tiptap/pm/tables";
-    import GridBacksightLiner from "./GridBacksightLiner.svelte";
     import { evenColumnWidthAfterInsert } from "../../utils/column";
+    import GridBacksightLiner from "./GridBacksightLiner.svelte";
     /**
      * Grid cell belongs
      *
@@ -83,7 +83,7 @@
         width: 12px;
         height: 12px;
         border-radius: 50%;
-        background-color: var(--mds-semantic-color-bg-primary);
+        background-color: var(--mds-sys-light-primary);
         opacity: 0;
         pointer-events: auto;
 

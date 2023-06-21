@@ -1,13 +1,16 @@
 <script>
+    /**
+     * @typedef {import('@tiptap/core').Editor} Editor
+     * @typedef {import('svelte').ComponentType} ComponentType
+     *
+     * @typedef {import('./typings').EditorToolbarProfile} EditorToolbarProfile
+     */
+
     import IconExportHTML from "~icons/carbon/html-reference";
     import IconExportJSON from "~icons/carbon/json-reference";
     import IconExportTxt from "~icons/carbon/txt-reference";
 
     import MenuItem from "./MenuItem.svelte";
-
-    /**
-     * @typedef {import('./typings').EditorToolbarProfile} EditorToolbarProfile
-     */
 
     /**
      * @type {EditorToolbarProfile[]}

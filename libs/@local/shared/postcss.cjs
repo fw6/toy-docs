@@ -1,7 +1,6 @@
-// const functions = require("./postcss-functions.cjs");
 const tokenCSSFilePath = require.resolve("@misky-design/tokens/platforms/web/tokens.css");
+// const postcssGlobalData = require("@csstools/postcss-global-data");
 const flatTokens = require("@misky-design/tokens/platforms/web/tokens.flat.json");
-const postcssGlobalData = require("@csstools/postcss-global-data");
 
 /**
  * 磅转像素

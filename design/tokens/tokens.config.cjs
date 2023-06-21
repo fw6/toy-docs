@@ -4,7 +4,7 @@
 const TOKEN_PREFIX = "mds";
 
 module.exports = {
-    source: ["lib/configs/**/*.json", "lib/configs/**/*.jsonc"],
+    source: ["tokens/**/*.json"],
     platforms: {
         web: {
             basePxFontSize: 16,
@@ -15,8 +15,6 @@ module.exports = {
                 {
                     format: "css/variables",
                     destination: "tokens.css",
-                    /** @param {{name: string}} token */
-                    filter: (token) => !token.name.endsWith("-primitive"),
                     options: {
                         outputReferences: true,
                     },
@@ -30,26 +28,19 @@ module.exports = {
                     },
                 },
                 {
-                    format: "json/nested",
-                    destination: "tokens.json",
-                },
-                {
-                    format: "json",
-                    destination: "tokens.raw.json",
-                },
-                {
                     format: "json/flat",
                     destination: "tokens.flat.json",
                 },
                 {
-                    format: "json/asset",
-                    destination: "tokens.asset.json",
+                    format: "my/json/nested",
+                    destination: "tokens.nested.json",
                 },
             ],
             options: {
                 showFileHeader: true,
             },
         },
+
         js: {
             basePxFontSize: 16,
             buildPath: "platforms/js/",

@@ -457,7 +457,7 @@ stylify-customSelectors
             display:block width:fit-content max-width:100% margin:0 white-space:nowrap user-select:none border-collapse:collapse
 
             &.table-active {
-                background-color:lightenAll(^mds-core-color-blue-500^,50)
+                background-color:lightenAll(^mds-sys-light-primary^,50)
             }
 
             thead {
@@ -466,7 +466,7 @@ stylify-customSelectors
 
             tbody {
                 tr.active {
-                    background-color:lightenAll(^mds-core-color-blue-400^,50)
+                    background-color:lightenAll(^mds-sys-light-primary^,50)
                 }
             }
         }

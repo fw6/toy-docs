@@ -89,8 +89,8 @@
 <style lang="postcss">
     .header-cell {
         cursor: cell;
-        background-color: var(--mds-core-color-neutral-50);
-        border: 1px solid var(--mds-semantic-color-border-lvl-1);
+        background-color: var(--mds-sys-light-surface);
+        border: 1px solid var(--mds-sys-light-surface-bright);
 
         &.col-active {
             background-color: rgb(30 110 207 / 60%);
@@ -109,6 +109,6 @@
         border: none;
         outline: none;
         resize: none;
-        caret-color: var(--mds-semantic-color-primary);
+        caret-color: var(--mds-sys-light-primary);
     }
 </style>

@@ -19,6 +19,33 @@ jobs:
               with:
                 fetch-depth: 0
 
+            - name: Cache node modules
+              id: cache-npm
+              uses: actions/cache@v3
+              env:
+                cache-name: cache-node-modules
+              with:
+                  path: '**/node_modules'
+                  key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/pnpm-lock.json') }}
+                  restore-keys: |
+                    ${{ runner.os }}-build-${{ env.cache-name }}-
+                    ${{ runner.os }}-build-
+                    ${{ runner.os }}-
+
+            - name: Get pnpm store directory
+              id: pnpm-cache
+              shell: bash
+              run: |
+                    echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+            - uses: actions/cache@v3
+              name: Setup pnpm cache
+              with:
+                path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+                key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+                restore-keys: |
+                  ${{ runner.os }}-pnpm-store-
+
             - uses: volta-cli/action@v4
               with:
                 node-version: ${{ matrix.node-version }}
@@ -30,7 +57,7 @@ jobs:
               run: pnpm install
 
             - name: Build storybook
-              run: pnpm build:storybook
+              run: pnpm build:all && pnpm build:storybook
               env:
                 NODE_ENV: 'production'
 

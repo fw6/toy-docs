@@ -247,7 +247,7 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: var(--mds-semantic-color-bg-primary);
+        background-color: var(--mds-sys-light-primary);
         opacity: 0;
         z-index: 9;
     }

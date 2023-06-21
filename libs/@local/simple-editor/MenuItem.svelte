@@ -1,5 +1,10 @@
 <script>
     /**
+     * @typedef {import('@tiptap/core').Editor} Editor
+     * @typedef {import('svelte').ComponentType} ComponentType
+     */
+
+    /**
      * @type {Editor}
      */
     export let editor;
@@ -58,6 +63,6 @@
     .menu-item.disabled {
         opacity: 0.6;
         cursor: not-allowed;
-        background-color: var(--mds-semantic-color-bg-container-disabled);
+        background-color: var(--mds-sys-light-surface-container-low);
     }
 </style>

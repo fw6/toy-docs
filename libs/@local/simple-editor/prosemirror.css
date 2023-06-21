@@ -107,27 +107,35 @@
             [first-line-indent] {
                 text-indent: 2em;
             }
+
             [indent=1] {
                 padding-left: 2em;
             }
+
             [indent=2] {
                 padding-left: 4em;
             }
+
             [indent=3] {
                 padding-left: 6em;
             }
+
             [indent=4] {
                 padding-left: 8em;
             }
+
             [indent=5] {
                 padding-left: 10em;
             }
+
             [indent=6] {
                 padding-left: 12em;
             }
+
             [indent=7] {
                 padding-left: 14em;
             }
+
             [indent=8] {
                 padding-left: 16em;
             }
@@ -136,21 +144,27 @@
             [data-align^="t"] {
                 vertical-align: top;
             }
+
             [data-align^="m"] {
                 vertical-align: middle;
             }
+
             [data-align^="b"] {
                 vertical-align: bottom;
             }
+
             [data-align$="l"] {
                 text-align: left;
             }
+
             [data-align$="c"] {
                 text-align: center;
             }
+
             [data-align$="r"] {
                 text-align: right;
             }
+
             [data-align$="j"] {
                 text-align: justify;
             }
@@ -200,10 +214,13 @@
                     position: relative;
                     caret-color: transparent;
 
-                    ::selection,*::selection {
+                    ::selection,
+                    *::selection {
                         background-color: transparent;
                     }
-                    ::-moz-selection,*::-moz-selection {
+
+                    ::-moz-selection,
+                    *::-moz-selection {
                         background-color: transparent;
                     }
 
@@ -233,6 +250,7 @@
             pointer-events: none;
             position: absolute;
         }
+
         .ProseMirror-gapcursor:after {
             content: "";
             display: block;
@@ -242,11 +260,13 @@
             border-top: 1px solid black;
             animation: ProseMirror-cursor-blink 1.1s steps(2, start) infinite;
         }
+
         @keyframes ProseMirror-cursor-blink {
             to {
                 visibility: hidden;
             }
         }
+
         .ProseMirror-focused .ProseMirror-gapcursor {
             display: block;
         }
@@ -343,6 +363,7 @@
                     min-height: mm2px(216);
                 }
             }
+
             &[format="Legal"] {
                 width: mm2px(216);
                 min-height: mm2px(356);
@@ -352,6 +373,7 @@
                     min-height: mm2px(216);
                 }
             }
+
             &[format="Tabloid"] {
                 width: mm2px(279);
                 min-height: mm2px(432);
@@ -361,6 +383,7 @@
                     min-height: mm2px(279);
                 }
             }
+
             &[format="Ledger"] {
                 width: mm2px(432);
                 min-height: mm2px(279);
@@ -374,11 +397,13 @@
             :is(header) {
                 order: 1;
             }
+
             :is(main) {
                 order: 2;
                 flex-grow: 1;
-                border: 1px solid var(--mds-semantic-color-border-lvl-1);
+                border: 1px solid var(--mds-sys-light-surface-bright);
             }
+
             :is(footer) {
                 order: 3;
             }

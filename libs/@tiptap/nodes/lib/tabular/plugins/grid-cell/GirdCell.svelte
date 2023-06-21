@@ -204,14 +204,15 @@
         height: 100%;
         left: 0;
         top: 0;
-        background-color: var(--mds-core-color-neutral-50);
+        background-color: var(--mds-sys-light-surface-container-low);
         pointer-events: auto;
         cursor: pointer;
 
         --grid-cell-size: 12px;
         --grid-cell-gap-size: 2px;
-        --grid-cell-active: var(--mds-core-color-neutral-300);
-        --grid-cell-partially-active: var(--mds-core-color-neutral-100);
+        --grid-cell-active: var(--mds-sys-light-surface-variant);
+        /* prettier-ignore */
+        --grid-cell-partially-active: var(--mds-sys-light-surface-container-high);
 
         &.partially-active {
             background-color: var(--grid-cell-partially-active);

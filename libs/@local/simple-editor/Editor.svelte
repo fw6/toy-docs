@@ -7,6 +7,9 @@
     import MenuBar from "./MenuBar.svelte";
 
     /**
+     * @typedef {import('@tiptap/core').Content} Content
+     * @typedef {import('@tiptap/core').Extensions} Extensions
+     *
      * @typedef {import('./typings').EditorToolbarProfile} EditorToolbarProfile
      */
 
