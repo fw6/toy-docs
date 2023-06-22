@@ -13,7 +13,7 @@
     },
     "peerDependencies": {
         "@misky/prose-utils": "workspace:*",
-        "svelte": "^3.54.0"
+        "svelte": "^3.54.0 || ^4.0.0"
     },
     "devDependencies": {
         "@misky/prose-utils": "workspace:*"
