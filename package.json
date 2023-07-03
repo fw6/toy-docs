@@ -15,7 +15,7 @@
         "dev": "nx run-many -t dev"
     },
     "devDependencies": {
-        "@csstools/postcss-design-tokens": "^2.0.4",
+        "@csstools/postcss-design-tokens": "^3.0.0",
         "@csstools/postcss-global-data": "^1.0.3",
         "@fontsource/fira-mono": "^4.5.10",
         "@local/shared": "workspace:*",
