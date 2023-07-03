@@ -1,9 +1,5 @@
 lockfileVersion: '6.0'
 
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
-
 patchedDependencies:
   '@tanstack/table-core@8.9.1':
     hash: fjne5uqnqkvbitvgen5ilwpnei
@@ -72,8 +68,8 @@ importers:
         specifier: ^2.0.4
         version: 2.0.4(postcss@8.4.24)
       '@csstools/postcss-global-data':
-        specifier: ^1.0.3
-        version: 1.0.3(postcss@8.4.24)
+        specifier: ^2.0.0
+        version: 2.0.0(postcss@8.4.24)
       '@fontsource/fira-mono':
         specifier: ^4.5.10
         version: 4.5.10
@@ -1885,8 +1881,8 @@ packages:
       postcss-value-parser: 4.2.0
     dev: true
 
-  /@csstools/postcss-global-data@1.0.3(postcss@8.4.24):
-    resolution: {integrity: sha512-x2fZOl7RJJtKC9ZfG+1bdrQKeRfP1a3Ff4uF2/fykNUKly8E8Q7lw7oegsEnqenSEDC1xjk6qXJ/fcJkTAdcNg==}
+  /@csstools/postcss-global-data@2.0.0(postcss@8.4.24):
+    resolution: {integrity: sha512-yaI3+hBJw7ljUhM0INqnFzG8nsDD+Si/FFUWw6uRLQHUALnXyxpSeihOIvG35y03GhpmiEU6qsADbVVGDHKSLw==}
     engines: {node: ^14 || ^16 || >=18}
     peerDependencies:
       postcss: ^8.4
@@ -10596,3 +10592,7 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
     dev: true
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
