@@ -1,9 +1,5 @@
 lockfileVersion: '6.0'
 
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
-
 patchedDependencies:
   '@tanstack/table-core@8.9.1':
     hash: fjne5uqnqkvbitvgen5ilwpnei
@@ -75,8 +71,8 @@ importers:
         specifier: ^1.0.3
         version: 1.0.3(postcss@8.4.24)
       '@fontsource/fira-mono':
-        specifier: ^4.5.10
-        version: 4.5.10
+        specifier: ^5.0.0
+        version: 5.0.3
       '@local/shared':
         specifier: workspace:*
         version: link:libs/@local/shared
@@ -2346,8 +2342,8 @@ packages:
     resolution: {integrity: sha512-cEee/Z+I12mZcFJshKcCqC8tuX5hG3s+d+9nZ3LabqKF1vKdF41B92pJVCBggjAGORAeOzyyDDKrZwIkLffeOQ==}
     dev: true
 
-  /@fontsource/fira-mono@4.5.10:
-    resolution: {integrity: sha512-bxUnRP8xptGRo8YXeY073DSpfK74XpSb0ZyRNpHV9WvLnJ7TwPOjZll8hTMin7zLC6iOp59pDZ8EQDj1gzgAQQ==}
+  /@fontsource/fira-mono@5.0.3:
+    resolution: {integrity: sha512-AN08SykeaFazTC0d0HHOZeQ3jmHyn2Qs5bGEjhxuNp9NjUqg9rL8x+LxrXWdVIo8PBg0xbnkcA3KR6RVvQeRAg==}
     dev: true
 
   /@humanwhocodes/config-array@0.9.5:
@@ -10596,3 +10592,7 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
     dev: true
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
