@@ -92,7 +92,7 @@
         "design/**"
     ],
     "volta": {
-        "node": "18.16.0"
+        "node": "18.20.4"
     },
     "dependencies": {
         "@iconify/json": "^2.2.70",
