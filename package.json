@@ -98,7 +98,7 @@
         "@iconify/json": "^2.2.70",
         "@local/simple-editor": "workspace:^",
         "@svelte-put/clickoutside": "^2.0.0",
-        "@tanstack/table-core": "8.9.1",
+        "@tanstack/table-core": "8.20.1",
         "@tiptap/core": "^2.0.3",
         "@tiptap/pm": "^2.0.3",
         "@tiptap/starter-kit": "^2.0.3",

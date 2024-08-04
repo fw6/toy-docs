@@ -21,7 +21,7 @@
         "typings.d.ts"
     ],
     "peerDependencies": {
-        "@tanstack/table-core": "~8.9.1",
+        "@tanstack/table-core": "~8.9.1 || ~8.20.0",
         "@local/intl": "workspace:*",
         "@misky-design/tokens": "workspace:*",
         "svelte": "^3.54.0"
