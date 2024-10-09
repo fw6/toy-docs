@@ -75,7 +75,7 @@
         "storybook-addon-performance": "^0.17.1",
         "storybook-addon-swc": "^1.2.0",
         "style-dictionary": "^3.8.0",
-        "svelte": "^3.54.0",
+        "svelte": "^4.0.0",
         "svelte-check": "^3.0.1",
         "svelte-preprocess": "^5.0.4",
         "tinycolor2": "^1.6.0",
