@@ -82,7 +82,7 @@
         "tslib": "^2.5.2",
         "typescript": "^5.0.4",
         "unplugin-icons": "^0.16.1",
-        "vite": "^4.3.8",
+        "vite": "^6.0.0",
         "vite-plugin-mkcert": "^1.15.0",
         "vite-tsconfig-paths": "^4.2.0"
     },
